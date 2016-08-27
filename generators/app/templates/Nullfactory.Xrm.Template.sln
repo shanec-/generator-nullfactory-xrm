@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nullfactory.Xrm.Tooling", "Nullfactory.Xrm.Tooling\Nullfactory.Xrm.Tooling.csproj", "{24351FDA-7413-4120-BA8D-504490005F1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>", "<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>\<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>.csproj", "{4C391BA8-8D8A-40DE-84E7-3EE7D4B5988B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F82EC072-B2BD-4A6C-8C89-F942BE9F5783} = {F82EC072-B2BD-4A6C-8C89-F942BE9F5783}
+		{44CC5A81-2072-42BA-A759-E3B12D84C8C2} = {44CC5A81-2072-42BA-A759-E3B12D84C8C2}
+		{24351FDA-7413-4120-BA8D-504490005F1D} = {24351FDA-7413-4120-BA8D-504490005F1D}
+	EndProjectSection
+EndProject
+<% if (isAddWebResourceProject == true) { %>
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>.WebResources", "<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>.WebResources\<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>.WebResources.csproj", "{44CC5A81-2072-42BA-A759-E3B12D84C8C2}"
+EndProject
+<% } %>
+<% if (isAddPluginProject == true) { %>
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= visualStudioSolutionProjectPrefix %>.Xrm.Plugins", "<%= visualStudioSolutionProjectPrefix %>.Xrm.Plugins\<%= visualStudioSolutionProjectPrefix %>.Xrm.Plugins.csproj", "{F82EC072-B2BD-4A6C-8C89-F942BE9F5783}"
+EndProject
+<% } %>
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24351FDA-7413-4120-BA8D-504490005F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24351FDA-7413-4120-BA8D-504490005F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C391BA8-8D8A-40DE-84E7-3EE7D4B5988B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C391BA8-8D8A-40DE-84E7-3EE7D4B5988B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C391BA8-8D8A-40DE-84E7-3EE7D4B5988B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C391BA8-8D8A-40DE-84E7-3EE7D4B5988B}.Release|Any CPU.Build.0 = Release|Any CPU
+		<% if (isAddWebResourceProject == true) { %>
+		{44CC5A81-2072-42BA-A759-E3B12D84C8C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44CC5A81-2072-42BA-A759-E3B12D84C8C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		<% } %>
+		<% if (isAddPluginProject == true) { %>
+		{F82EC072-B2BD-4A6C-8C89-F942BE9F5783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F82EC072-B2BD-4A6C-8C89-F942BE9F5783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F82EC072-B2BD-4A6C-8C89-F942BE9F5783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F82EC072-B2BD-4A6C-8C89-F942BE9F5783}.Release|Any CPU.Build.0 = Release|Any CPU
+		<% } %>
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
