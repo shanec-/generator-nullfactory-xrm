@@ -5,8 +5,8 @@
 -username "<%= crmUsername %>" `
 -password "<%= crmPassword %>" `
 -solutionName "<%= crmSolutionName %>" `
--solutionRootFolder "..\..\<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>" `
--solutionMapFile "..\..\Nullfactory.Xrm.Tooling\Mappings\<%= crmSolutionName %>-mapping.xml"
+-solutionRootFolder (Resolve-Path "..\..\<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>") `
+-solutionMapFile (Resolve-Path "..\..\Nullfactory.Xrm.Tooling\Mappings\<%= crmSolutionName %>-mapping.xml")
 
 
 #.\Sync-CrmSolution.ps1 `
