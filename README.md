@@ -1,5 +1,5 @@
 # generator-nullfactory-xrm
-> Dynamics CRM Solution Template
+> Nullfactory - Dynamics CRM Solution Template
 
 A yeoman template for managing [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx)-compatible Dynamics CRM solutions.
 
