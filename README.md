@@ -1,7 +1,7 @@
 # generator-nullfactory-xrm
 > Dynamics CRM Solution Template
 
-A yeoman template for [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx) compatible Dynamics CRM solutions.
+A yeoman template for managing [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx)-compatible Dynamics CRM solutions.
 
 ## Installation
 
@@ -22,37 +22,14 @@ yo nullfactory-xrm
 
 Template questions and their purpose:
 
-1. Visual Studio solution file name? 
-
-        The visual studio solution filename.
-
-2. Visual Studio project prefix?
-
-        The prefix for the projects generated. This can be an organization name or preferred convention.
-
-3. Source CRM server url?
-
-        This is the source CRM server url. Example:[https://sndbx.crm6.dynamics.com](https://sndbx.crm6.dynamics.com)
-
-4. Source CRM Username?
-
-        The username used to connect to the source CRM server.
-
-5. Source CRM Password?
-
-        The password for the above account.
-
-6. Source CRM Solution Name?
-
-        The name of the CRM solution to be extracted.
-
-7. Add *.WebResource project?
-
-        Specifies if a new project should be created to manage the web resouces.
-
-8. Add *.Plugin project?
-
-        Specifies if a new plugin project should be created.
+1. Visual Studio solution file name?  `The visual studio solution filename.`
+2. Visual Studio project prefix?  `The prefix for the projects generated. This can be an organization name or preferred convention.`
+3. Source CRM server url? `This is the source CRM server url. Example:[https://sndbx.crm6.dynamics.com](https://sndbx.crm6.dynamics.com)`
+4. Source CRM Username? `The username used to connect to the source CRM server.`
+5. Source CRM Password? `The password for the above account.`
+6. Source CRM Solution Name? `The name of the CRM solution to be extracted.`
+7. Add *.WebResource project? `Specifies if a new project should be created to manage the web resouces.`
+8. Add *.Plugin project? `Specifies if a new plugin project should be created.`
 
 ## Post Installation Setup
 
