@@ -18,7 +18,9 @@ Then generate your new project:
 yo nullfactory-xrm
 ```
 
-## Execution1
+## Execution
+
+Template questions and their purpose:
 
 1. Visual Studio solution file name? 
 
