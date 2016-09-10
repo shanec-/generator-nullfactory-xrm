@@ -1,5 +1,7 @@
-# generator-nullfactory-xrm [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# generator-nullfactory-xrm
 > Dynamics CRM Solution Template
+
+A yeoman template for [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx) compatible Dynamics CRM solutions.
 
 ## Installation
 
@@ -16,21 +18,67 @@ Then generate your new project:
 yo nullfactory-xrm
 ```
 
-## Getting To Know Yeoman
+## Execution1
 
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
+1. Visual Studio solution file name? 
+
+        The visual studio solution filename.
+
+2. Visual Studio project prefix?
+
+        The prefix for the projects generated. This can be an organization name or preferred convention.
+
+3. Source CRM server url?
+
+        This is the source CRM server url. Example:[https://sndbx.crm6.dynamics.com](https://sndbx.crm6.dynamics.com)
+
+4. Source CRM Username?
+
+        The username used to connect to the source CRM server.
+
+5. Source CRM Password?
+
+        The password for the above account.
+
+6. Source CRM Solution Name?
+
+        The name of the CRM solution to be extracted.
+
+7. Add *.WebResource project?
+
+        Specifies if a new project should be created to manage the web resouces.
+
+8. Add *.Plugin project?
+
+        Specifies if a new plugin project should be created.
+
+## Post Installation Setup
+
+Start off by updating the packages for the `Nullfactory.Xrm.Tooling` project. Open up the `Package Manager Console` in Visual Studio and execute the following command:
+
+```
+Update-Package -reinstall -Project Nullfactory.Xrm.Tooling
+```
+
+Next, install the [`Microsoft.Xrm.Data.PowerShell`](https://github.com/seanmcne/Microsoft.Xrm.Data.PowerShell) powershell module. On a Windows 10 or later, do this by executing the included powershell script `Nullfactory.Xrm.Tooling\_Install\Install-Microsoft.Xrm.Data.PowerShell.ps1` or manually running the following command:
+
+```
+Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser
+```
+
+## Syncing a Solution to the Project
+
+Anytime the CRM solution needs to be synchronized back to the project, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Sync-CrmSolution.Param.ps1`.
+
+### Resource Mapping
+
+Edit the mapping file to map to the appropriate resource project. They are located in the `Nullfactory.Xrm.Tooling\Mapping` folder. 
+More information on the structure of the mapping file can be found [here](https://msdn.microsoft.com/en-us/library/jj602987.aspx#use_command)
+
+## Building the CRM Solution
+
+The repackaging the extracted solution is integrated as a post-build step of the solution class library. Simply build it to output both a managed as well as unmanaged  CRM solution package. 
 
 ## License
 
 Apache-2.0 © [Shane Carvalho](http://www.nullfactory.net)
-
-
-[npm-image]: https://badge.fury.io/js/generator-nullfactory-xrm.svg
-[npm-url]: https://npmjs.org/package/generator-nullfactory-xrm
-[travis-image]: https://travis-ci.org/shanec-/generator-nullfactory-xrm.svg?branch=master
-[travis-url]: https://travis-ci.org/shanec-/generator-nullfactory-xrm
-[daviddm-image]: https://david-dm.org/shanec-/generator-nullfactory-xrm.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/shanec-/generator-nullfactory-xrm

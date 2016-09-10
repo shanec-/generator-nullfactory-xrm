@@ -13,38 +13,38 @@ module.exports = yeoman.Base.extend({
     var prompts = [{
       type: 'input',
       name: 'visualStudioSolutionName',
-      message: 'Visual Studio solution name?',
+      message: 'Visual Studio solution filename?',
       default: 'nullfactory'
     },
     {
       type: 'input',
       name: 'visualStudioSolutionProjectPrefix',
-      message: 'Visual Studio solution project prefix?',
+      message: 'Visual Studio solution project filename prefix?',
       default: 'nullfactory'
     },
     {
       type: 'input',
-      name: 'crmSolutionName',
-      message: 'Source CRM Solution Name?',
-      default: 'solution1'
-    },
-    {
-      type: 'input',
       name: 'crmServerUrl',
-      message: 'Source Crm Server Url?',
+      message: 'Source CRM server url?',
       default: 'https://sandbox.crm6.dynamics.com/'
     },
     {
       type: 'input',
       name: 'crmUsername',
-      message: 'Source CRM Username?',
+      message: 'Source CRM username?',
       default: 'admin@sandbox.onmicrosoft.com'
     },
     {
       type: 'input',
       name: 'crmPassword',
-      message: 'Source CRM Password?',
+      message: 'Source CRM password?',
       default: 'P@ssw0rd'
+    },
+    {
+      type: 'input',
+      name: 'crmSolutionName',
+      message: 'Source CRM solution name?',
+      default: 'solution1'
     },
     {
       type: 'confirm',
