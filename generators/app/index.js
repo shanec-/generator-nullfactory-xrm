@@ -75,10 +75,6 @@ module.exports = yeoman.Base.extend({
     // initialize the crm solution project 
     this._writeCrmSolutionProject();
 
-    // hard code the values here for now
-    this.props.isAddWebResourceProject = true;
-    this.props.isAddPluginProject = true;
-
     if (this.props.isAddWebResourceProject) {
       this._writeResourcesProject();
     }
@@ -184,7 +180,10 @@ module.exports = yeoman.Base.extend({
     var generatedProjectName = this.props.visualStudioSolutionProjectPrefix + '.' + this.props.crmSolutionName + '.WebResources';
     this.fs.copyTpl(
       this.templatePath('Project.Solution.WebResources/Project.Solution.WebResources.csproj'),
-      this.destinationPath(generatedProjectName + '/'+ generatedProjectName + '.csproj')
+      this.destinationPath(generatedProjectName + '/'+ generatedProjectName + '.csproj'), {
+          visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
+          crmSolutionName: this.props.crmSolutionName
+      }
     );
   },
 
