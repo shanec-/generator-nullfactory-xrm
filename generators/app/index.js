@@ -149,6 +149,22 @@ module.exports = yeoman.Base.extend({
             crmServerUrl: this.props.crmServerUrl
         }
       );
+
+      this.fs.copy(
+        this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.ps1'),
+        this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.ps1')
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.Param.ps1'),
+        this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.Param.ps1'), {
+            visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
+            crmSolutionName: this.props.crmSolutionName,
+            crmUsername: this.props.crmUsername,
+            crmPassword: this.props.crmPassword,
+            crmServerUrl: this.props.crmServerUrl
+        }
+      );
   },
 
   _writePluginProject : function() {
