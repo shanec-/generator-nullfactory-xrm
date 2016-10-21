@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Scripts\Deploy-CrmSolution.Param.ps1" />
+    <None Include="Scripts\Deploy-CrmSolution.ps1" />
     <None Include="Scripts\Sync-CrmSolution.Param.ps1" />
     <None Include="Scripts\Sync-CrmSolution.ps1" />
     <None Include="_Install\Install-Microsoft.Xrm.Data.PowerShell.ps1" />
