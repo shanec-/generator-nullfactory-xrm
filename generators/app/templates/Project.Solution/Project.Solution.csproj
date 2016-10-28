@@ -41,6 +41,6 @@
   </Target>
   -->
   <Target Name="Build">
-    <Exec Command="$(SolutionDir)\Nullfactory.Xrm.Tooling\bin\coretools\SolutionPackager.exe /action:pack /packagetype:both /folder:$(MSBuildProjectDirectory) /zipfile:$(OutDir)$(MSBuildProjectName).zip /map:$(SolutionDir)\Nullfactory.Xrm.Tooling\Mappings\<%= crmSolutionName %>-mapping.xml" />
+    <Exec Command="&quot;$(SolutionDir)\Nullfactory.Xrm.Tooling\bin\coretools\SolutionPackager.exe&quot; /action:pack /packagetype:both /folder:&quot;$(MSBuildProjectDirectory)&quot; /zipfile:&quot;$(OutDir)$(MSBuildProjectName).zip&quot; /map:&quot;$(SolutionDir)\Nullfactory.Xrm.Tooling\Mappings\<%= crmSolutionName %>-mapping.xml&quot;" />
   </Target>
 </Project>
