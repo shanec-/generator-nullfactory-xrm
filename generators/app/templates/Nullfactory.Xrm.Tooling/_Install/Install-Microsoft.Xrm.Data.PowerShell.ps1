@@ -1,1 +1,1 @@
-﻿Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser
+﻿Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -Force

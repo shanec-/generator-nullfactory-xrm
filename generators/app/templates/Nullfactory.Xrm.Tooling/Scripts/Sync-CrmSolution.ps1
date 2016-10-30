@@ -12,17 +12,28 @@ param(
 	[string]$solutionName,
 	[Parameter(Mandatory=$true)]
 	[string]$solutionRootFolder,
+	[Parameter(Mandatory=$false)]
+	[switch]$isOnPremServer,
+	[Parameter(Mandatory=$false)]
 	[string]$solutionMapFile = ""
 )
 
-Write-Verbose "Import Micrsoft.Xrm.Data.Powershell module"
-Import-Module Microsoft.Xrm.Data.Powershell
+Write-Verbose "Intializing Micrsoft.Xrm.Data.Powershell module"
+Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -ErrorAction SilentlyContinue -Force
 
 $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
 $creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
 
-Write-Verbose "Connecting to the crm instance $serverUrl ..."
-Connect-CrmOnPremDiscovery -Credential $creds -ServerUrl $serverUrl
+if($isOnPremServer)
+{
+	Write-Verbose "Connecting to the OnPrem crm instance $serverUrl ..."
+	Connect-CrmOnPremDiscovery -Credential $creds -ServerUrl $serverUrl
+}
+else
+{
+	Write-Verbose "Connecting to the Online crm instance $serverUrl ..."
+	Connect-CrmOnline -Credential $creds -ServerUrl $serverUrl
+}
 
 $exportZipFileName = $solutionName + "_export.zip"
 $exportZipFileNameManaged = $solutionName + "_export_Managed.zip"
