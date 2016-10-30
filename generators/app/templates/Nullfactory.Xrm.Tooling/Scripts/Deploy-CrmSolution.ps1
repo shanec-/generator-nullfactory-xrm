@@ -17,7 +17,7 @@ param(
 	[switch]$publishChanges
 )
 
-Write-Verbose "Intializing Micrsoft.Xrm.Data.Powershell module"
+Write-Verbose "Initializing Micrsoft.Xrm.Data.Powershell module ..."
 Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -ErrorAction SilentlyContinue -Force
 
 $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
@@ -25,22 +25,22 @@ $creds = New-Object System.Management.Automation.PSCredential ($username, $secur
 
 if($isOnPremServer)
 {
-	Write-Verbose "Connecting to the OnPrem crm instance $serverUrl ..."
+	Write-Verbose "Connecting to OnPrem CRM instance $serverUrl ..."
 	Connect-CrmOnPremDiscovery -Credential $creds -ServerUrl $serverUrl
 }
 else
 {
-	Write-Verbose "Connecting to the Online crm instance $serverUrl ..."
+	Write-Verbose "Connecting to Online CRM instance $serverUrl ..."
 	Connect-CrmOnline -Credential $creds -ServerUrl $serverUrl
 }
 
 $releaseZipFileName = "";
 
-if (-Not $deployManagedSolution){ $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\$solutionName.zip") } 
-else { $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\$solutionName_managed.zip") }
+if (-Not $deployManagedSolution){ $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName.zip") } 
+else { $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName_managed.zip") }
 
 Write-Verbose "Importing the $releaseZipFileName solution into $serverUrl ..."
-Import-CrmSolution 
+Import-CrmSolution `
 	-SolutionFilePath $releaseZipFileName `
 	-PublishChanges $publishChanges `
 	-ActivatePlugIns $activatePlugIns

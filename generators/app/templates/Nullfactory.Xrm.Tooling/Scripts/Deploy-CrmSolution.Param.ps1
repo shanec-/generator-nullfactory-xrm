@@ -4,6 +4,6 @@
 -serverUrl "<%= crmServerUrl %>" `
 -username "<%= crmUsername %>" `
 -password "<%= crmPassword %>" `
--solutionName "<%= crmSolutionName %>" `
+-solutionName "<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>" `
 -publishChanges `
 -activatePlugins
