@@ -170,8 +170,10 @@ module.exports = yeoman.Base.extend({
   _writePluginProject : function() {
     var pluginProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Plugins'; 
     this.fs.copyTpl(
-      this.templatePath('Project.Xrm.Plugins/Project.Xrm.Plugins.csproj'),
-      this.destinationPath(pluginProjectName + '/'+ pluginProjectName + '.csproj')
+        this.templatePath('Project.Xrm.Plugins/Project.Xrm.Plugins.csproj'),
+        this.destinationPath(pluginProjectName + '/'+ pluginProjectName + '.csproj'), {
+          pluginProjectName: pluginProjectName
+        }
     );
 
     this.fs.copyTpl(
