@@ -30,6 +30,7 @@ Template questions and their purpose:
 6. Source CRM Solution Name? `The name of the CRM solution to be extracted.`
 7. Add *.WebResource project? `Specifies if a new project should be created to manage the web resouces.`
 8. Add *.Plugin project? `Specifies if a new plugin project should be created.`
+9. Add *.Workflow project? `Specifies if a new workflow project should be created`
 
 ## Post Installation Setup
 
@@ -39,11 +40,15 @@ Start off by updating the packages for the `Nullfactory.Xrm.Tooling` project. Op
 Update-Package -reinstall -Project Nullfactory.Xrm.Tooling
 ```
 
-Next, install the [`Microsoft.Xrm.Data.PowerShell`](https://github.com/seanmcne/Microsoft.Xrm.Data.PowerShell) powershell module. On a Windows 10 or later, do this by executing the included powershell script `Nullfactory.Xrm.Tooling\_Install\Install-Microsoft.Xrm.Data.PowerShell.ps1` or manually running the following command:
+Next, if you opted to add either a plugin or workflow project, ensure that the assembly is signed with a new key.  
+
+Optionally, install the [`Microsoft.Xrm.Data.PowerShell`](https://github.com/seanmcne/Microsoft.Xrm.Data.PowerShell) powershell module. On a Windows 10 or later, do this by executing the included powershell script `Nullfactory.Xrm.Tooling\_Install\Install-Microsoft.Xrm.Data.PowerShell.ps1` or manually running the following command:
 
 ```
-Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser
+Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -Force
 ```
+
+Even if you skip the above step, the sychrnoization powershell script would attempt to install it automatically.
 
 ## Syncing a Solution to the Project
 
@@ -56,7 +61,7 @@ More information on the structure of the mapping file can be found [here](https:
 
 ## Building the CRM Solution
 
-The repackaging the extracted solution is integrated as a post-build step of the solution class library. Simply build it to output both a managed as well as unmanaged  CRM solution package. 
+The repackaging the extracted solution is integrated as a post-build step of the solution class library. Simply build it to output both a managed as well as unmanaged CRM solution package. 
 
 ## License
 
