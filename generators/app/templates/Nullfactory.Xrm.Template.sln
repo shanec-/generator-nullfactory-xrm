@@ -1,5 +1,4 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -18,6 +17,10 @@ EndProject
 <% } %>
 <% if (isAddPluginProject == true) { %>
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= visualStudioSolutionProjectPrefix %>.Xrm.Plugins", "<%= visualStudioSolutionProjectPrefix %>.Xrm.Plugins\<%= visualStudioSolutionProjectPrefix %>.Xrm.Plugins.csproj", "{F82EC072-B2BD-4A6C-8C89-F942BE9F5783}"
+EndProject
+<% } %>
+<% if (isAddWorkflowProject == true) { %>
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%= visualStudioSolutionProjectPrefix %>.Xrm.Workflows", "<%= visualStudioSolutionProjectPrefix %>.Xrm.Workflows\<%= visualStudioSolutionProjectPrefix %>.Xrm.Workflows.csproj", "{92AE51F5-292F-4BB2-A80D-E5929D3C6C6E}"
 EndProject
 <% } %>
 Global
@@ -41,6 +44,12 @@ Global
 		{F82EC072-B2BD-4A6C-8C89-F942BE9F5783}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F82EC072-B2BD-4A6C-8C89-F942BE9F5783}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F82EC072-B2BD-4A6C-8C89-F942BE9F5783}.Release|Any CPU.Build.0 = Release|Any CPU
+		<% } %>
+		<% if (isAddWorkflowProject == true) { %>
+		{92AE51F5-292F-4BB2-A80D-E5929D3C6C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92AE51F5-292F-4BB2-A80D-E5929D3C6C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92AE51F5-292F-4BB2-A80D-E5929D3C6C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92AE51F5-292F-4BB2-A80D-E5929D3C6C6E}.Release|Any CPU.Build.0 = Release|Any CPU
 		<% } %>
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

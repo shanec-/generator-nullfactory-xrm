@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xrm.Sdk;
 
-namespace Project.Xrm.Plugins
+namespace <%= pluginProjectName %>
 {
     public class SimplePlugin : IPlugin
     {
