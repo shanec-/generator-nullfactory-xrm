@@ -37,7 +37,7 @@ else
 $releaseZipFileName = "";
 
 if (-Not $deployManagedSolution){ $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName.zip") } 
-else { $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName_managed.zip") }
+else { $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName" + "_managed.zip") }
 
 Write-Verbose "Importing the $releaseZipFileName solution into $serverUrl ..."
 Import-CrmSolution `
