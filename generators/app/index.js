@@ -78,7 +78,7 @@ module.exports = yeoman.Base.extend({
     // initialize the visual studio solution project
     this._writeVsSolutionProject();
 
-    // initialize the crm solution project 
+    // initialize the crm solution project
     this._writeCrmSolutionProject();
 
     // add the web resource project
@@ -90,7 +90,7 @@ module.exports = yeoman.Base.extend({
     if (this.props.isAddPluginProject) {
       this._writePluginProject();
     }
-	
+
     // add the workflow project
     if (this.props.isAddWorkflowProject) {
         this._writeWorkflowProject();
@@ -182,7 +182,7 @@ module.exports = yeoman.Base.extend({
   },
 
   _writePluginProject : function() {
-    var pluginProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Plugins'; 
+    var pluginProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Plugins';
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Plugins/Project.Xrm.Plugins.csproj'),
       this.destinationPath(pluginProjectName + '/'+ pluginProjectName + '.csproj'), {
@@ -209,9 +209,9 @@ module.exports = yeoman.Base.extend({
       this.destinationPath(pluginProjectName + '/packages.config')
     );
   },
-  
+
   _writeWorkflowProject : function() {
-    var workflowProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Workflows'; 
+    var workflowProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Workflows';
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Workflows/Project.Xrm.Workflows.csproj'),
       this.destinationPath(workflowProjectName + '/'+ workflowProjectName + '.csproj'), {

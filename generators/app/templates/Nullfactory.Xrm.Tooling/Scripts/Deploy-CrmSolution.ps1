@@ -10,11 +10,13 @@ param(
 	[Parameter(Mandatory=$false)]
 	[switch]$isOnPremServer,
 	[Parameter(Mandatory=$false)]
-    [switch]$deployManagedSolution,
-    [Parameter(Mandatory=$false)]
-    [switch]$activatePlugIns,
+  [switch]$deployManagedSolution,
+  [Parameter(Mandatory=$false)]
+  [switch]$activatePlugIns,
 	[Parameter(Mandatory=$false)]
-	[switch]$publishChanges
+	[switch]$publishChanges,
+  [Parameter(Mandatory=$false)]
+  [swtich]$importAsHoldingSolution
 )
 
 Write-Verbose "Initializing Micrsoft.Xrm.Data.Powershell module ..."
@@ -36,7 +38,7 @@ else
 
 $releaseZipFileName = "";
 
-if (-Not $deployManagedSolution){ $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName.zip") } 
+if (-Not $deployManagedSolution){ $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName.zip") }
 else { $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName" + "_managed.zip") }
 
 Write-Verbose "Importing the $releaseZipFileName solution into $serverUrl ..."
@@ -44,3 +46,4 @@ Import-CrmSolution `
 	-SolutionFilePath $releaseZipFileName `
 	-PublishChanges $publishChanges `
 	-ActivatePlugIns $activatePlugIns
+  -ImportAsHoldingSolution $importAsHoldingSolution
