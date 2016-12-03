@@ -14,31 +14,19 @@ module.exports = yeoman.Base.extend({
       type: 'input',
       name: 'visualStudioSolutionName',
       message: 'Visual Studio solution filename?',
-      default: 'nullfactory'
+      default: 'Nullfactory'
     },
     {
       type: 'input',
       name: 'visualStudioSolutionProjectPrefix',
       message: 'Visual Studio solution project filename prefix?',
-      default: 'nullfactory'
+      default: 'Nullfactory'
     },
     {
       type: 'input',
       name: 'crmServerUrl',
       message: 'Source CRM server url?',
       default: 'https://sandbox.crm6.dynamics.com/'
-    },
-    {
-      type: 'input',
-      name: 'crmUsername',
-      message: 'Source CRM username?',
-      default: 'admin@sandbox.onmicrosoft.com'
-    },
-    {
-      type: 'input',
-      name: 'crmPassword',
-      message: 'Source CRM password?',
-      default: 'P@ssw0rd'
     },
     {
       type: 'input',
@@ -78,7 +66,7 @@ module.exports = yeoman.Base.extend({
     // initialize the visual studio solution project
     this._writeVsSolutionProject();
 
-    // initialize the crm solution project 
+    // initialize the crm solution project
     this._writeCrmSolutionProject();
 
     // add the web resource project
@@ -90,7 +78,7 @@ module.exports = yeoman.Base.extend({
     if (this.props.isAddPluginProject) {
       this._writePluginProject();
     }
-	
+
     // add the workflow project
     if (this.props.isAddWorkflowProject) {
         this._writeWorkflowProject();
@@ -158,8 +146,6 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.Param.ps1'), {
           visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
           crmSolutionName: this.props.crmSolutionName,
-          crmUsername: this.props.crmUsername,
-          crmPassword: this.props.crmPassword,
           crmServerUrl: this.props.crmServerUrl
       }
     );
@@ -174,15 +160,13 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.Param.ps1'), {
           visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
           crmSolutionName: this.props.crmSolutionName,
-          crmUsername: this.props.crmUsername,
-          crmPassword: this.props.crmPassword,
           crmServerUrl: this.props.crmServerUrl
       }
     );
   },
 
   _writePluginProject : function() {
-    var pluginProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Plugins'; 
+    var pluginProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Plugins';
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Plugins/Project.Xrm.Plugins.csproj'),
       this.destinationPath(pluginProjectName + '/'+ pluginProjectName + '.csproj'), {
@@ -209,9 +193,9 @@ module.exports = yeoman.Base.extend({
       this.destinationPath(pluginProjectName + '/packages.config')
     );
   },
-  
+
   _writeWorkflowProject : function() {
-    var workflowProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Workflows'; 
+    var workflowProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Workflows';
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Workflows/Project.Xrm.Workflows.csproj'),
       this.destinationPath(workflowProjectName + '/'+ workflowProjectName + '.csproj'), {
