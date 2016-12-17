@@ -25,7 +25,7 @@ Template questions and their purpose:
 1. Visual Studio solution file name?  `The visual studio solution filename.`
 2. Visual Studio project prefix?  `The prefix for the projects generated. This can be an organization name or preferred convention.`
 3. Source CRM server url? `This is the source CRM server url. Example:[https://sndbx.crm6.dynamics.com](https://sndbx.crm6.dynamics.com)`
-4. Source CRM Solution Name? `The name of the CRM solution to be extracted.`
+4. Source CRM solution name? `The name of the CRM solution to be extracted.`
 5. Add *.WebResource project? `Specifies if a new project should be created to manage the web resouces.`
 6. Add *.Plugin project? `Specifies if a new plugin project should be created.`
 7. Add *.Workflow project? `Specifies if a new workflow project should be created`

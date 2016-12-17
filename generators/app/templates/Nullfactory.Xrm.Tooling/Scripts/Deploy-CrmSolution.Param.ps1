@@ -1,5 +1,3 @@
-# Include new entry for each CRM solution to be released manually
-
 function GetUsername($solutionName)
 {
   $variableName = "nfac_" + $solutionName + "_username"
@@ -34,3 +32,13 @@ function GetPassword($solutionName)
   -solutionName "<%= crmSolutionName %>" `
   -publishChanges `
   -activatePlugins
+
+# Include new entry for each CRM solution to be released manually
+
+# .\Deploy-CrmSolution.ps1 `
+#   -serverUrl "http://servername/secondary" `
+#   -username (GetUsername "env_secondary_username_key") `
+#   -password (GetPassword "env_secondary_password_key") `
+#   -solutionName "secondary" `
+#   -publishChanges `
+#   -activatePlugins

@@ -1,5 +1,4 @@
-﻿# Include new entry for each CRM solution to be synced to project
-
+﻿
 function GetUsername($solutionName)
 {
   $variableName = "nfac_" + $solutionName + "_username"
@@ -35,10 +34,12 @@ function GetPassword($solutionName)
   -solutionRootFolder "..\..\<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>" `
   -solutionMapFile "..\..\Nullfactory.Xrm.Tooling\Mappings\<%= crmSolutionName %>-mapping.xml"
 
+# Include a new entry for each CRM solution to be synced against a project folder
 
-#.\Sync-CrmSolution.ps1 `
-#-serverUrl "http://servername/organizationname" `
-#-username "domain\username" `
-#-password "password" `
-#-solutionName "solutionname" `
-#-solutionRootFolder "..\..\Demo.Solutions.Primary"
+# .\Sync-CrmSolution.ps1 `
+#   -serverUrl "http://servername/secondary" `
+#   -username (GetUsername "env_secondary_username_key") `
+#   -password (GetPassword "env_secondary_password_key") `
+#   -solutionName "secondary" `
+#   -solutionRootFolder "..\..\Demo.Solutions.Secondary" `
+#   -solutionMapFile "..\..\Nullfactory.Xrm.Tooling\Mappings\secondary-mapping.xml"
