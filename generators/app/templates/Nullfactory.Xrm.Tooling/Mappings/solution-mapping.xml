@@ -2,4 +2,5 @@
 <Mapping>
 <!--   <FileToFile map="PluginAssemblies\**\ProjectXrmPlugins.dll" to="..\Project.Xrm.Plugins\bin\**\Project.Xrm.Plugins.dll" />
   <FileToFile map="WebResources\nf_MyComponent\Images\test_image.jpg" to="..\Project.Solution1.WebResources\MyComponent\Images\test_image.jpg" />
- --></Mapping>
+ -->
+ </Mapping>

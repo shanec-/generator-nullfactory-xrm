@@ -14,31 +14,19 @@ module.exports = yeoman.Base.extend({
       type: 'input',
       name: 'visualStudioSolutionName',
       message: 'Visual Studio solution filename?',
-      default: 'nullfactory'
+      default: 'Nullfactory'
     },
     {
       type: 'input',
       name: 'visualStudioSolutionProjectPrefix',
       message: 'Visual Studio solution project filename prefix?',
-      default: 'nullfactory'
+      default: 'Nullfactory'
     },
     {
       type: 'input',
       name: 'crmServerUrl',
       message: 'Source CRM server url?',
       default: 'https://sandbox.crm6.dynamics.com/'
-    },
-    {
-      type: 'input',
-      name: 'crmUsername',
-      message: 'Source CRM username?',
-      default: 'admin@sandbox.onmicrosoft.com'
-    },
-    {
-      type: 'input',
-      name: 'crmPassword',
-      message: 'Source CRM password?',
-      default: 'P@ssw0rd'
     },
     {
       type: 'input',
@@ -158,8 +146,6 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.Param.ps1'), {
           visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
           crmSolutionName: this.props.crmSolutionName,
-          crmUsername: this.props.crmUsername,
-          crmPassword: this.props.crmPassword,
           crmServerUrl: this.props.crmServerUrl
       }
     );
@@ -174,8 +160,6 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.Param.ps1'), {
           visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
           crmSolutionName: this.props.crmSolutionName,
-          crmUsername: this.props.crmUsername,
-          crmPassword: this.props.crmPassword,
           crmServerUrl: this.props.crmServerUrl
       }
     );
