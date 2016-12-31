@@ -14,7 +14,9 @@ param(
   [Parameter(Mandatory=$false)]
   [switch]$activatePlugIns,
 	[Parameter(Mandatory=$false)]
-	[switch]$publishChanges
+	[switch]$publishChanges,
+  [Parameter(Mandatory=$false)]
+  [swtich]$importAsHoldingSolution
 )
 
 Write-Verbose "Initializing Micrsoft.Xrm.Data.Powershell module ..."
@@ -44,3 +46,4 @@ Import-CrmSolution `
 	-SolutionFilePath $releaseZipFileName `
 	-PublishChanges $publishChanges `
 	-ActivatePlugIns $activatePlugIns
+  -ImportAsHoldingSolution $importAsHoldingSolution

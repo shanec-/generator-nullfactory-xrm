@@ -7,7 +7,7 @@ module.exports = yeoman.Base.extend({
   prompting: function () {
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the ' + chalk.red('nullfactory-xrm') + ' generator!'
+      'Welcome to ' + chalk.red('nullfactory-xrm') + '\n The Dynamics CRM project structure generator!'
     ));
 
     var prompts = [{
@@ -236,5 +236,18 @@ module.exports = yeoman.Base.extend({
 
   install: function () {
     // this.installDependencies();
+  },
+
+  end: function(){
+    var postInstallSteps =
+      chalk.green.bold('\nSuccessfully generated project structure for ' + this.props.crmSolutionName + '.') +
+      '\n\nFinalize the installation by running the following command in the Visual Studio' + chalk.yellow(' "Package Manager Console"') + ' window.\n\t' +
+      chalk.yellow.bold('Update-Package -reinstall -project "Nullfactory.Xrm.Tooling"') +
+      '\n\n' +
+      'Execute the ' +
+       chalk.yellow.bold('Sync-CrmSolution-Param.ps1') +
+       ' powershell script to download and extract the remote CRM Solution.';
+
+    this.log(postInstallSteps);
   }
 });
