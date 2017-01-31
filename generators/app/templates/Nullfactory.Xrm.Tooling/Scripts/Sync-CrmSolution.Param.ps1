@@ -1,30 +1,7 @@
-﻿
-function GetUsername($solutionName)
-{
-  $variableName = "nfac_" + $solutionName + "_username"
-  $username = [environment]::GetEnvironmentVariable($variableName, "User")
+﻿# Importing common functions
+. .\CrmSolution.Common.ps1
 
-  if($username -eq $null)
-  {
-    $username = Read-Host "Set username for $solutionName"
-    [environment]::SetEnvironmentVariable($variableName, $username,  "User")
-  }
-  return $username;
-}
-
-function GetPassword($solutionName)
-{
-  $variableName = "nfac_" + $solutionName + "_password"
-  $plainTextPassword = [environment]::GetEnvironmentVariable($variableName, "User")
-
-  if($plainTextPassword -eq $null)
-  {
-    $securePassword = Read-Host "Set password for $solutionName" -AsSecureString
-    $plainTextPassword = (New-Object PSCredential "user", $SecurePassword).GetNetworkCredential().Password
-    [environment]::SetEnvironmentVariable($variableName, $plainTextPassword,  "User")
-  }
-  return $plainTextPassword;
-}
+Write-Host "Attempting to synchronize solution(s)..."
 
 .\Sync-CrmSolution.ps1 `
   -serverUrl "<%= crmServerUrl %>" `
@@ -43,3 +20,5 @@ function GetPassword($solutionName)
 #   -solutionName "secondary" `
 #   -solutionRootFolder "..\..\Demo.Solutions.Secondary" `
 #   -solutionMapFile "..\..\Nullfactory.Xrm.Tooling\Mappings\secondary-mapping.xml"
+
+Write-Host "Synchronization complete." -ForegroundColor Green

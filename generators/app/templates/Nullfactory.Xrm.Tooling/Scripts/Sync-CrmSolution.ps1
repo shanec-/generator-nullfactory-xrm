@@ -18,8 +18,11 @@ param(
 	[string]$solutionMapFile = ""
 )
 
-Write-Verbose "Intializing Micrsoft.Xrm.Data.Powershell module"
-Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -ErrorAction SilentlyContinue -Force
+if (-Not (Get-Module -ListAvailable -Name Microsoft.Xrm.Data.PowerShell))
+{
+  Write-Verbose "Initializing Micrsoft.Xrm.Data.Powershell module ..."
+  Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -ErrorAction SilentlyContinue -Force
+}
 
 $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
 $creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
@@ -48,7 +51,7 @@ Write-Verbose "Exporting the managed version of the solution..."
 Export-CrmSolution -SolutionName $solutionName -Managed -SolutionZipFileName $exportZipFileNameManaged
 
 Write-Verbose "Delete the source controlled artifacts while keeping the project file intact..."
-Remove-Item -Recurse $solutionRootFolder  -Force -exclude *.csproj 
+Remove-Item -Recurse $solutionRootFolder  -Force -exclude *.csproj
 
 Write-Verbose "Extracing previous generated solution..."
 if($solutionMapFile -eq "")

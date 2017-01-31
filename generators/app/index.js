@@ -137,6 +137,11 @@ module.exports = yeoman.Base.extend({
     );
 
     this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1')
+    );
+
+    this.fs.copy(
       this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.ps1'),
       this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.ps1')
     );
@@ -244,9 +249,9 @@ module.exports = yeoman.Base.extend({
       '\n\nFinalize the installation by running the following command in the Visual Studio' + chalk.yellow(' "Package Manager Console"') + ' window.\n\t' +
       chalk.yellow.bold('Update-Package -reinstall -project "Nullfactory.Xrm.Tooling"') +
       '\n\n' +
-      'Execute the ' +
+      'Download and extract the remote CRM solution by executing the ' +
        chalk.yellow.bold('Sync-CrmSolution-Param.ps1') +
-       ' powershell script to download and extract the remote CRM Solution.';
+       ' powershell script.';
 
     this.log(postInstallSteps);
   }
