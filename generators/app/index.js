@@ -137,6 +137,11 @@ module.exports = yeoman.Base.extend({
     );
 
     this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1')
+    );
+
+    this.fs.copy(
       this.templatePath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1'),
       this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1')
     );
