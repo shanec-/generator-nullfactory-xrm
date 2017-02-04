@@ -12,7 +12,7 @@ function ReplaceVersion([string]$BuildSourcePath, [string] $versionFile, [string
     {
       $filecontent = Get-Content($file)
       attrib $file -r
-      $filecontent -replace $regexPattern, $finalVersion | Out-File $file
+      $filecontent -replace $regexPattern, $finalVersion | Out-File $file -encoding $encoding
       Write-Host "$finalVersion version successfully applied to $file with encoding $encoding" -ForegroundColor Green
     }
   }
@@ -29,17 +29,10 @@ function ApplyVersionToAssemblies
     [string]$BuildSourcePath,
     [parameter(Position=1, Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [string]$BuildBuildNumber,
-    [parameter(Position=3, Mandatory=$false)]
-    [string]$regEx = ''
+    [string]$BuildBuildNumber
   )
 
-  if ([string]::IsNullOrWhiteSpace($regEx))
-  {
-    $regEx = "\d+\.\d+\.\d+\.\d+"
-  }
-
-  $isSuccess =  (ReplaceVersion $BuildSourcePath "*AssemblyInfo.cs" $regEx $BuildBuildNumber)
+  $isSuccess =  (ReplaceVersion $BuildSourcePath "*AssemblyInfo.cs" "\d+\.\d+\.\d+\.\d+" $BuildBuildNumber)
 
   if ($isSuccess)
   {
