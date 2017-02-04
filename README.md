@@ -61,6 +61,19 @@ More information on the structure of the mapping file can be found [here](https:
 
 The repackaging the extracted solution is integrated as a post-build step of the solution class library. Simply build it to output both a managed as well as unmanaged CRM solution package. 
 
+### Source Control, CI Builds and Release Management
+
+More information on source control management, setting up continuous integration builds and automated releases:
+
+- [Release Strategy for Dynamics CRM - Part 1 - Preparation](http://www.nullfactory.net/2016/10/release-strategy-for-dynamics-crm-prepping-part-1/)
+- [Release Strategy for Dynamics CRM - Part 2 - Setting Up the Build](http://www.nullfactory.net/2016/11/release-strategy-for-dynamics-crm-setting-up-the-build-part-2/)
+- [Release Strategy for Dynamics CRM - Part 3 - Setting Up the Release](http://www.nullfactory.net/2016/11/release-strategy-for-dynamics-crm-setting-up-the-release-part-3/)
+- [Release Strategy for Dynamics CRM - Part 4 - Versioning](http://www.nullfactory.net/2016/11/release-strategy-for-dynamics-crm-versioning-part-4/)
+
+## Feedback
+
+Please submit any feature requests or issues found to [https://github.com/shanec-/generator-nullfactory-xrm/issues](https://github.com/shanec-/generator-nullfactory-xrm/issues)
+
 ## License
 
 Apache-2.0 © [Shane Carvalho](http://www.nullfactory.net)
