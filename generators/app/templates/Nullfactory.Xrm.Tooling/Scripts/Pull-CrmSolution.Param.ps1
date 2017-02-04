@@ -3,7 +3,7 @@
 
 Write-Host "Attempting to synchronize solution(s)..."
 
-.\Sync-CrmSolution.ps1 `
+.\Pull-CrmSolution.ps1 `
   -serverUrl "<%= crmServerUrl %>" `
   -username (GetUsername "<%= crmSolutionName %>") `
   -password (GetPassword "<%= crmSolutionName %>") `
@@ -13,7 +13,7 @@ Write-Host "Attempting to synchronize solution(s)..."
 
 # Include a new entry for each CRM solution to be synced against a project folder
 
-# .\Sync-CrmSolution.ps1 `
+# .\Pull-CrmSolution.ps1 `
 #   -serverUrl "http://servername/secondary" `
 #   -username (GetUsername "env_secondary_username_key") `
 #   -password (GetPassword "env_secondary_password_key") `

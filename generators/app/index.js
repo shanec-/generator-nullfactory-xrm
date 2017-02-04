@@ -137,18 +137,23 @@ module.exports = yeoman.Base.extend({
     );
 
     this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1')
+    );
+
+    this.fs.copy(
       this.templatePath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1'),
       this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1')
     );
 
     this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.ps1')
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1')
     );
 
     this.fs.copyTpl(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.Param.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.Param.ps1'), {
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'), {
           visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
           crmSolutionName: this.props.crmSolutionName,
           crmServerUrl: this.props.crmServerUrl
@@ -246,12 +251,20 @@ module.exports = yeoman.Base.extend({
   end: function(){
     var postInstallSteps =
       chalk.green.bold('\nSuccessfully generated project structure for ' + this.props.crmSolutionName + '.') +
-      '\n\nFinalize the installation by running the following command in the Visual Studio' + chalk.yellow(' "Package Manager Console"') + ' window.\n\t' +
+      '\n\nFinalize the installation by: \n   1. Running the following command in the Visual Studio' + chalk.yellow(' "Package Manager Console"') + ' window.\n\t' +
       chalk.yellow.bold('Update-Package -reinstall -project "Nullfactory.Xrm.Tooling"') +
-      '\n\n' +
-      'Download and extract the remote CRM solution by executing the ' +
-       chalk.yellow.bold('Sync-CrmSolution-Param.ps1') +
-       ' powershell script.';
+      '\n';
+
+    postInstallSteps += '   2. Download and extracting the remote CRM solution by executing the ' +
+      chalk.yellow.bold('Pull-CrmSolution-Param.ps1') +
+      ' powershell script.';
+
+    if (this.props.isAddPluginProject || this.props.isAddWorkflowProject) {
+      postInstallSteps += '\n   3. Add a strong name key file to the plugin and/or workflow projects.'
+    }
+
+    postInstallSteps += '\n\nPlease submit any issues found to ' + chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues');
+    postInstallSteps += '\nApache-2.0 © Shane Carvalho \n\n'
 
     this.log(postInstallSteps);
   }

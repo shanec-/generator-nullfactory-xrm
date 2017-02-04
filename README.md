@@ -50,7 +50,7 @@ Even if you skip the above step, the sychrnoization powershell script would atte
 
 ## Syncing a Solution to the Project
 
-Anytime the CRM solution needs to be synchronized back to the project, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Sync-CrmSolution.Param.ps1`.
+Anytime the CRM solution needs to be synchronized back to the project, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Pull-CrmSolution.Param.ps1`.
 
 ### Resource Mapping
 

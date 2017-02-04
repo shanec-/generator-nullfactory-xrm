@@ -1,5 +1,5 @@
 ﻿#
-# Sync-CrmSolution.ps1
+# Pull-CrmSolution.ps1
 #
 param(
 	[Parameter(Mandatory=$true)]
