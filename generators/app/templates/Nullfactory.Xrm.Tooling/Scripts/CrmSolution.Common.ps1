@@ -5,7 +5,7 @@ function GetUsername($solutionName)
 
   if($username -eq $null)
   {
-    Write-Host "Please provide the username to access $solutionName. It willl be saved in the [$variableName] user environmental variable." -ForegroundColor Yellow
+    Write-Host "Please provide the username to access $solutionName. It will be saved as [$variableName] user environmental variable." -ForegroundColor Yellow
     $username = Read-Host "Username"
     [environment]::SetEnvironmentVariable($variableName, $username,  "User")
   }

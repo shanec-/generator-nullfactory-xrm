@@ -251,12 +251,20 @@ module.exports = yeoman.Base.extend({
   end: function(){
     var postInstallSteps =
       chalk.green.bold('\nSuccessfully generated project structure for ' + this.props.crmSolutionName + '.') +
-      '\n\nFinalize the installation by running the following command in the Visual Studio' + chalk.yellow(' "Package Manager Console"') + ' window.\n\t' +
+      '\n\nFinalize the installation by: \n   1. Running the following command in the Visual Studio' + chalk.yellow(' "Package Manager Console"') + ' window.\n\t' +
       chalk.yellow.bold('Update-Package -reinstall -project "Nullfactory.Xrm.Tooling"') +
-      '\n\n' +
-      'Download and extract the remote CRM solution by executing the ' +
-       chalk.yellow.bold('Pull-CrmSolution-Param.ps1') +
-       ' powershell script.';
+      '\n';
+
+    postInstallSteps += '   2. Download and extracting the remote CRM solution by executing the ' +
+      chalk.yellow.bold('Pull-CrmSolution-Param.ps1') +
+      ' powershell script.';
+
+    if (this.props.isAddPluginProject || this.props.isAddWorkflowProject) {
+      postInstallSteps += '\n   3. Add a strong name key file to the plugin and/or workflow projects.'
+    }
+
+    postInstallSteps += '\n\nPlease submit any issues found to ' + chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues');
+    postInstallSteps += '\nApache-2.0 © Shane Carvalho \n\n'
 
     this.log(postInstallSteps);
   }
