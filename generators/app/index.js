@@ -147,13 +147,13 @@ module.exports = yeoman.Base.extend({
     );
 
     this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.ps1')
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1')
     );
 
     this.fs.copyTpl(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.Param.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Sync-CrmSolution.Param.ps1'), {
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'), {
           visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
           crmSolutionName: this.props.crmSolutionName,
           crmServerUrl: this.props.crmServerUrl
@@ -255,7 +255,7 @@ module.exports = yeoman.Base.extend({
       chalk.yellow.bold('Update-Package -reinstall -project "Nullfactory.Xrm.Tooling"') +
       '\n\n' +
       'Download and extract the remote CRM solution by executing the ' +
-       chalk.yellow.bold('Sync-CrmSolution-Param.ps1') +
+       chalk.yellow.bold('Pull-CrmSolution-Param.ps1') +
        ' powershell script.';
 
     this.log(postInstallSteps);

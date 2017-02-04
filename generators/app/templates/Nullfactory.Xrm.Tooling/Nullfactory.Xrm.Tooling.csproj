@@ -51,17 +51,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Scripts\ApplyVersionToArtifact.ps1" />
     <None Include="Scripts\Deploy-CrmSolution.Param.ps1" />
     <None Include="Scripts\Deploy-CrmSolution.ps1" />
-    <None Include="Scripts\Sync-CrmSolution.Param.ps1" />
-    <None Include="Scripts\Sync-CrmSolution.ps1" />
+    <None Include="Scripts\Pull-CrmSolution.Param.ps1" />
+    <None Include="Scripts\Pull-CrmSolution.ps1" />
     <None Include="_Install\Install-Microsoft.Xrm.Data.PowerShell.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
