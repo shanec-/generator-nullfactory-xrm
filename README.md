@@ -1,6 +1,8 @@
 # generator-nullfactory-xrm
 > Dynamics CRM Solution Template
 
+[![Build status](https://ci.appveyor.com/api/projects/status/4dmqta7pnueqxa11?svg=true)](https://ci.appveyor.com/project/shanec-/generator-nullfactory-xrm)
+
 A yeoman template for managing [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx)-compatible Dynamics CRM solutions.
 
 ## Installation
