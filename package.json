@@ -39,9 +39,10 @@
     "gulp-nsp": "^2.1.0"
   },
   "eslintConfig": {
-    "extends": "xo-space",
     "env": {
       "mocha": true
+    },
+    "rules": {
     }
   },
   "repository": "shanec-/generator-nullfactory-xrm",
