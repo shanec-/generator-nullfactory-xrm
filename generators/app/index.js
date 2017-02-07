@@ -256,7 +256,7 @@ module.exports = yeoman.Base.extend({
       '\n';
 
     postInstallSteps += '   2. Download and extracting the remote CRM solution by executing the ' +
-      chalk.yellow.bold('Pull-CrmSolution-Param.ps1') +
+      chalk.yellow.bold('Pull-CrmSolution.Param.ps1') +
       ' powershell script.';
 
     if (this.props.isAddPluginProject || this.props.isAddWorkflowProject) {
