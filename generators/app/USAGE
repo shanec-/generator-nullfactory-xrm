@@ -1,0 +1,6 @@
+Description:
+	Creates a basic Dynamics CRM project structure
+
+Subgenerators:
+
+	yo nullfactory-xrm:gitignore [options]
