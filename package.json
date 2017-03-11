@@ -1,6 +1,6 @@
 {
   "name": "generator-nullfactory-xrm",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Dynamics CRM Solution Template",
   "homepage": "http://www.nullfactory.net",
   "author": {
@@ -10,7 +10,7 @@
   },
   "files": [
     "generators/app",
-    "generators/xrmsolution"
+    "generators/gitignore"
   ],
   "main": "generators/index.js",
   "keywords": [
