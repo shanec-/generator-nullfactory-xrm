@@ -50,7 +50,7 @@ else { $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName
 Write-Verbose "Importing the $releaseZipFileName solution into $serverUrl ..."
 Import-CrmSolution `
 	-SolutionFilePath $releaseZipFileName `
-	-PublishChanges $publishChanges `
-	-ActivatePlugIns $activatePlugIns `
-  -ImportAsHoldingSolution $importAsHoldingSolution `
+	-PublishChanges:$publishChanges `
+	-ActivatePlugIns:$activatePlugIns `
+  -ImportAsHoldingSolution:$importAsHoldingSolution `
 	-MaxWaitTimeInSeconds 900
