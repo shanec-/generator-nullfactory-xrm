@@ -51,5 +51,6 @@ Write-Verbose "Importing the $releaseZipFileName solution into $serverUrl ..."
 Import-CrmSolution `
 	-SolutionFilePath $releaseZipFileName `
 	-PublishChanges $publishChanges `
-	-ActivatePlugIns $activatePlugIns
-  -ImportAsHoldingSolution $importAsHoldingSolution
+	-ActivatePlugIns $activatePlugIns `
+  -ImportAsHoldingSolution $importAsHoldingSolution `
+	-MaxWaitTimeInSeconds 900
