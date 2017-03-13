@@ -19,7 +19,7 @@ param(
 	[Parameter(Mandatory=$false)]
 	[switch]$publishChanges,
   [Parameter(Mandatory=$false)]
-  [swtich]$importAsHoldingSolution
+  [switch]$importAsHoldingSolution
 )
 
 if (-Not (Get-Module -ListAvailable -Name Microsoft.Xrm.Data.PowerShell))
