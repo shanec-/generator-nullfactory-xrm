@@ -48,7 +48,7 @@ Optionally, install the [`Microsoft.Xrm.Data.PowerShell`](https://github.com/sea
 Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -Force
 ```
 
-Even if you skip the above step, the sychrnoization powershell script would attempt to install it automatically.
+Even if you skip the above step, the sychrnoization PowerShell script would attempt to install it automatically. The PowerShell scripts are require a minimum of PowerShell 5.0 and Microsoft.Xrm.Data.PowerShell 2.5.
 
 ## Syncing a Solution to the Project
 

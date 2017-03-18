@@ -1,24 +1,35 @@
 ﻿# Importing common functions
 . .\CrmSolution.Common.ps1
 
-Write-Host "Attempting to synchronize solution(s)..."
+# Defaulting to increased verbosity for manual execution
+$oldverbose = $VerbosePreference
+$VerbosePreference = "continue"
 
-.\Pull-CrmSolution.ps1 `
-  -serverUrl "<%= crmServerUrl %>" `
-  -username (GetUsername "<%= crmSolutionName %>") `
-  -password (GetPassword "<%= crmSolutionName %>") `
-  -solutionName "<%= crmSolutionName %>" `
-  -solutionRootFolder "..\..\<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>" `
-  -solutionMapFile "..\..\Nullfactory.Xrm.Tooling\Mappings\<%= crmSolutionName %>-mapping.xml"
+Write-Host "Attempting to pull solution(s)..."
+try
+{
+  .\Pull-CrmSolution.ps1 `
+    -serverUrl "<%= crmServerUrl %>" `
+    -username (GetUsername "<%= crmSolutionName %>") `
+    -password (GetPassword "<%= crmSolutionName %>") `
+    -solutionName "<%= crmSolutionName %>" `
+    -solutionRootFolder "..\..\<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>" `
+    -solutionMapFile "..\..\Nullfactory.Xrm.Tooling\Mappings\<%= crmSolutionName %>-mapping.xml"
 
-# Include a new entry for each CRM solution to be synced against a project folder
+  # Include a new entry for each CRM solution to be synced against a project folder
 
-# .\Pull-CrmSolution.ps1 `
-#   -serverUrl "http://servername/secondary" `
-#   -username (GetUsername "env_secondary_username_key") `
-#   -password (GetPassword "env_secondary_password_key") `
-#   -solutionName "secondary" `
-#   -solutionRootFolder "..\..\Demo.Solutions.Secondary" `
-#   -solutionMapFile "..\..\Nullfactory.Xrm.Tooling\Mappings\secondary-mapping.xml"
+  # .\Pull-CrmSolution.ps1 `
+  #   -serverUrl "http://servername/secondary" `
+  #   -username (GetUsername "env_secondary_username_key") `
+  #   -password (GetPassword "env_secondary_password_key") `
+  #   -solutionName "secondary" `
+  #   -solutionRootFolder "..\..\Demo.Solutions.Secondary" `
+  #   -solutionMapFile "..\..\Nullfactory.Xrm.Tooling\Mappings\secondary-mapping.xml"
 
-Write-Host "Synchronization complete." -ForegroundColor Green
+  Write-Host "Solution pull complete." -ForegroundColor Green
+}
+finally
+{
+	# Reset the verbosity to original level
+	$VerbosePreference = $oldverbose
+}

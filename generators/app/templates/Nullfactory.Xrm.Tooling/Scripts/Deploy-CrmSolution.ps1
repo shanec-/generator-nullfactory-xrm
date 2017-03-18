@@ -13,13 +13,13 @@ param(
 	[Parameter(Mandatory=$false)]
 	[switch]$isOnPremServer,
 	[Parameter(Mandatory=$false)]
-  [switch]$deployManagedSolution,
-  [Parameter(Mandatory=$false)]
-  [switch]$activatePlugIns,
+	[switch]$deployManagedSolution,
+	[Parameter(Mandatory=$false)]
+	[switch]$activatePlugIns,
 	[Parameter(Mandatory=$false)]
 	[switch]$publishChanges,
-  [Parameter(Mandatory=$false)]
-  [switch]$importAsHoldingSolution
+	[Parameter(Mandatory=$false)]
+	[switch]$importAsHoldingSolution
 )
 
 if (-Not (Get-Module -ListAvailable -Name Microsoft.Xrm.Data.PowerShell))
@@ -34,12 +34,18 @@ $creds = New-Object System.Management.Automation.PSCredential ($username, $secur
 if($isOnPremServer)
 {
 	Write-Verbose "Connecting to OnPrem CRM instance $serverUrl ..."
-	Connect-CrmOnPremDiscovery -Credential $creds -ServerUrl $serverUrl
+	$connectionState = Connect-CrmOnPremDiscovery -Credential $creds -ServerUrl $serverUrl
 }
 else
 {
 	Write-Verbose "Connecting to Online CRM instance $serverUrl ..."
-	Connect-CrmOnline -Credential $creds -ServerUrl $serverUrl
+	$connectionState = Connect-CrmOnline -Credential $creds -ServerUrl $serverUrl
+}
+
+# Make sure that the connection was successful, else stop the script.
+if($connectionState.IsReady -eq $false)
+{
+	throw $connectionState.LastCrmError
 }
 
 $releaseZipFileName = "";
@@ -52,5 +58,5 @@ Import-CrmSolution `
 	-SolutionFilePath $releaseZipFileName `
 	-PublishChanges:$publishChanges `
 	-ActivatePlugIns:$activatePlugIns `
-  -ImportAsHoldingSolution:$importAsHoldingSolution `
+	-ImportAsHoldingSolution:$importAsHoldingSolution `
 	-MaxWaitTimeInSeconds 900
