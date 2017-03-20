@@ -1,6 +1,34 @@
-﻿#
-# Pull-CrmSolution.ps1
-#
+﻿<#
+
+	.SYNOPSIS
+		Download a solution from a remote CRM server, extract it to a specified folder location.
+	.DESCRIPTION
+		Download a solution from a remote CRM server, extract it to a specified folder location.
+	.PARAMETER serverUrl
+		Required parameter that specifies the server url of the Dynamics CRM instance.
+	.PARAMETER username
+		Required parameter. The username used to connect to Dynamics CRM.
+	.PARAMETER password
+		Required paramerter. The password of the user used to connect to Dynamics CRM.
+	.PARAMETER solutionName
+		Required paramter. The name of the solution that needs to be downloaded and extracted.
+	.PARAMETER solutionRootFolder
+		Required Parameter. The folder into which the solution will be extracted to.
+	.PARAMETER isOnPremServer
+		This optional switch indicates if the CRM solution is an OnPremises server. Crm Online is the default provider.
+	.PARAMETER solutionMapFile
+		This is an option parameter that specifies the path of the maping file used to be used by SolutionPackager.
+	.EXAMPLE
+		.\Pull-CrmSolution.ps1 -serverUrl "https://sndbx.crm6.dynamics.com" -username "admin@sndx.onmicrosoft.com" -password "P@ssw0rd!" -solutionName "RemoteSolutionName" -solutionRootFolder ".\RemoteSolutionRoot"
+		Download remote solution "RemoteSolutionName" from the "https://sndbx.crm6.dynamics.com" dynamics crm online server and extract it to the "RemoteSolutionRoot" folder.
+	.EXAMPLE
+		.\Pull-CrmSolution.ps1 -serverUrl "https://sndbx.crm6.dynamics.com" -username "admin@sndx.onmicrosoft.com" -password "P@ssw0rd!" -solutionName "RemoteSolutionName" -solutionRootFolder ".\RemoteSolutionRoot" -solutionMapFile ".\RemoteSolutionName-mapping.xml"
+		Download remote solution "RemoteSolutionName" from the "https://sndbx.crm6.dynamics.com" dynamics crm online server and extract it to the "RemoteSolutionRoot" folder using the "RemoteSolutionName-mapping.xml" mapping file.
+	.EXAMPLE
+		.\Pull-CrmSolution.ps1 -serverUrl "https://onpremserver.local/orgname" -username "admin@local" -password "P@ssw0rd!" -solutionName "RemoteSolutionName" -solutionRootFolder ".\RemoteSolutionRoot" -isOnPremServer
+		Download remote solution "RemoteSolutionName" from the "https://onpremserver/orgname" on premises server and extract it to the "RemoteSolutionRoot".
+
+#>
 param(
 	[Parameter(Mandatory=$true)]
 	[string]$serverUrl,
