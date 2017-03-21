@@ -1,21 +1,27 @@
 ﻿<#
 
 	.SYNOPSIS
-		Download a solution from a remote CRM server, extract it to a specified folder location.
+		Download a solution from a remote CRM server and extract to a specified folder location.
 	.DESCRIPTION
-		Download a solution from a remote CRM server, extract it to a specified folder location.
+		This scripts automatically connect to a remote dynamics CRM instance, downloads a specified CRM solution and unpacks it to the specified folder via the Solution Packager tool. Works with both on-premises and online solutions.
+
+    Pre-requisites:
+      - PowerShell V5 or greater
+      - Latest version of Solution Packager tool provided with the CRM SDK.
+      - Micrsoft.Xrm.Data.Powershell 2.4 or greater
+
 	.PARAMETER serverUrl
 		Required parameter that specifies the server url of the Dynamics CRM instance.
 	.PARAMETER username
-		Required parameter. The username used to connect to Dynamics CRM.
+		Mandatory paramater is the username used to connect to Dynamics CRM.
 	.PARAMETER password
-		Required paramerter. The password of the user used to connect to Dynamics CRM.
+		Mandatory paramerter is the password of the user used to connect to Dynamics CRM.
 	.PARAMETER solutionName
 		Required paramter. The name of the solution that needs to be downloaded and extracted.
 	.PARAMETER solutionRootFolder
 		Required Parameter. The folder into which the solution will be extracted to.
 	.PARAMETER isOnPremServer
-		This optional switch indicates if the CRM solution is an OnPremises server. Crm Online is the default provider.
+		This optional switch that tells the script if the server is an OnPremises server. CRM Online is the default provider.
 	.PARAMETER solutionMapFile
 		This is an option parameter that specifies the path of the maping file used to be used by SolutionPackager.
 	.EXAMPLE
