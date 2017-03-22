@@ -1,3 +1,10 @@
+<#
+  .SYNOPSIS
+    Manually deploy the CRM Solutions to the remote CRM servers.
+  .DESCRIPTION
+    Manually deploy the CRm solution to the configured remote CRM servers.
+#>
+
 # Importing common functions
 . .\CrmSolution.Common.ps1
 
@@ -10,8 +17,8 @@ try
 {
   .\Deploy-CrmSolution.ps1 `
     -serverUrl "<%= crmServerUrl %>" `
-    -username (GetUsername "<%= crmSolutionName %>") `
-    -password (GetPassword "<%= crmSolutionName %>") `
+    -username (Get-CrmUsername "<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>") `
+    -password (Get-CrmPassword "<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>") `
     -solutionName "<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>" `
     -publishChanges `
     -activatePlugins

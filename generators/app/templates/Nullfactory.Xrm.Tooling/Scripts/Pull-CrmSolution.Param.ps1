@@ -1,4 +1,11 @@
-﻿# Importing common functions
+﻿<#
+  .SYNOPSIS
+    Manually pull and extract CRM Solutions from remote servers.
+  .DESCRIPTION
+    Manually pull and extract CRM Solutions from configured remote servers.
+#>
+
+# Importing common functions
 . .\CrmSolution.Common.ps1
 
 # Defaulting to increased verbosity for manual execution
@@ -10,8 +17,8 @@ try
 {
   .\Pull-CrmSolution.ps1 `
     -serverUrl "<%= crmServerUrl %>" `
-    -username (GetUsername "<%= crmSolutionName %>") `
-    -password (GetPassword "<%= crmSolutionName %>") `
+    -username (Get-CrmUsername "<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>") `
+    -password (Get-CrmPassword "<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>") `
     -solutionName "<%= crmSolutionName %>" `
     -solutionRootFolder "..\..\<%= visualStudioSolutionProjectPrefix %>.<%= crmSolutionName %>" `
     -solutionMapFile "..\..\Nullfactory.Xrm.Tooling\Mappings\<%= crmSolutionName %>-mapping.xml"
