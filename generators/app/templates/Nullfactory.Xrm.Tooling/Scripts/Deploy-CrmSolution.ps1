@@ -20,14 +20,14 @@
 		Required paramter. The name of the solution that needs to be downloaded and extracted.
 	.PARAMETER isOnPremServer
 		This optional switch tells the script if the server is an OnPremises server. CRM Online is the default provider.
-  .PARAMETER deployManagedSolution
-    This optional switch tells the script that it should deploy the managed version of the solution`. The unmanaged version is selected by default.
-  .PARAMETER activatePlugIns
-    This optional switch tells the script that it should attempt to activate plugins that have been included as part of the solution. Defaults to false.
-  .PARAMETER publishChanges
-    This optional switch tells the script that it should publish changes once deployed. Defaults to false.
-  .PARAMETER importAsHoldingSolution
-    This optional switch tells the script that it should import the solution as a hold solution.
+	.PARAMETER deployManagedSolution
+		This optional switch tells the script that it should deploy the managed version of the solution`. The unmanaged version is selected by default.
+	.PARAMETER activatePlugIns
+		This optional switch tells the script that it should attempt to activate plugins that have been included as part of the solution. Defaults to false.
+	.PARAMETER publishChanges
+		This optional switch tells the script that it should publish changes once deployed. Defaults to false.
+	.PARAMETER importAsHoldingSolution
+		This optional switch tells the script that it should import the solution as a hold solution.
 	.EXAMPLE
 		.\Deploy-CrmSolution.ps1 -serverUrl "https://sndbx.crm6.dynamics.com" -username "admin@sndx.onmicrosoft.com" -password "P@ssw0rd!" -solutionName "RemoteSolutionName"
 		Deploys the unmanaged version of "RemoteSolutionName" to the "https://sndbx.crm6.dynamics.com" dynamics crm online server.
@@ -35,10 +35,14 @@
 		.\Deploy-CrmSolution.ps1 -serverUrl "https://sndbx.crm6.dynamics.com" -username "admin@sndx.onmicrosoft.com" -password "P@ssw0rd!" -solutionName "RemoteSolutionName" -deployManagedSolution -isOnPremServer
 		Deploys the managed version of "RemoteSolutionName" to the "https://sndbx.crm6.dynamics.com" dynamics crm on premises  server and extract it to the "RemoteSolutionRoot" folder using the "RemoteSolutionName-mapping.xml" mapping file.
 	.EXAMPLE
-		.\Deploy-CrmSolution.ps1 -serverUrl "https://sndbx.crm6.dynamics.com" -username "admin@sndx.onmicrosoft.com" -password "P@ssw0rd!" -solutionName "RemoteSolutionName" -activatePlugIns -publishChanges -importAsHoldingSolution
-		Deploys the unmanaged version of "RemoteSolutionName" to the "https://onpremserver/orgname" dynamics crm online server as an holding solution. Once deployed, activate plugins and publish changes.
+		.\Deploy-CrmSolution.ps1 -serverUrl "https://onpremserver/orgname" -username "admin@sndx.onmicrosoft.com" -password "P@ssw0rd!" -solutionName "RemoteSolutionName" -isOnPremServer -activatePlugIns -publishChanges -importAsHoldingSolution
+		Deploys the unmanaged version of "RemoteSolutionName" to the "https://onpremserver/orgname" dynamics crm onprem server as an holding solution. Once deployed, activate plugins and publish changes.
+	.EXAMPLE
+		.\Deploy-CrmSolution.ps1 -serverUrl "https://sndbx.crm6.dynamics.com" -username "admin@sndx.onmicrosoft.com" -password "P@ssw0rd!" -externalSolutionFileName ".\ThirdPartySolution.zip" -activatePlugIns -publishChanges
+		Deploys "ThirdPartySolution.zip" solution to the "https://sndbx.crm6.dynamics.com" dynamics crm online. Once deployed, activate plugins and publish changes.
 
 #>
+[CmdletBinding(DefaultParameterSetName="Internal")]
 param(
 	[Parameter(Mandatory=$true, Position=1)]
 	[string]$serverUrl,
@@ -46,12 +50,14 @@ param(
 	[string]$username,
 	[Parameter(Mandatory=$true, Position=3)]
 	[string]$password,
-	[Parameter(Mandatory=$true, Position=4)]
+	[Parameter(ParameterSetName='Internal',Mandatory=$true, Position=4)]
 	[string]$solutionName,
+	[Parameter(ParameterSetName='Internal')]
+	[switch]$deployManagedSolution,
+	[Parameter(ParameterSetName='External',Mandatory=$true)]
+	[string]$externalSolutionFileName,
 	[Parameter(Mandatory=$false)]
 	[switch]$isOnPremServer,
-	[Parameter(Mandatory=$false)]
-	[switch]$deployManagedSolution,
 	[Parameter(Mandatory=$false)]
 	[switch]$activatePlugIns,
 	[Parameter(Mandatory=$false)]
@@ -88,8 +94,16 @@ if($connectionState.IsReady -eq $false)
 
 $releaseZipFileName = "";
 
-if (-Not $deployManagedSolution){ $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName.zip") }
-else { $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName" + "_managed.zip") }
+# if deploying external third party solution
+if($externalSolutionFileName)
+{
+	$releaseZipFileName = Resolve-Path($externalSolutionFileName)
+}
+else
+{
+	if (-Not $deployManagedSolution){ $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName.zip") }
+	else { $releaseZipFileName = Resolve-Path("..\..\$solutionName\*\*\$solutionName" + "_managed.zip") }
+}
 
 Write-Verbose "Importing the $releaseZipFileName solution into $serverUrl ..."
 Import-CrmSolution `
