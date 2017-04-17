@@ -1,4 +1,19 @@
-function GetUsername($solutionName)
+<#
+  .SYNOPSIS
+    Retrieves the username for the specified CRM solution.
+  .DESCRIPTION
+    Retrieves the username for the specified CRM solution which is stored in a user-environmental variable. If one does not exist, the script would prompt the user for a new username, which is then stored in a new environment variable.
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+		https://nullfactory.net
+	.PARAMETER solutionName
+    The name of the CRM solution.
+  .EXAMPLE
+    $username = Get-CrmUsername("Nullfactory.Solution1")
+#>
+function Get-CrmUsername($solutionName)
 {
   $variableName = "nfac_" + $solutionName + "_username"
   $username = [environment]::GetEnvironmentVariable($variableName, "User")
@@ -12,7 +27,18 @@ function GetUsername($solutionName)
   return $username;
 }
 
-function GetPassword($solutionName)
+<#
+  .SYNOPSIS
+    Retrieves the password for the specified CRM solution.
+  .DESCRIPTION
+    Retrieves the password for the specified CRM solution which is stored in a user-environmental variable. If one does not exist, the script would prompt the user for a new password, which is then stored in a new environment variable.
+    Note that the password is stored as plain-text.
+  .PARAMETER solutionName
+    The name of the CRM solution.
+  .EXAMPLE
+    $username = Get-CrmPassword("Nullfactory.Solution1")
+#>
+function Get-CrmPassword($solutionName)
 {
   $variableName = "nfac_" + $solutionName + "_password"
   $plainTextPassword = [environment]::GetEnvironmentVariable($variableName, "User")

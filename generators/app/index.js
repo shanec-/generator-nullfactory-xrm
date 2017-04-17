@@ -131,9 +131,13 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('Nullfactory.Xrm.Tooling/_Install/Install-Microsoft.Xrm.Data.PowerShell.ps1')
     );
 
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Mappings/solution-mapping.xml'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Mappings/' + this.props.crmSolutionName + '-mapping.xml')
+      this.destinationPath('Nullfactory.Xrm.Tooling/Mappings/' + this.props.crmSolutionName + '-mapping.xml'), {
+        visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
+        isAddPluginProject: this.props.isAddPluginProject,
+        isAddWorkflowProject: this.props.isAddWorkflowProject
+      }
     );
 
     this.fs.copy(

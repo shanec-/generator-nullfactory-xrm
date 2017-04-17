@@ -9,15 +9,11 @@ namespace <%= pluginProjectName %>
         {
             IPluginExecutionContext context =
                 (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
-
             IOrganizationServiceFactory serviceFactory =
                 (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
-
             IOrganizationService organizationService =
                 (IOrganizationService)serviceProvider.GetService(typeof(IOrganizationService));
 
-			
-			
         }
     }
 }

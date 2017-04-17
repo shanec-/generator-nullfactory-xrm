@@ -3,4 +3,12 @@
 <!--   <FileToFile map="PluginAssemblies\**\ProjectXrmPlugins.dll" to="..\Project.Xrm.Plugins\bin\**\Project.Xrm.Plugins.dll" />
   <FileToFile map="WebResources\nf_MyComponent\Images\test_image.jpg" to="..\Project.Solution1.WebResources\MyComponent\Images\test_image.jpg" />
  -->
+
+<% if (isAddPluginProject == true) { %>
+  <FileToFile map="PluginAssemblies\**\<%= visualStudioSolutionProjectPrefix %>XrmPlugins.dll" to="..\<%= visualStudioSolutionProjectPrefix %>.Xrm.Plugins\bin\**\<%= visualStudioSolutionProjectPrefix %>.Xrm.Plugins.dll" />
+<% } %>
+<% if (isAddWorkflowProject == true) { %>
+  <FileToFile map="PluginAssemblies\**\<%= visualStudioSolutionProjectPrefix %>XrmWorkflows.dll" to="..\<%= visualStudioSolutionProjectPrefix %>.Xrm.Workflows\bin\**\<%= visualStudioSolutionProjectPrefix %>.Xrm.Workflows.dll" />
+<% } %>
+
  </Mapping>

@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- generated using generator-nullfactory-xrm@1.4.0 -->
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -30,23 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="bin\coretools\AntiXSSLibrary.dll" />
     <Content Include="bin\coretools\CrmSvcUtil.exe" />
     <Content Include="bin\coretools\CrmSvcUtil.xml" />
     <Content Include="bin\coretools\Microsoft.Crm.Sdk.Proxy.dll" />
     <Content Include="bin\coretools\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
     <Content Include="bin\coretools\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll" />
-    <Content Include="bin\coretools\Microsoft.IdentityModel.dll" />
-    <Content Include="bin\coretools\Microsoft.Xrm.Client.CodeGeneration.dll" />
-    <Content Include="bin\coretools\Microsoft.Xrm.Client.dll" />
-    <Content Include="bin\coretools\Microsoft.Xrm.Portal.dll" />
     <Content Include="bin\coretools\Microsoft.Xrm.Sdk.Deployment.dll" />
     <Content Include="bin\coretools\Microsoft.Xrm.Sdk.dll" />
     <Content Include="bin\coretools\Microsoft.Xrm.Tooling.Connector.dll" />
     <Content Include="bin\coretools\Microsoft.Xrm.Tooling.CrmConnectControl.dll" />
     <Content Include="bin\coretools\Other Redistributable.txt" />
     <Content Include="bin\coretools\SolutionPackager.exe" />
-    <Content Include="bin\coretools\WebsiteCopy.exe" />
     <Content Include="Mappings\<%= crmSolutionName %>-mapping.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +51,7 @@
     <None Include="Scripts\Deploy-CrmSolution.ps1" />
     <None Include="Scripts\Pull-CrmSolution.Param.ps1" />
     <None Include="Scripts\Pull-CrmSolution.ps1" />
+    <None Include="Scripts\CrmSolution.Common.ps1" />
     <None Include="_Install\Install-Microsoft.Xrm.Data.PowerShell.ps1" />
   </ItemGroup>
   <ItemGroup>

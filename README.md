@@ -1,9 +1,11 @@
 # generator-nullfactory-xrm
-> Dynamics CRM Solution Template
+> Scaffolding Template for Dynamics CRM/365 Solutions
 
 [![Build status](https://ci.appveyor.com/api/projects/status/4dmqta7pnueqxa11?svg=true)](https://ci.appveyor.com/project/shanec-/generator-nullfactory-xrm)
 
-A yeoman template for managing [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx)-compatible Dynamics CRM solutions.
+A yeoman tempate for scaffolding [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx)-compatible Dynamics CRM (365) solution structure.
+
+The generated project structure is built around the Solution Packager provided in the official SDK and the [Microsoft.Xrm.Data.PowerShell](https://github.com/seanmcne/Microsoft.Xrm.Data.PowerShell) module. It facilitates the quick creation of team builds and release strategies with minimal effort and enables you to maintain a single source of truth for you CRM solutions.
 
 ## Installation
 
@@ -48,7 +50,7 @@ Optionally, install the [`Microsoft.Xrm.Data.PowerShell`](https://github.com/sea
 Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -Force
 ```
 
-Even if you skip the above step, the sychrnoization powershell script would attempt to install it automatically.
+Even if you skip the above step, the sychrnoization PowerShell script would attempt to install it automatically. The PowerShell scripts require a minimum of PowerShell 5.0 and Microsoft.Xrm.Data.PowerShell 2.5.
 
 ## Syncing a Solution to the Project
 
@@ -71,6 +73,7 @@ More information on source control management, setting up continuous integration
 - [Release Strategy for Dynamics CRM - Part 2 - Setting Up the Build](http://www.nullfactory.net/2016/11/release-strategy-for-dynamics-crm-setting-up-the-build-part-2/)
 - [Release Strategy for Dynamics CRM - Part 3 - Setting Up the Release](http://www.nullfactory.net/2016/11/release-strategy-for-dynamics-crm-setting-up-the-release-part-3/)
 - [Release Strategy for Dynamics CRM - Part 4 - Versioning](http://www.nullfactory.net/2017/02/release-strategy-for-dynamics-crm-versioning-part-4/)
+- [Release Strategy for Dynamics CRM - Part 5 - Deploy Third-Party Solutions](http://www.nullfactory.net/2017/04/release-strategy-for-dynamics-crm-deploying-third-party-solutions-part-5/)
 
 ## Feedback
 
