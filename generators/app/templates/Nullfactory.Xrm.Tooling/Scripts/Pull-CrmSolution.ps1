@@ -10,6 +10,11 @@
       - Latest version of Solution Packager tool provided with the CRM SDK.
       - Micrsoft.Xrm.Data.Powershell 2.4 or greater
 
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+		https://nullfactory.net
 	.PARAMETER serverUrl
 		Required parameter that specifies the server url of the Dynamics CRM instance.
 	.PARAMETER username

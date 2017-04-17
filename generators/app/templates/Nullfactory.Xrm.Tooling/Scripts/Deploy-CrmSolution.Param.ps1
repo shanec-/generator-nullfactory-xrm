@@ -2,7 +2,12 @@
   .SYNOPSIS
     Manually deploy the CRM Solutions to the remote CRM servers.
   .DESCRIPTION
-    Manually deploy the CRm solution to the configured remote CRM servers.
+    Manually deploy the CRM solution to the configured remote CRM servers.
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+		https://nullfactory.net
 #>
 
 # Importing common functions

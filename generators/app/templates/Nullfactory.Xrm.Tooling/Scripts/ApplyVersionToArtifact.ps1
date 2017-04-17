@@ -3,7 +3,12 @@
     Recursively finds a list of files and uses a pattern to match and replace matches with a specified version number.
   .DESCRIPTION
     Recursively finds a list of files within a folder and uses a regular expression pattern to match and replace it with a specified version number.
-  .PARAMETER BuildSourcePath
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+		https://nullfactory.net
+	.PARAMETER BuildSourcePath
     The root folder to search.
   .PARAMETER versionFile
     The pattern of file to be searched.

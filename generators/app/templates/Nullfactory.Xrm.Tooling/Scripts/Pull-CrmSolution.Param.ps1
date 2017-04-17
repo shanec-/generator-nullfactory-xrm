@@ -3,6 +3,11 @@
     Manually pull and extract CRM Solutions from remote servers.
   .DESCRIPTION
     Manually pull and extract CRM Solutions from configured remote servers.
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+		https://nullfactory.net
 #>
 
 # Importing common functions
