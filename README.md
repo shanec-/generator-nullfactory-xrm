@@ -2,6 +2,7 @@
 > Scaffolding Template for Dynamics CRM/365 Solutions
 
 [![Build status](https://ci.appveyor.com/api/projects/status/4dmqta7pnueqxa11?svg=true)](https://ci.appveyor.com/project/shanec-/generator-nullfactory-xrm)
+[![npm version](https://badge.fury.io/js/generator-nullfactory-xrm.svg)](https://badge.fury.io/js/generator-nullfactory-xrm)
 
 A yeoman tempate for scaffolding [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx)-compatible Dynamics CRM (365) solution structure.
 
