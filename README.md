@@ -1,10 +1,10 @@
 # generator-nullfactory-xrm
-> Scaffolding Template for Dynamics CRM/365 Solutions
+> Dynamics CRM / 365 Project Structure Generator
 
 [![Build status](https://ci.appveyor.com/api/projects/status/4dmqta7pnueqxa11?svg=true)](https://ci.appveyor.com/project/shanec-/generator-nullfactory-xrm)
 [![npm version](https://badge.fury.io/js/generator-nullfactory-xrm.svg)](https://badge.fury.io/js/generator-nullfactory-xrm)
 
-A yeoman tempate for scaffolding [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx)-compatible Dynamics CRM (365) solution structure.
+A yeoman tempate for scaffolding [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx)-compatible Dynamics CRM/365 project structure.
 
 The generated project structure is built around the Solution Packager provided in the official SDK and the [Microsoft.Xrm.Data.PowerShell](https://github.com/seanmcne/Microsoft.Xrm.Data.PowerShell) module. It facilitates the quick creation of team builds and release strategies with minimal effort and enables you to maintain a single source of truth for you CRM solutions.
 
@@ -82,4 +82,4 @@ Please submit any feature requests or issues found to [https://github.com/shanec
 
 ## License
 
-Apache-2.0 © [Shane Carvalho](http://www.nullfactory.net)
+GPL-3.0 © [Shane Carvalho](http://www.nullfactory.net)

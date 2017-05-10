@@ -7,7 +7,7 @@ module.exports = yeoman.Base.extend({
   prompting: function () {
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to ' + chalk.red('nullfactory-xrm') + '\n The Dynamics CRM project structure generator!'
+      'Welcome to ' + chalk.red('nullfactory-xrm') + '\n The Dynamics CRM/365 Project Structure Generator!'
     ));
 
     var prompts = [{
@@ -268,7 +268,7 @@ module.exports = yeoman.Base.extend({
     }
 
     postInstallSteps += '\n\nPlease submit any issues found to ' + chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues');
-    postInstallSteps += '\nApache-2.0 © Shane Carvalho \n\n';
+    postInstallSteps += '\nGPL-3.0 © Shane Carvalho \n\n';
 
     this.log(postInstallSteps);
   }
