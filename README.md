@@ -53,9 +53,9 @@ Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -Force
 
 Even if you skip the above step, the sychrnoization PowerShell script would attempt to install it automatically. The PowerShell scripts require a minimum of PowerShell 5.0 and Microsoft.Xrm.Data.PowerShell 2.5.
 
-## Syncing a Solution to the Project
+## Pull CRM Solution into the Project Structure
 
-Anytime the CRM solution needs to be synchronized back to the project, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Pull-CrmSolution.Param.ps1`.
+Anytime the CRM solution needs to be pulled down into the project structure, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Pull-CrmSolution.Param.ps1`.
 
 ### Resource Mapping
 
@@ -81,5 +81,5 @@ More information on source control management, setting up continuous integration
 Please submit any feature requests or issues found to [https://github.com/shanec-/generator-nullfactory-xrm/issues](https://github.com/shanec-/generator-nullfactory-xrm/issues)
 
 ## License
-
-GPL-3.0 © [Shane Carvalho](http://www.nullfactory.net)
+Copyright © [Shane Carvalho](http://www.nullfactory.net). 
+Licensed under the GPL-3.0 License.
