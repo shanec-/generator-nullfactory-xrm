@@ -97,6 +97,16 @@ module.exports = yeoman.Base.extend({
         isAddWorkflowProject: this.props.isAddWorkflowProject
       }
     );
+
+    this.fs.copyTpl(
+      this.templatePath('README.md'),
+      this.destinationPath('README.md'), {
+        crmSolutionName: this.props.crmSolutionName,
+        visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
+        visualStudioSolutionName: this.props.visualStudioSolutionName,
+        crmServerUrl: this.props.crmServerUrl
+      }
+    );
   },
 
   // crm solution
