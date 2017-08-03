@@ -8,14 +8,10 @@ namespace <%= workflowProjectName %>
     {
         protected override void Execute(CodeActivityContext executionContext)
         {
-            IWorkflowContext context = executionContext.GetExtension<IWorkflowContext>();
-            IOrganizationServiceFactory serviceFactory =
-                executionContext.GetExtension<IOrganizationServiceFactory>();
-            IOrganizationService organizationService =
-                serviceFactory.CreateOrganizationService(context.UserId);
-            ITracingService tracingService =
-                executionContext.GetExtension<ITracingService>();
-
+            var workflowContext = context.GetExtension<IWorkflowContext>();
+            var tracingService = context.GetExtension<ITracingService>();
+            var serviceFactory = context.GetExtension<IOrganizationServiceFactory>();
+            var organizationService = serviceFactory.CreateOrganizationService(workflowContext.UserId);
 
         }
     }
