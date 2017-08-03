@@ -53,6 +53,14 @@ Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -Force
 
 Even if you skip the above step, the sychrnoization PowerShell script would attempt to install it automatically. The PowerShell scripts require a minimum of PowerShell 5.0 and Microsoft.Xrm.Data.PowerShell 2.5.
 
+### Install Customised .gitignore
+
+Run the following command to install a customised version of the gitignore file. This file is structured to include the binaries within the `Nullfactory.Xrm.Tooling\bin\coretools` folder.  
+
+```
+yo nullfactory-xrm:gitignore
+```
+
 ## Pull the CRM Solution into the Project Structure
 
 Anytime the CRM solution needs to be pulled down into the project structure, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Pull-CrmSolution.Param.ps1`.
