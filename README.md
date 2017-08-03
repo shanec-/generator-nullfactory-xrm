@@ -55,7 +55,7 @@ Even if you skip the above step, the sychrnoization PowerShell script would atte
 
 ### Install Customised .gitignore
 
-Run the following command to install a customised version of the gitignore file. This file is structured to include the binaries within the `Nullfactory.Xrm.Tooling\bin\coretools` folder.  
+If the underlying repository is git, run the following command to install a customised version of the gitignore file. This file is structured to include the binaries within the `Nullfactory.Xrm.Tooling\bin\coretools` folder.  
 
 ```
 yo nullfactory-xrm:gitignore
