@@ -1,0 +1,6 @@
+Description:
+	Creates a Dynamics 365 solution structure only
+
+Subgenerators:
+
+	yo nullfactory-xrm:solution [options]

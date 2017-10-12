@@ -10,7 +10,8 @@
   },
   "files": [
     "generators/app",
-    "generators/gitignore"
+    "generators/gitignore",
+	"generators/solution"
   ],
   "main": "generators/index.js",
   "keywords": [
