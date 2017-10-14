@@ -1,6 +1,8 @@
 Description:
-	Creates a Dynamics 365 solution structure only
+	Creates the csproj file for Dynamics 365 solution
 
-Subgenerators:
+Example:
+	yo nullfactory-xrm:solution
 
-	yo nullfactory-xrm:solution [options]
+	This will create:
+		csproj file customized for the solution. 
