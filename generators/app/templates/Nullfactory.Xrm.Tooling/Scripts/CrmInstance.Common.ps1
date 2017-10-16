@@ -52,3 +52,39 @@ function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceBackupLabe
 
     return $instance.Id;
 }
+
+
+function Wait-CrmOperation ($apiUrl, $credentials, $operationId)
+{
+    Write-Host "Waiting for operation completion..."
+    
+    $timeout = new-timespan -Minutes 5
+    $sw = [diagnostics.stopwatch]::StartNew()
+    while ($sw.elapsed -lt $timeout)
+    {
+        $opStatus = Get-CrmOperationStatus -apiUrl $apiUrl -Credential $credentials -Id $operationId
+
+        $timeStamp = (Get-Date).ToShortTimeString()
+        $statusString = $opStatus.Status;
+        
+        Write-Host "[$timeStamp]: $statusString"
+    
+        # determinate statuses
+        if($opStatus.Status -eq "Succeeded")
+        {
+            Write-Host "Operation completed successfully!" -ForegroundColor Green
+            exit 0
+        }
+        elseif(@("FailedToCreate", "Failed", "Cancelling", "Cancelled", "Aborting", "Aborted", "Tombstone", "Deleting", "Deleted") -contains $opStatus)
+        {
+            throw "Operation failed";
+        }
+        # indeterminate statuses
+        elseif(@("None", "NotStarted", "Ready", "Pending", "Running") -contains $opStatus)
+        {
+            Write-Verbose "Indeterminate status."
+        }
+    
+        start-sleep -Seconds 60
+    }
+}

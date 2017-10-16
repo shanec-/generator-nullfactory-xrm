@@ -50,8 +50,15 @@ if (-Not $backupId)
     $backupId = Get-CrmInstanceBackupByLabel $apiUrl $creds $backupLabel
 }
 
-Restore-CrmInstance -ApiUrl $apiUrl `
+$restoreJob = Restore-CrmInstance -ApiUrl $apiUrl `
     -Credential $creds `
     -BackupId $backupId `
     -SourceInstanceId $sourceInstanceId `
     -TargetInstanceId $targetInstanceId
+
+$restoreOperationId = $restoreJob.OperationId 
+$restoreOperationStatus = $restoreJob.Status
+    
+Write-Host "OperationId: $restoreOperationId Status: $restoreOperationStatus"
+    
+Wait-CrmOperation $apiUrl $creds $restoreOperationId
