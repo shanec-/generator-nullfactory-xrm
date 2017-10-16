@@ -34,8 +34,21 @@ function Get-CrmInstanceByName($apiUrl, $credentials, $friendlyName, $uniqueName
     }
     else
     {
-        throw "Unable to resolve CRM instance Id."
+        throw "Unable to resolve unique CRM instance identifier."
     }
+
+    return $instance.Id;
+}
+
+
+function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceBackupLabel)
+{
+    if(-Not $instanceBackupLabel)
+    {
+        throw "Unable to resolve unique instance backup identifier";
+    }
+
+    $instance = Get-CrmInstanceBackups -ApiUrl $apiUrl | ? {$_.Label -eq $instanceBackupLabel } | Select-Object -first 1
 
     return $instance.Id;
 }
