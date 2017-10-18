@@ -62,3 +62,6 @@ $restoreOperationStatus = $restoreJob.Status
 Write-Host "OperationId: $restoreOperationId Status: $restoreOperationStatus"
     
 Wait-CrmOperation $apiUrl $creds $restoreOperationId
+
+Write-Host "Restore operation timed out."
+exit 1

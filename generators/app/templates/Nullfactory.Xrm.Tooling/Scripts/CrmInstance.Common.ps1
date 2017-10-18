@@ -45,7 +45,7 @@ function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceBackupLabe
 {
     if(-Not $instanceBackupLabel)
     {
-        throw "Unable to resolve unique instance backup identifier";
+        throw "Unable to resolve unique instance backup identifier.";
     }
 
     $instance = Get-CrmInstanceBackups -ApiUrl $apiUrl | ? {$_.Label -eq $instanceBackupLabel } | Select-Object -first 1
@@ -53,6 +53,18 @@ function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceBackupLabe
     return $instance.Id;
 }
 
+
+function  Get-CrmServiceVersionByName($apiUrl, $credentials, $serviceVersionName)
+{
+    if(-Not $serviceVersionName)
+    {
+        throw new "Unable to resolve unique service version identifier.";
+    }
+
+    $serviceVersion = Get-CrmServiceVersions | ? {$_.Name -eq $serviceVersionName } | Select-Object -first 1
+
+    return $serviceVersion.Id;
+}
 
 function Wait-CrmOperation ($apiUrl, $credentials, $operationId)
 {
