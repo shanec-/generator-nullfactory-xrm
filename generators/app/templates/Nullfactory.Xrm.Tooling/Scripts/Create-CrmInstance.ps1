@@ -17,19 +17,16 @@ param(
     [string]$username,
     [Parameter(Mandatory = $true, Position = 3)]
     [string]$password,
-    [guid]$instanceId,
     [string]$friendlyName,
     [string]$domainName,
     [string]$initialUserEmail,
     [guid]$serviceVersionId,
     [string]$serviceVersionName,
     [ValidateSet('None', 'Production', 'Sandbox', 'Support', 'Preview', 'Trial')] 
-    [string]$instanceType,
-    [int]$baseLanguage,
-    [string]$templateNames,
-
+    [string]$instanceType = 'Sandbox',
+    [int]$baseLanguage = 1033,
+    [string]$templateNames
 )
-
 # Import common functions
 . .\CrmInstance.Common.ps1
 
@@ -42,31 +39,24 @@ $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
 $creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
 
 # retrieve the service versionId here
-if($serviceVersionId)
+if(-Not $serviceVersionId)
 {
     $serviceVersionId = Get-CrmServiceVersionByName $apiUrl $creds $serviceVersionName
 }
 
-$newInstanceInfo = 
-    New-CrmInstanceInfo -BaseLanguage $baseLanguage `
-        -DomainName $domainName `
-        -InitialUserEmail $initialUserEmail `
-        -ServiceVersionId $serviceVersionId `
-        -InstanceType $instanceType ` 
-        -FriendlyName $friendlyName 
+$newInstanceInfo = New-CrmInstanceInfo -BaseLanguage $baseLanguage -DomainName $domainName -InitialUserEmail $initialUserEmail -ServiceVersionId $serviceVersionId -InstanceType $instanceType -FriendlyName $friendlyName
         #[-TemplateList
 #<List[string]>] [-Purpose <string>] [-SecurityGroupId <guid>] [-CurrencyCode <string>] [-CurrencyName <string>]
 #[-CurrencyPrecision <int>] [-CurrencySymbol <string>]  [<CommonParameters>]
 
+$newInstanceJob = New-CrmInstance -ApiUr $apiUrl -Credential $creds -NewInstanceInfo $newInstanceInfo
 
-$newInstanceJob = New-CrmInstance 
-
-$OperationId = $newInstanceJob.OperationId 
+$operationId = $newInstanceJob.OperationId 
 $operationStatus = $newInstanceJob.Status
 
-Write-Host "OperationId: $backupOperationId Status: $backupOperationStatus"
+Write-Host "OperationId: $operationId Status: $operationStatus"
 
-Wait-CrmOperation $apiUrl $creds $backupOperationId
+Wait-CrmOperation $apiUrl $creds $operationId
  
 Write-Host "Creation of a new instance timed out."
 exit 1

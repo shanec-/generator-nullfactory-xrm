@@ -48,7 +48,7 @@ function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceBackupLabe
         throw "Unable to resolve unique instance backup identifier.";
     }
 
-    $instance = Get-CrmInstanceBackups -ApiUrl $apiUrl | ? {$_.Label -eq $instanceBackupLabel } | Select-Object -first 1
+    $instance = Get-CrmInstanceBackups -ApiUrl $apiUrl | ? {$_.Label -eq $instanceBackupLabel } | Select-Object -First 1
 
     return $instance.Id;
 }
@@ -58,12 +58,22 @@ function  Get-CrmServiceVersionByName($apiUrl, $credentials, $serviceVersionName
 {
     if(-Not $serviceVersionName)
     {
-        throw new "Unable to resolve unique service version identifier.";
+        Write-Verbose "Service version name not provided. Attempting to select first service version..."
+        # todo: figure out why inline select-object behaves differently
+        $svs = Get-CrmServiceVersions -ApiUrl $apiUrl -Credential $credentials 
+        $serviceVersion = $svs | Select-Object -First 1
+    }
+    else
+    {
+        Write-Verbose "Attempting resolve service version by name $serviceVersionName"
+        $serviceVersion = Get-CrmServiceVersions -ApiUrl $apiUrl -Credential $credentials | ? {$_.Name -eq $serviceVersionName } | Select-Object -First 1
     }
 
-    $serviceVersion = Get-CrmServiceVersions | ? {$_.Name -eq $serviceVersionName } | Select-Object -first 1
+    $serviceVersionId = $serviceVersion.Id;
+    
+    Write-Verbose "ServiceVersionId: $serviceVersionId"
 
-    return $serviceVersion.Id;
+    return $serviceVersionId;
 }
 
 function Wait-CrmOperation ($apiUrl, $credentials, $operationId)
