@@ -21,10 +21,16 @@ param(
     [string]$uniqueName
 )
 
+# Importing common functions
+. .\CrmInstance.Common.ps1
+
 if (-Not (Get-Module -ListAvailable -Name Microsoft.Xrm.OnlineManagementAPI)) {
     Write-Verbose "Initializing Microsoft.Xrm.OnlineManagementAPI module ..."
     Install-Module -Name Microsoft.Xrm.OnlineManagementAPI -Scope CurrentUser -ErrorAction SilentlyContinue -Force
 }
+
+$securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
 
 # if an instance id is not provided then attempt to use the aliases
 if(-Not $instanceId)
