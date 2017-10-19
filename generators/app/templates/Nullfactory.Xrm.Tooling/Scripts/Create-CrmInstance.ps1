@@ -25,7 +25,7 @@ param(
     [ValidateSet('None', 'Production', 'Sandbox', 'Support', 'Preview', 'Trial')] 
     [string]$instanceType = 'Sandbox',
     [int]$baseLanguage = 1033,
-    [string]$templateNames
+    [System.Array]$templatesList
 )
 # Import common functions
 . .\CrmInstance.Common.ps1
@@ -44,7 +44,9 @@ if(-Not $serviceVersionId)
     $serviceVersionId = Get-CrmServiceVersionByName $apiUrl $creds $serviceVersionName
 }
 
-$newInstanceInfo = New-CrmInstanceInfo -BaseLanguage $baseLanguage -DomainName $domainName -InitialUserEmail $initialUserEmail -ServiceVersionId $serviceVersionId -InstanceType $instanceType -FriendlyName $friendlyName
+#$testTemplateList = @("D365_Sales", "D365_CustomerService", "D365_FieldService", "D365_ProjectServiceAutomation")
+
+$newInstanceInfo = New-CrmInstanceInfo -BaseLanguage $baseLanguage -DomainName $domainName -InitialUserEmail $initialUserEmail -ServiceVersionId $serviceVersionId -InstanceType $instanceType -FriendlyName $friendlyName -TemplateList $templatesList
         #[-TemplateList
 #<List[string]>] [-Purpose <string>] [-SecurityGroupId <guid>] [-CurrencyCode <string>] [-CurrencyName <string>]
 #[-CurrencyPrecision <int>] [-CurrencySymbol <string>]  [<CommonParameters>]

@@ -40,6 +40,12 @@ function Get-CrmInstanceByName($apiUrl, $credentials, $friendlyName, $uniqueName
     return $instance.Id;
 }
 
+function Get-AvailableCrmTemplates($apiUrl, $credentials)
+{
+    $crmTemplates = Get-CrmTemplates -ApiUrl $apiUrl -Credential $credentials
+
+    return $crmTemplates
+}
 
 function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceBackupLabel)
 {
@@ -78,6 +84,12 @@ function  Get-CrmServiceVersionByName($apiUrl, $credentials, $serviceVersionName
 
 function Wait-CrmOperation ($apiUrl, $credentials, $operationId)
 {
+    if($operationId -eq "00000000-0000-0000-0000-000000000000")
+    {
+        Write-Verbose "Invalid operationId, exiting."
+        exit 0
+    }
+
     Write-Host "Waiting for operation completion..."
     
     $timeout = new-timespan -Minutes 5
