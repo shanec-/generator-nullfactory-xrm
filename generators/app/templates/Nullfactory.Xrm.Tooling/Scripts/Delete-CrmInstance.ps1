@@ -25,11 +25,6 @@ param(
 . .\CrmInstance.Common.ps1
 Init-OmapiModule $username $password
 
-if (-Not (Get-Module -ListAvailable -Name Microsoft.Xrm.OnlineManagementAPI)) {
-    Write-Verbose "Initializing Microsoft.Xrm.OnlineManagementAPI module ..."
-    Install-Module -Name Microsoft.Xrm.OnlineManagementAPI -Scope CurrentUser -ErrorAction SilentlyContinue -Force
-}
-
 # if an instance id is not provided then attempt to use the aliases
 if(-Not $instanceId)
 {
