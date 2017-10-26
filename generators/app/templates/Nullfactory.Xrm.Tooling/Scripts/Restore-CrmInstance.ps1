@@ -1,3 +1,38 @@
+<#
+  .SYNOPSIS
+    Restore a backup from a source instance to a destination instance.
+  .DESCRIPTION
+    Restore a backup from a source instance to a destination instance using one of the unique identifiers or friendly names.
+  .NOTES
+    Author: Shane Carvalho
+    Version: generator-nullfactory-xrm@1.4.0
+  .LINK
+    https://nullfactory.net
+  .PARAMETER apiUrl
+    The service api url.
+  .PARAMETER username
+    The username used to connect to the service API.
+  .PARAMETER password
+    The password used to connect.
+  .PARAMETER sourceInstanceId
+    The unique identifier for the source instance.
+  .PARAMETER sourceInstanceFriendlyName
+    The unique friendly name for the source instance.
+  .PARAMETER sourceInstanceUniqueName
+    The unique name for the source instance.
+  .PARAMETER targetInstanceId
+    The unique identifier for the target instance.
+  .PARAMETER targetInstanceFriendlyName
+    The unique friendly name for the target instance.
+  .PARAMETER targetInstanceUniqueName
+    The unique name for the target instance.
+  .PARAMETER backupId
+    The unique identigier for the backup.
+  .PARAMETER backupLabel
+    The label for the backup.
+  .EXAMPLE
+    
+#>
 [CmdletBinding(DefaultParameterSetName = "Internal")]
 param(
     [Parameter(Mandatory = $true, Position = 1)]
@@ -23,16 +58,12 @@ param(
     [string]$targetInstanceFriendlyName,
     [string]$targetInstanceUniqueName,
     [guid]$backupId,
-    [string]$backupLabel,
+    [string]$backupLabel
 )
 
 # Importing common functions
 . .\CrmInstance.Common.ps1
-
-if (-Not (Get-Module -ListAvailable -Name Microsoft.Xrm.OnlineManagementAPI)) {
-    Write-Verbose "Initializing Microsoft.Xrm.OnlineManagementAPI module ..."
-    Install-Module -Name Microsoft.Xrm.OnlineManagementAPI -Scope CurrentUser -ErrorAction SilentlyContinue -Force
-}
+Init-OmapiModule $username $password
 
 # if an instance id is not provided then attempt to use the aliases provided
 if(-Not $sourceInstanceId)
@@ -40,24 +71,30 @@ if(-Not $sourceInstanceId)
     $sourceInstanceId = Get-CrmInstanceByName $apiUrl $creds $sourceInstanceFriendlyName $sourceInstanceUniqueName
 }
 
+Write-Verbose "SourceInstanceId resolved: $sourceInstanceId"
+
 if (-Not $targetInstanceId)
 {
     $targetInstanceId = Get-CrmInstanceByName $apiUrl $creds $targetInstanceFriendlyName $targetInstanceUniqueName
 }
+
+Write-Verbose "TargetInstanceId resolved: $targetInstanceId"
 
 if (-Not $backupId)
 {
     $backupId = Get-CrmInstanceBackupByLabel $apiUrl $creds $backupLabel
 }
 
-$restoreJob = Restore-CrmInstance -ApiUrl $apiUrl `
-    -Credential $creds `
-    -BackupId $backupId `
-    -SourceInstanceId $sourceInstanceId `
-    -TargetInstanceId $targetInstanceId
+Write-Verbose "BackupId resolved: $backupId"
 
-$restoreOperationId = $restoreJob.OperationId 
-$restoreOperationStatus = $restoreJob.Status
+# $restoreJob = Restore-CrmInstance -ApiUrl $apiUrl `
+#     -Credential $creds `
+#     -BackupId $backupId `
+#     -SourceInstanceId $sourceInstanceId `
+#     -TargetInstanceId $targetInstanceId
+
+# $restoreOperationId = $restoreJob.OperationId 
+# $restoreOperationStatus = $restoreJob.Status
     
 Write-Host "OperationId: $restoreOperationId Status: $restoreOperationStatus"
     
