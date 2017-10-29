@@ -16,15 +16,15 @@
     The password used to connect.
   .PARAMETER sourceInstanceId
     The unique identifier for the source instance.
-  .PARAMETER sourceInstanceFriendlyName
+  .PARAMETER sourceFriendlyName
     The unique friendly name for the source instance.
-  .PARAMETER sourceInstanceUniqueName
+  .PARAMETER sourceUniqueName
     The unique name for the source instance.
   .PARAMETER targetInstanceId
     The unique identifier for the target instance.
-  .PARAMETER targetInstanceFriendlyName
+  .PARAMETER targetFriendlyName
     The unique friendly name for the target instance.
-  .PARAMETER targetInstanceUniqueName
+  .PARAMETER targetUniqueName
     The unique name for the target instance.
   .PARAMETER backupId
     The unique identigier for the backup.
@@ -52,11 +52,11 @@ param(
     [Parameter(Mandatory = $true, Position = 3)]
     [string]$password,
     [guid]$sourceInstanceId,
-    [string]$sourceInstanceFriendlyName,
-    [string]$sourceInstanceUniqueName,
+    [string]$sourceFriendlyName,
+    [string]$sourceUniqueName,
     [guid]$targetInstanceId,
-    [string]$targetInstanceFriendlyName,
-    [string]$targetInstanceUniqueName,
+    [string]$targetFriendlyName,
+    [string]$targetUniqueName,
     [guid]$backupId,
     [string]$backupLabel
 )
@@ -68,33 +68,33 @@ Init-OmapiModule $username $password
 # if an instance id is not provided then attempt to use the aliases provided
 if(-Not $sourceInstanceId)
 {
-    $sourceInstanceId = Get-CrmInstanceByName $apiUrl $creds $sourceInstanceFriendlyName $sourceInstanceUniqueName
+    $sourceInstanceId = Get-CrmInstanceByName $apiUrl $creds $sourceFriendlyName $sourceUniqueName
 }
 
 Write-Verbose "SourceInstanceId resolved: $sourceInstanceId"
 
 if (-Not $targetInstanceId)
 {
-    $targetInstanceId = Get-CrmInstanceByName $apiUrl $creds $targetInstanceFriendlyName $targetInstanceUniqueName
+    $targetInstanceId = Get-CrmInstanceByName $apiUrl $creds $targetFriendlyName $targetUniqueName
 }
 
 Write-Verbose "TargetInstanceId resolved: $targetInstanceId"
 
 if (-Not $backupId)
 {
-    $backupId = Get-CrmInstanceBackupByLabel $apiUrl $creds $backupLabel
+    $backupId = Get-CrmInstanceBackupByLabel $apiUrl $creds $sourceInstanceId $backupLabel
 }
 
 Write-Verbose "BackupId resolved: $backupId"
 
-# $restoreJob = Restore-CrmInstance -ApiUrl $apiUrl `
-#     -Credential $creds `
-#     -BackupId $backupId `
-#     -SourceInstanceId $sourceInstanceId `
-#     -TargetInstanceId $targetInstanceId
+$restoreJob = Restore-CrmInstance -ApiUrl $apiUrl `
+    -Credential $creds `
+    -BackupId $backupId `
+    -SourceInstanceId $sourceInstanceId `
+    -TargetInstanceId $targetInstanceId
 
-# $restoreOperationId = $restoreJob.OperationId 
-# $restoreOperationStatus = $restoreJob.Status
+$restoreOperationId = $restoreJob.OperationId 
+$restoreOperationStatus = $restoreJob.Status
     
 Write-Host "OperationId: $restoreOperationId Status: $restoreOperationStatus"
     

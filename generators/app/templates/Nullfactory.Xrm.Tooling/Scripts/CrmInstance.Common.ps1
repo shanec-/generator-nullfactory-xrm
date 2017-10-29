@@ -61,16 +61,34 @@ function Get-AvailableCrmTemplates($apiUrl, $credentials)
     return $crmTemplates
 }
 
-function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceBackupLabel)
+function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceId, $backupLabel)
 {
-    if(-Not $instanceBackupLabel)
+    if(-Not $backupLabel)
     {
         throw "Unable to resolve unique instance backup identifier.";
     }
 
-    $instance = Get-CrmInstanceBackups -ApiUrl $apiUrl | ? {$_.Label -eq $instanceBackupLabel } | Select-Object -First 1
+    #$backups = Get-CrmInstanceBackups -ApiUrl $apiUrl -Credential $credentials -InstanceId $instanceId  | ? {$_.Label -eq $backupLabel } 
+    #$backup = $backups | Select-Object -First 1
+    
 
-    return $instance.Id;
+    $backups = Get-CrmInstanceBackups -ApiUrl $apiUrl -Credential $credentials -InstanceId $instanceId
+    $backup = $backups | ? {$_.Label -eq $backupLabel } | Select-Object -First 1
+    # Write-Host $backup
+
+
+    # Get-Member -InputObject $backup
+
+    # $backupId = $backup.Label;
+
+    # Write-Host $backupId.Type
+    # Write-Host $backupId.Length
+    # $backupId = $backup.Label.Trim();
+    # Write-Host $backupId.Length
+
+    # Write-Host "bk: zzz$backupId zzz"
+    # exit
+    return $backup.Id
 }
 
 
