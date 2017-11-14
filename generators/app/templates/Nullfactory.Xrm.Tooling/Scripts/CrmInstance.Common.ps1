@@ -54,6 +54,13 @@ function Get-CrmInstanceByName($apiUrl, $credentials, $friendlyName, $uniqueName
     return $instance.Id;
 }
 
+
+function Get-AvailableCrmInstances($apiUrl, $credentials)
+{
+    $instances = Get-CrmInstances -ApiUrl $apiUrl -Credential $credentials
+    return $instances;
+}
+
 function Get-AvailableCrmTemplates($apiUrl, $credentials)
 {
     $crmTemplates = Get-CrmTemplates -ApiUrl $apiUrl -Credential $credentials
@@ -130,6 +137,8 @@ function Wait-CrmOperation ($apiUrl, $credentials, $operationId)
     {
         $opStatus = Get-CrmOperationStatus -apiUrl $apiUrl -Credential $credentials -Id $operationId
 
+        Write-Host $opStatus
+
         $timeStamp = (Get-Date).ToShortTimeString()
         $statusString = $opStatus.Status;
         
@@ -141,12 +150,14 @@ function Wait-CrmOperation ($apiUrl, $credentials, $operationId)
             Write-Host "Operation completed successfully!" -ForegroundColor Green
             exit 0
         }
-        elseif(@("FailedToCreate", "Failed", "Cancelling", "Cancelled", "Aborting", "Aborted", "Tombstone", "Deleting", "Deleted") -contains $opStatus)
+        elseif(@("FailedToCreate", "Failed", "Cancelling", "Cancelled", "Aborting", "Aborted", "Tombstone", "Deleting", "Deleted") -contains $statusString)
         {
-            throw "Operation failed";
+            $failReasons = $opStatus.ItemDescription | ? { $_.Subject }
+            $failReason = $failReasons -Join ','
+            throw "Operation failed. $failReason";
         }
         # indeterminate statuses
-        elseif(@("None", "NotStarted", "Ready", "Pending", "Running") -contains $opStatus)
+        elseif(@("None", "NotStarted", "Ready", "Pending", "Running") -contains $statusString)
         {
             Write-Verbose "Indeterminate status."
         }
