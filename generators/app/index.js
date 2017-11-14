@@ -156,8 +156,43 @@ module.exports = yeoman.Base.extend({
     );
 
     this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Backup-CrmInstance.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Backup-CrmInstance.ps1')
+    );
+
+    this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Create-CrmInstance.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Create-CrmInstance.ps1')
+    );
+
+    this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/CrmInstance.Common.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/CrmInstance.Common.ps1')
+    );
+
+    this.fs.copy(
       this.templatePath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1'),
       this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1')
+    );
+
+    this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Delete-CrmInstance.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Delete-CrmInstance.ps1')
+    );
+
+    this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Get-AvailableCrmInstances.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Get-AvailableCrmInstances.ps1')
+    );
+
+    this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Get-AvailableCrmTemplates.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Get-AvailableCrmTemplates.ps1')
+    );
+
+    this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Restore-CrmInstance.ps1'),
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Restore-CrmInstance.ps1')
     );
 
     this.fs.copy(
