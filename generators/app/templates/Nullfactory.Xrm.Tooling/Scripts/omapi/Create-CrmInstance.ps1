@@ -1,8 +1,42 @@
-
+<#
+  .SYNOPSIS
+		Provision a Dynamics 365 Customer Engagement Instance.
+  .DESCRIPTION
+    Provision a new Dynamics 365 Customer Engagement instance in the Office 365 tenant.
+  .NOTES
+    Author: Shane Carvalho
+    Version: generator-nullfactory-xrm@1.4.0
+  .LINK
+    https://nullfactory.net
+  .PARAMETER apiUrl
+    The service api url.
+  .PARAMETER username
+    The username used to connect to the service API.
+  .PARAMETER password
+    The password used to connect.
+  .PARAMETER friendlyName
+    The unique friendly name for the instance.
+  .PARAMETER domainName
+    The doman name for the instance.
+	.PARAMETER initialUserEmail
+		The initial user email address.
+	.PARAMETER serviceVersionId
+		The Version Id of the CRM Service. If one is not provided, the first available version will be used.
+	.PARAMETER serviceVersionName
+		The Service Version Name.
+	.PARAMETER instanceType
+		The type of the instance.
+	.PARAMETER baseLanguage
+		The base language code for the instance.
+	.PARAMETER templatesList
+		The templates to be used with this instance.
+  .EXAMPLE
+		.\Delete-CrmInstance.ps1 -apiUrl "https://admin.services.crm6.dynamics.com" -username "admin@myinstance.onmicrosoft.com" -password "P@ssw0rd!" -friendlyname "SuperInstance"
+#>
 [CmdletBinding(DefaultParameterSetName = "Internal")]
 param(
     [Parameter(Mandatory = $true, Position = 1)]
-    [ValidateSet('https://admin.services.crm.dynamics.com', 
+    [ValidateSet('https://admin.services.crm.dynamics.com',
         'https://admin.services.crm9.dynamics.com',
         'https://admin.services.crm4.dynamics.com',
         'https://admin.services.crm5.dynamics.com',
@@ -22,14 +56,14 @@ param(
     [string]$initialUserEmail,
     [guid]$serviceVersionId,
     [string]$serviceVersionName,
-    [ValidateSet('None', 'Production', 'Sandbox', 'Support', 'Preview', 'Trial')] 
+    [ValidateSet('None', 'Production', 'Sandbox', 'Support', 'Preview', 'Trial')]
     [string]$instanceType = 'Sandbox',
     [int]$baseLanguage = 1033,
     [System.Array]$templatesList
 )
 # Import common functions
 . .\CrmInstance.Common.ps1
-Init-OmapiModule $username $password
+$creds = Init-OmapiModule $username $password
 
 # retrieve the service versionId here
 if(-Not $serviceVersionId)
@@ -37,21 +71,17 @@ if(-Not $serviceVersionId)
     $serviceVersionId = Get-CrmServiceVersionByName $apiUrl $creds $serviceVersionName
 }
 
-#$testTemplateList = @("D365_Sales", "D365_CustomerService", "D365_FieldService", "D365_ProjectServiceAutomation")
-
 $newInstanceInfo = New-CrmInstanceInfo -BaseLanguage $baseLanguage -DomainName $domainName -InitialUserEmail $initialUserEmail -ServiceVersionId $serviceVersionId -InstanceType $instanceType -FriendlyName $friendlyName -TemplateList $templatesList
-        #[-TemplateList
-#<List[string]>] [-Purpose <string>] [-SecurityGroupId <guid>] [-CurrencyCode <string>] [-CurrencyName <string>]
-#[-CurrencyPrecision <int>] [-CurrencySymbol <string>]  [<CommonParameters>]
-
 $newInstanceJob = New-CrmInstance -ApiUr $apiUrl -Credential $creds -NewInstanceInfo $newInstanceInfo
 
-$operationId = $newInstanceJob.OperationId 
+Get-Member -inputobject $newInstanceJob
+
+$operationId = $newInstanceJob.OperationId
 $operationStatus = $newInstanceJob.Status
 
-Write-Host "OperationId: $operationId Status: $operationStatus"
+Write-Verbose "OperationId: $operationId Status: $operationStatus"
 
 Wait-CrmOperation $apiUrl $creds $operationId
- 
+
 Write-Host "Creation of a new instance timed out."
 exit 1

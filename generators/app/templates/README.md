@@ -5,14 +5,14 @@ CRM Server Url: [<%= crmServerUrl %>](<%= crmServerUrl %>)
 
 ## Getting Started
 
-Ensure that the `Nullfactory.Xrm.Tooling` project has the nuget packages are refreshed by running the following command. 
+Ensure that the NuGet packages in the `Nullfactory.Xrm.Tooling` project are refreshed by running the following command:
 ```
 Update-Package -reinstall -Project Nullfactory.Xrm.Tooling
 ```
 
 ### Pull the CRM Solution into the Project Structure
 
-Anytime the CRM solution needs to be pulled down into the project structure, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Pull-CrmSolution.Param.ps1`.
+When the CRM solution needs to be pulled down into the project structure, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Pull-CrmSolution.Param.ps1`.
 
 On the first attempt, the scripts would ask the user for the credentials to connect to the remote CRM server. The username and password used will be saved in the `nfac_<%= crmSolutionName %>_username` and `nfac_<%= crmSolutionName %>_password` user environmental variables respectively. 
 

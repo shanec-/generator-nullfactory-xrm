@@ -1,6 +1,3 @@
-
-$global:creds = $null;
-
 function Init-OmapiModule($username, $password)
 {
     if (-Not (Get-Module -ListAvailable -Name Microsoft.Xrm.OnlineManagementAPI)) {
@@ -9,34 +6,34 @@ function Init-OmapiModule($username, $password)
     }
 
     $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
-    $global:creds  = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
+    return $creds  = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
 }
 
 <#
-    .SYNOPSIS
-        Retrieves the unique identifier of a CRM instance.
-    .DESCRIPTION
-        Retrieves the unique identifier of a CRM instance using its friendly or unique name. If one does not exist, an error is thrown.
-    .NOTES
+	.SYNOPSIS
+			Retrieves the unique identifier of a CRM instance.
+	.DESCRIPTION
+			Retrieves the unique identifier of a CRM instance using its friendly or unique name. If one does not exist, an error is thrown.
+	.NOTES
 		Author: Shane Carvalho
 		Version: generator-nullfactory-xrm@1.4.0
 	.LINK
 		https://nullfactory.net
 	.PARAMETER apiUrl
-        The API service url for the tenant.
-    .PARAMETER credentials
-        The credentials used to access the API Service.
-    .PARAMETER friendlyName
-        The friendly name of the CRM instance.
-    .PARAMETER uniqueName
-        The unique name of the CRM Instance.
-    .EXAMPLE
-        $creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
-        $instanceId = Get-CrmInstanceByName("https://admin.services.crm6.dynamics.com",  $creds "SuperFriendlyName", "")
+		The API service url for the tenant.
+	.PARAMETER credentials
+		The credentials used to access the API Service.
+	.PARAMETER friendlyName
+		The friendly name of the CRM instance.
+	.PARAMETER uniqueName
+		The unique name of the CRM Instance.
+	.EXAMPLE
+		$creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
+		$instanceId = Get-CrmInstanceByName("https://admin.services.crm6.dynamics.com",  $creds "SuperFriendlyName", "")
 #>
 function Get-CrmInstanceByName($apiUrl, $credentials, $friendlyName, $uniqueName)
 {
-    if ($friendlyName) 
+    if ($friendlyName)
     {
         # retrieve instance using friendly name
         $instance = Get-CrmInstances -ApiUrl $apiUrl -Credential $credentials | ? {$_.FriendlyName -eq $friendlyName }
@@ -75,26 +72,9 @@ function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceId, $backu
         throw "Unable to resolve unique instance backup identifier.";
     }
 
-    #$backups = Get-CrmInstanceBackups -ApiUrl $apiUrl -Credential $credentials -InstanceId $instanceId  | ? {$_.Label -eq $backupLabel } 
-    #$backup = $backups | Select-Object -First 1
-    
-
     $backups = Get-CrmInstanceBackups -ApiUrl $apiUrl -Credential $credentials -InstanceId $instanceId
     $backup = $backups | ? {$_.Label -eq $backupLabel } | Select-Object -First 1
-    # Write-Host $backup
 
-
-    # Get-Member -InputObject $backup
-
-    # $backupId = $backup.Label;
-
-    # Write-Host $backupId.Type
-    # Write-Host $backupId.Length
-    # $backupId = $backup.Label.Trim();
-    # Write-Host $backupId.Length
-
-    # Write-Host "bk: zzz$backupId zzz"
-    # exit
     return $backup.Id
 }
 
@@ -105,7 +85,7 @@ function  Get-CrmServiceVersionByName($apiUrl, $credentials, $serviceVersionName
     {
         Write-Verbose "Service version name not provided. Attempting to select first service version..."
         # todo: figure out why inline select-object behaves differently
-        $svs = Get-CrmServiceVersions -ApiUrl $apiUrl -Credential $credentials 
+        $svs = Get-CrmServiceVersions -ApiUrl $apiUrl -Credential $credentials
         $serviceVersion = $svs | Select-Object -First 1
     }
     else
@@ -115,13 +95,23 @@ function  Get-CrmServiceVersionByName($apiUrl, $credentials, $serviceVersionName
     }
 
     $serviceVersionId = $serviceVersion.Id;
-    
+
     Write-Verbose "ServiceVersionId: $serviceVersionId"
 
     return $serviceVersionId;
 }
 
-function Wait-CrmOperation ($apiUrl, $credentials, $operationId)
+function Wait-CrmOperation (
+	[parameter(Mandatory=$true,ParameterSetName = "OperationId")]
+	[parameter(Mandatory=$true,ParameterSetName = "Operation")]
+	[string]$apiUrl,
+	[parameter(Mandatory=$true,ParameterSetName = "OperationId")]
+	[parameter(Mandatory=$true,ParameterSetName = "Operation")]
+	[System.Management.Automation.PSCredential]$credentials,
+	[parameter(Mandatory=$true,ParameterSetName = "OperationId")]
+	[guid]$operationId,
+	[parameter(Mandatory=$true,ParameterSetName = "Operation")]
+  [Microsoft.Xrm.Services.Admin.Client.Models.OperationStatus]$operation)
 {
     if($operationId -eq "00000000-0000-0000-0000-000000000000")
     {
@@ -130,20 +120,18 @@ function Wait-CrmOperation ($apiUrl, $credentials, $operationId)
     }
 
     Write-Host "Waiting for operation completion..."
-    
+
     $timeout = new-timespan -Minutes 5
     $sw = [diagnostics.stopwatch]::StartNew()
     while ($sw.elapsed -lt $timeout)
     {
         $opStatus = Get-CrmOperationStatus -apiUrl $apiUrl -Credential $credentials -Id $operationId
 
-        Write-Host $opStatus
-
         $timeStamp = (Get-Date).ToShortTimeString()
         $statusString = $opStatus.Status;
-        
+
         Write-Host "[$timeStamp]: $statusString"
-    
+
         # determinate statuses
         if($opStatus.Status -eq "Succeeded")
         {
@@ -161,7 +149,7 @@ function Wait-CrmOperation ($apiUrl, $credentials, $operationId)
         {
             Write-Verbose "Indeterminate status."
         }
-    
+
         start-sleep -Seconds 60
     }
 }

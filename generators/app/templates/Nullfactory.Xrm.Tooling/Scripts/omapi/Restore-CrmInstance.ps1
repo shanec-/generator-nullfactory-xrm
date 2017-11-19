@@ -1,42 +1,42 @@
 <#
-  .SYNOPSIS
-    Restore a backup from a source instance to a destination instance.
-  .DESCRIPTION
-    Restore a backup from a source instance to a destination instance using one of the unique identifiers or friendly names.
-  .NOTES
-    Author: Shane Carvalho
-    Version: generator-nullfactory-xrm@1.4.0
-  .LINK
-    https://nullfactory.net
-  .PARAMETER apiUrl
-    The service api url.
-  .PARAMETER username
-    The username used to connect to the service API.
-  .PARAMETER password
-    The password used to connect.
-  .PARAMETER sourceInstanceId
-    The unique identifier for the source instance.
-  .PARAMETER sourceFriendlyName
-    The unique friendly name for the source instance.
-  .PARAMETER sourceUniqueName
-    The unique name for the source instance.
-  .PARAMETER targetInstanceId
-    The unique identifier for the target instance.
-  .PARAMETER targetFriendlyName
-    The unique friendly name for the target instance.
-  .PARAMETER targetUniqueName
-    The unique name for the target instance.
-  .PARAMETER backupId
-    The unique identigier for the backup.
-  .PARAMETER backupLabel
-    The label for the backup.
-  .EXAMPLE
-    
+	.SYNOPSIS
+		Restore a backup from a source instance to a destination instance.
+	.DESCRIPTION
+		Restore a backup from a source instance to a destination instance using one of the unique identifiers or friendly names.
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+		https://nullfactory.net
+	.PARAMETER apiUrl
+		The service api url.
+	.PARAMETER username
+		The username used to connect to the service API.
+	.PARAMETER password
+		The password used to connect.
+	.PARAMETER sourceInstanceId
+		The unique identifier for the source instance.
+	.PARAMETER sourceFriendlyName
+		The unique friendly name for the source instance.
+	.PARAMETER sourceUniqueName
+		The unique name for the source instance.
+	.PARAMETER targetInstanceId
+		The unique identifier for the target instance.
+	.PARAMETER targetFriendlyName
+		The unique friendly name for the target instance.
+	.PARAMETER targetUniqueName
+		The unique name for the target instance.
+	.PARAMETER backupId
+		The unique identigier for the backup.
+	.PARAMETER backupLabel
+		The label for the backup.
+	.EXAMPLE
+
 #>
 [CmdletBinding(DefaultParameterSetName = "Internal")]
 param(
     [Parameter(Mandatory = $true, Position = 1)]
-    [ValidateSet('https://admin.services.crm.dynamics.com', 
+    [ValidateSet('https://admin.services.crm.dynamics.com',
         'https://admin.services.crm9.dynamics.com',
         'https://admin.services.crm4.dynamics.com',
         'https://admin.services.crm5.dynamics.com',
@@ -71,14 +71,14 @@ if(-Not $sourceInstanceId)
     $sourceInstanceId = Get-CrmInstanceByName $apiUrl $creds $sourceFriendlyName $sourceUniqueName
 }
 
-Write-Verbose "SourceInstanceId resolved: $sourceInstanceId"
+Write-Verbose "Resolved SourceInstanceId: $sourceInstanceId"
 
 if (-Not $targetInstanceId)
 {
     $targetInstanceId = Get-CrmInstanceByName $apiUrl $creds $targetFriendlyName $targetUniqueName
 }
 
-Write-Verbose "TargetInstanceId resolved: $targetInstanceId"
+Write-Verbose "Resolved TargetInstanceId: $targetInstanceId"
 
 if (-Not $backupId)
 {
@@ -93,11 +93,11 @@ $restoreJob = Restore-CrmInstance -ApiUrl $apiUrl `
     -SourceInstanceId $sourceInstanceId `
     -TargetInstanceId $targetInstanceId
 
-$restoreOperationId = $restoreJob.OperationId 
+$restoreOperationId = $restoreJob.OperationId
 $restoreOperationStatus = $restoreJob.Status
-    
+
 Write-Host "OperationId: $restoreOperationId Status: $restoreOperationStatus"
-    
+
 Wait-CrmOperation $apiUrl $creds $restoreOperationId
 
 Write-Host "Restore operation timed out."
