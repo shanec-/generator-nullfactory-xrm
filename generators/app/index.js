@@ -124,21 +124,39 @@ module.exports = yeoman.Base.extend({
 
   // tooling project
   _writeToolingProject: function () {
+
+    var staticFiles = [
+      'Nullfactory.Xrm.Tooling/packages.config',
+      'Nullfactory.Xrm.Tooling/_Install/Install-Microsoft.Xrm.Data.PowerShell.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Backup-CrmInstance.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Create-CrmInstance.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/CrmInstance.Common.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Delete-CrmInstance.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Get-AvailableCrmInstances.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Get-AvailableCrmTemplates.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Restore-CrmInstance.ps1',
+    ];
+
+    // process static files that do no need parameters
+    for(var i =0; i < staticFiles.length; i++)
+    {
+      var element = staticFiles[i];
+      // this.log(element);
+      this.fs.copy(
+        this.templatePath(element),
+        this.destinationPath(element)
+      );
+    }
+    
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'),
       this.destinationPath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'), {
         crmSolutionName: this.props.crmSolutionName
       }
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/packages.config'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/packages.config')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/_Install/Install-Microsoft.Xrm.Data.PowerShell.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/_Install/Install-Microsoft.Xrm.Data.PowerShell.ps1')
     );
 
     this.fs.copyTpl(
@@ -150,56 +168,6 @@ module.exports = yeoman.Base.extend({
       }
     );
 
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Backup-CrmInstance.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Backup-CrmInstance.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Create-CrmInstance.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Create-CrmInstance.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/CrmInstance.Common.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/CrmInstance.Common.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Delete-CrmInstance.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Delete-CrmInstance.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Get-AvailableCrmInstances.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Get-AvailableCrmInstances.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Get-AvailableCrmTemplates.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Get-AvailableCrmTemplates.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Restore-CrmInstance.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Restore-CrmInstance.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1')
-    );
-
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'),
       this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'), {
@@ -207,11 +175,6 @@ module.exports = yeoman.Base.extend({
         crmSolutionName: this.props.crmSolutionName,
         crmServerUrl: this.props.crmServerUrl
       }
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.ps1')
     );
 
     this.fs.copyTpl(
