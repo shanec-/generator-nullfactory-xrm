@@ -50,7 +50,7 @@ param(
 
 # Importing common functions
 . .\CrmInstance.Common.ps1
-Init-OmapiModule $username $password
+$creds = Init-OmapiModule $username $password
 
 # if an instance id is not provided then attempt to use the aliases
 if(-Not $instanceId)

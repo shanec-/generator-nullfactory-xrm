@@ -1,7 +1,7 @@
 [CmdletBinding(DefaultParameterSetName = "Internal")]
 param(
     [Parameter(Mandatory = $true, Position = 1)]
-    [ValidateSet('https://admin.services.crm.dynamics.com', 
+    [ValidateSet('https://admin.services.crm.dynamics.com',
         'https://admin.services.crm9.dynamics.com',
         'https://admin.services.crm4.dynamics.com',
         'https://admin.services.crm5.dynamics.com',
@@ -20,7 +20,7 @@ param(
 
 # Import common functions
 . .\CrmInstance.Common.ps1
-Init-OmapiModule $username $password
+$creds = Init-OmapiModule $username $password
 
 Get-CrmInstances -ApiUrl $apiUrl -Credential $creds -Verbose
 $templates | Format-List
