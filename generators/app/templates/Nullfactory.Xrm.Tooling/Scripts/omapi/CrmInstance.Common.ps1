@@ -43,9 +43,10 @@ function Get-CrmInstanceByName($apiUrl, $credentials, $friendlyName, $uniqueName
         # retrieve instance using the unique name
         $instance = Get-CrmInstances -ApiUrl $apiUrl -Credential $credentials | ? {$_.UniqueName -eq $uniqueName }
     }
-    else
+
+		if(-Not $instance)
     {
-        throw "Unable to resolve unique CRM instance identifier."
+        throw "Unable to resolve unique instance."
     }
 
     return $instance.Id;

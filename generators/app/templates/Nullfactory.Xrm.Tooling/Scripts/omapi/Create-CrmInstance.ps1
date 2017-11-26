@@ -31,7 +31,7 @@
 	.PARAMETER templatesList
 		The templates to be used with this instance.
   .EXAMPLE
-		.\Delete-CrmInstance.ps1 -apiUrl "https://admin.services.crm6.dynamics.com" -username "admin@myinstance.onmicrosoft.com" -password "P@ssw0rd!" -friendlyname "SuperInstance"
+		.\Create-CrmInstance.ps1 -apiUrl "https://admin.services.crm6.dynamics.com" -username "admin@myinstance.onmicrosoft.com" -password "P@ssw0rd!" -friendlyname "SuperInstance"
 #>
 [CmdletBinding(DefaultParameterSetName = "Internal")]
 param(

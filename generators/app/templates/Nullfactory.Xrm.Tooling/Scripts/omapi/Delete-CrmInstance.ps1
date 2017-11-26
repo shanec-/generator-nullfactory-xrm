@@ -55,7 +55,7 @@ $creds = Init-OmapiModule $username $password
 # if an instance id is not provided then attempt to use the aliases
 if(-Not $instanceId)
 {
-    $instanceId = Get-CrmInstanceByName $apiUrl $creds $friendlyName $uniqueName
+    $instanceId = Get-CrmInstanceByName $apiUrl $creds $friendlyName $uniqueName -ErrorAction Stop
 }
 
 Write-Verbose "Resolved InstanceId: $instanceId"
@@ -63,16 +63,6 @@ Write-Verbose "Resolved InstanceId: $instanceId"
 $deleteJob = Remove-CrmInstance -ApiUrl $apiUrl -Credential $creds -Id $instanceId
 
 Wait-CrmOperation -apiUrl $apiUrl -Credentials $creds -sourceOperation $deleteJob
-
-
-# Write-Host $deleteJob.Errors[0].Subject
-# #Get-Member -InputObject $deleteJob.Errors[0].Subject | Format-List
-
-# $deleteOperationId = $deleteJob.OperationId
-# $deleteOperationStatus = $deleteJob.Status
-
-# Write-Host "OperationId: $deleteOperationId Status: $deleteOperationStatus"
-
 
 Write-Host "Delete instance operation timed out."
 exit 1
