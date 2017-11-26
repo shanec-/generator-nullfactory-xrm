@@ -74,11 +74,6 @@ if(-Not $serviceVersionId)
 $newInstanceInfo = New-CrmInstanceInfo -BaseLanguage $baseLanguage -DomainName $domainName -InitialUserEmail $initialUserEmail -ServiceVersionId $serviceVersionId -InstanceType $instanceType -FriendlyName $friendlyName -TemplateList $templatesList
 $newInstanceJob = New-CrmInstance -ApiUr $apiUrl -Credential $creds -NewInstanceInfo $newInstanceInfo
 
-# Get-Member -inputobject $newInstanceJob
-
-# $operationId = $newInstanceJob.OperationId
-# $operationStatus = $newInstanceJob.Status
-
 Write-Verbose "OperationId: $operationId Status: $operationStatus"
 
 Wait-CrmOperation -apiUrl $apiUrl -credentials $creds -operation $newInstanceJob

@@ -101,6 +101,13 @@ function  Get-CrmServiceVersionByName($apiUrl, $credentials, $serviceVersionName
     return $serviceVersionId;
 }
 
+function simpleFunction ($value)
+{
+    if(-Not $value)
+    {
+        Write-Host "yay!"
+    }
+}
 function Wait-CrmOperation (
 	[parameter(Mandatory=$true,ParameterSetName = "OperationId")]
 	[parameter(Mandatory=$true,ParameterSetName = "Operation")]
@@ -111,8 +118,36 @@ function Wait-CrmOperation (
 	[parameter(Mandatory=$true,ParameterSetName = "OperationId")]
 	[guid]$operationId,
 	[parameter(Mandatory=$true,ParameterSetName = "Operation")]
-  [Microsoft.Xrm.Services.Admin.Client.Models.OperationStatus]$operation)
+    $sourceOperation)
 {
+    # ensure that the intial status is not a failure
+    # if the initial status is a failure then GetOperation functionality would not work
+    if($sourceOperation)
+    {
+        $statusString = $sourceOperation.Status
+        $operationId = $sourceOperation.OperationId
+
+        Write-Verbose "Status $statusString"
+
+        if($statusString -eq "Succeeded")
+        {
+            $sourceOperation.Information | foreach { Write-Host $_.Subject - $_.Description }
+            Write-Host "Operation completed successfully!" -ForegroundColor Green
+            exit 0
+        }
+        elseif(@("FailedToCreate", "Failed", "Cancelling", "Cancelled", "Aborting", "Aborted", "Tombstone", "Deleting", "Deleted") -contains $statusString)
+        {
+            $sourceOperation.Errors | foreach { Write-Host $_.Subject - $_.Description }
+            throw "Operation failed.";
+        }
+        # indeterminate statuses
+        elseif(@("None", "NotStarted", "Ready", "Pending", "Running") -contains $statusString)
+        {
+            Write-Verbose "Indeterminate status."
+        }
+    }
+
+    # verify
     if($operationId -eq "00000000-0000-0000-0000-000000000000")
     {
         Write-Verbose "Invalid operationId, exiting."
@@ -135,13 +170,13 @@ function Wait-CrmOperation (
         # determinate statuses
         if($opStatus.Status -eq "Succeeded")
         {
+            $sourceOperation.Information | foreach { Write-Host $_.Subject - $_.Description }
             Write-Host "Operation completed successfully!" -ForegroundColor Green
             exit 0
         }
         elseif(@("FailedToCreate", "Failed", "Cancelling", "Cancelled", "Aborting", "Aborted", "Tombstone", "Deleting", "Deleted") -contains $statusString)
         {
-            $failReasons = $opStatus.ItemDescription | ? { $_.Subject }
-            $failReason = $failReasons -Join ','
+            $sourceOperation.Errors | foreach { Write-Host $_.Subject - $_.Description }
             throw "Operation failed. $failReason";
         }
         # indeterminate statuses
@@ -150,6 +185,7 @@ function Wait-CrmOperation (
             Write-Verbose "Indeterminate status."
         }
 
+        # poll the service every 60 seconds
         start-sleep -Seconds 60
     }
 }

@@ -62,14 +62,17 @@ Write-Verbose "Resolved InstanceId: $instanceId"
 
 $deleteJob = Remove-CrmInstance -ApiUrl $apiUrl -Credential $creds -Id $instanceId
 
-$deleteOperationId = $deleteJob.OperationId
-$deleteOperationStatus = $deleteJob.Status
+Wait-CrmOperation -apiUrl $apiUrl -Credentials $creds -sourceOperation $deleteJob
 
-Write-Host "OperationId: $deleteOperationId Status: $deleteOperationStatus"
 
-Wait-CrmOperation $apiUrl $creds $deleteOperationId
+# Write-Host $deleteJob.Errors[0].Subject
+# #Get-Member -InputObject $deleteJob.Errors[0].Subject | Format-List
+
+# $deleteOperationId = $deleteJob.OperationId
+# $deleteOperationStatus = $deleteJob.Status
+
+# Write-Host "OperationId: $deleteOperationId Status: $deleteOperationStatus"
+
 
 Write-Host "Delete instance operation timed out."
 exit 1
-
-
