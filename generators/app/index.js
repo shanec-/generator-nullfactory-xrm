@@ -126,6 +126,7 @@ module.exports = yeoman.Base.extend({
   _writeToolingProject: function () {
 
     var staticFiles = [
+      '_RunFirst.ps1',
       'Nullfactory.Xrm.Tooling/packages.config',
       'Nullfactory.Xrm.Tooling/_Install/Install-Microsoft.Xrm.Data.PowerShell.ps1',
       'Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1',
@@ -263,13 +264,11 @@ module.exports = yeoman.Base.extend({
   end: function () {
     var postInstallSteps =
       chalk.green.bold('\nSuccessfully generated project structure for ' + this.props.crmSolutionName + '.') +
-      '\n\nFinalize the installation by: \n   1. Running the following command in the Visual Studio' + chalk.yellow(' "Package Manager Console"') + ' window.\n\t' +
-      chalk.yellow.bold('Update-Package -reinstall -project "Nullfactory.Xrm.Tooling"') +
-      '\n';
+      '\n\nFinalize the installation by: \n   1. Execute the ' + chalk.yellow(' "_RunFirst.ps1"') + ' powershell script located in the root folder.\n';
 
     postInstallSteps += '   2. Download and extracting the remote CRM solution by executing the ' +
-      chalk.yellow.bold('Pull-CrmSolution.Param.ps1') +
-      ' powershell script.';
+      chalk.yellow.bold('Pull-CrmSolution.Param.ps1') + ' powershell script' +
+      '\n      located in the Nullfactory.Xrm.Tooling\\Scripts folder.';
 
     if (this.props.isAddPluginProject || this.props.isAddWorkflowProject) {
       postInstallSteps += '\n   3. Add a strong name key file to the plugin and/or workflow projects.';
