@@ -47,6 +47,7 @@ param(
     [string]$friendlyName,
     [string]$uniqueName
 )
+$ErrorActionPreference = "Stop"
 
 # Importing common functions
 . .\CrmInstance.Common.ps1

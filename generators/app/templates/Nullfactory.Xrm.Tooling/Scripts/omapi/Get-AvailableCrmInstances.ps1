@@ -1,3 +1,22 @@
+<#
+    .SYNOPSIS
+        Retrieve a list of Dynamics 365 Customer Engagement Instances.
+    .DESCRIPTION
+        Retrieve a list of Dynamics 365 Customer Engagement instances in the Office 365 tenant.
+    .NOTES
+        Author: Shane Carvalho
+        Version: generator-nullfactory-xrm@1.4.0
+    .LINK
+        https://nullfactory.net
+    .PARAMETER apiUrl
+        The service api url.
+    .PARAMETER username
+        The username used to connect to the service API.
+    .PARAMETER password
+        The password used to connect.
+    .EXAMPLE
+        .\Get-AvailableCrmInstances.ps1 -apiUrl "https://admin.services.crm6.dynamics.com" -username "admin@myinstance.onmicrosoft.com" -password "P@ssw0rd!"
+#>
 [CmdletBinding(DefaultParameterSetName = "Internal")]
 param(
     [Parameter(Mandatory = $true, Position = 1)]
@@ -17,10 +36,10 @@ param(
     [Parameter(Mandatory = $true, Position = 3)]
     [string]$password
 )
+$ErrorActionPreference = "Stop"
 
 # Import common functions
 . .\CrmInstance.Common.ps1
 $creds = Init-OmapiModule $username $password
 
-Get-CrmInstances -ApiUrl $apiUrl -Credential $creds -Verbose
-$templates | Format-List
+Get-AvailableCrmInstances -ApiUrl $apiUrl -Credential $creds -Verbose | Format-List

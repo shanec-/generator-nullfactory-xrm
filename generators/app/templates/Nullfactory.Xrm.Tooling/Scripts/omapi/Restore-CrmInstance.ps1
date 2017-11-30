@@ -29,9 +29,9 @@
 	.PARAMETER backupId
 		The unique identigier for the backup.
 	.PARAMETER backupLabel
-		The label for the backup.
+		The label of the backup being restored.
 	.EXAMPLE
-
+		.\Restore-CrmInstance.ps1 -apiUrl "https://admin.services.crm6.dynamics.com" -username "admin@superinstance.onmicrosoft.com" -password "Pass@word1" -sourceFriendlyName "indie" -targetFriendlyName "indie" -backupLabel "prod-backup1"
 #>
 [CmdletBinding(DefaultParameterSetName = "Internal")]
 param(
@@ -60,6 +60,8 @@ param(
     [guid]$backupId,
     [string]$backupLabel
 )
+
+$ErrorActionPreference = "Stop"
 
 # Importing common functions
 . .\CrmInstance.Common.ps1
@@ -93,12 +95,7 @@ $restoreJob = Restore-CrmInstance -ApiUrl $apiUrl `
     -SourceInstanceId $sourceInstanceId `
     -TargetInstanceId $targetInstanceId
 
-$restoreOperationId = $restoreJob.OperationId
-$restoreOperationStatus = $restoreJob.Status
-
-Write-Host "OperationId: $restoreOperationId Status: $restoreOperationStatus"
-
-Wait-CrmOperation $apiUrl $creds $restoreOperationId
+Wait-CrmOperation -apiUrl $apiUrl -credentials $creds -sourceOperation $restoreJob
 
 Write-Host "Restore operation timed out."
 exit 1

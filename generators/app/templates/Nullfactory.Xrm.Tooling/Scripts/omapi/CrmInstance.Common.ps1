@@ -1,3 +1,16 @@
+<#
+	.SYNOPSIS
+        Initializes the Online Management API for Dynamics 365 for Customer Engagement.
+    .DESCRIPTION
+        Setup the pre-requisites for accessing the Online Management API and initialize PSCredentials object used by associated functions.
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+        https://nullfactory.net
+    .EXAMPLE
+        Init-OmapiModule("admin@superinstance.crm6.dynamics.com", "Pass@word1")
+#>
 function Init-OmapiModule($username, $password)
 {
     if (-Not (Get-Module -ListAvailable -Name Microsoft.Xrm.OnlineManagementAPI)) {
@@ -6,14 +19,14 @@ function Init-OmapiModule($username, $password)
     }
 
     $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
-    return $creds  = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
+    return New-Object System.Management.Automation.PSCredential ($username, $securePassword)
 }
 
 <#
 	.SYNOPSIS
-			Retrieves the unique identifier of a CRM instance.
+        Retrieves the unique identifier of a Dynamics 365 Customer Engagement instance.
 	.DESCRIPTION
-			Retrieves the unique identifier of a CRM instance using its friendly or unique name. If one does not exist, an error is thrown.
+        Retrieves the unique identifier of a Dynamics 365 Customer Engagement instance using its friendly or unique name. If one does not exist, an error is thrown.
 	.NOTES
 		Author: Shane Carvalho
 		Version: generator-nullfactory-xrm@1.4.0
@@ -24,48 +37,143 @@ function Init-OmapiModule($username, $password)
 	.PARAMETER credentials
 		The credentials used to access the API Service.
 	.PARAMETER friendlyName
-		The friendly name of the CRM instance.
+		The friendly name of the instance.
 	.PARAMETER uniqueName
-		The unique name of the CRM Instance.
+		The unique name of the instance.
 	.EXAMPLE
 		$creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
-		$instanceId = Get-CrmInstanceByName("https://admin.services.crm6.dynamics.com",  $creds "SuperFriendlyName", "")
+		$instanceId = Get-CrmInstanceByName("https://admin.services.crm6.dynamics.com",  $creds, "SuperFriendlyName", "")
 #>
 function Get-CrmInstanceByName($apiUrl, $credentials, $friendlyName, $uniqueName)
 {
     if ($friendlyName)
     {
         # retrieve instance using friendly name
-        $instance = Get-CrmInstances -ApiUrl $apiUrl -Credential $credentials | ? {$_.FriendlyName -eq $friendlyName }
+        $instance = Get-CrmInstances -ApiUrl $apiUrl -Credential $credentials | Where-Object {$_.FriendlyName -eq $friendlyName }
     }
     elseif($uniqueName)
     {
         # retrieve instance using the unique name
-        $instance = Get-CrmInstances -ApiUrl $apiUrl -Credential $credentials | ? {$_.UniqueName -eq $uniqueName }
+        $instance = Get-CrmInstances -ApiUrl $apiUrl -Credential $credentials | Where-Object {$_.UniqueName -eq $uniqueName }
     }
 
-		if(-Not $instance)
+    if(-Not $instance)
     {
-        throw "Unable to resolve unique instance."
+        throw "Unable to resolve unique instance $friendlyName $uniqueName."
     }
 
-    return $instance.Id;
+    $instanceId = $instance.Id
+    
+    Write-Verbose "Instance resolved $instanceId"
+
+    return $instanceId;
 }
 
-
+<#
+	.SYNOPSIS
+        Retrieves a list of available Dynamics 365 instances.
+	.DESCRIPTION
+        Retrieves a list of available Dynamics 365 instances in the Office 365 tenant.
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+		https://nullfactory.net
+	.PARAMETER apiUrl
+		The API service url for the tenant.
+	.PARAMETER credentials
+		The credentials used to access the API Service.
+	.EXAMPLE
+        $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+        $creds = New-Object System.Management.Automation.PSCredential ("admin@superinstance.crm6.dynamics.com", $securePassword)
+        Get-AvailableCrmInstances("https://admin.services.crm6.dynamics.com", $creds)
+        Retrieves a list of available instances from tenant associated with username "admin@superinstance.crm6.dynamics.com"
+#>
 function Get-AvailableCrmInstances($apiUrl, $credentials)
 {
-    $instances = Get-CrmInstances -ApiUrl $apiUrl -Credential $credentials
+    try
+    {
+        $instances = Get-CrmInstances -ApiUrl $apiUrl -Credential $credentials -ErrorAction Stop
+    }
+    catch
+    {
+        if($_.Exception.Response.StatusCode -eq "NotFound")
+        {
+            Write-Host "Unable to find any instances associated with tenant." -ForegroundColor Yellow
+        }
+        else
+        {
+            throw $_;
+        }
+    }
+
     return $instances;
 }
 
+<#
+	.SYNOPSIS
+        Retrieves a list of available Dynamics 365 application templates in the Office 365 tenant.
+	.DESCRIPTION
+        Retrieves a list of application templates supported for provisioning a Dynamics 365 Customer Engagement (online) instance.
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+		https://nullfactory.net
+	.PARAMETER apiUrl
+		The API service url for the tenant.
+	.PARAMETER credentials
+		The credentials used to access the API Service.
+	.EXAMPLE
+        $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+        $creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
+        Get-AvailableCrmTemplates("https://admin.services.crm6.dynamics.com", $creds)
+#>
 function Get-AvailableCrmTemplates($apiUrl, $credentials)
 {
-    $crmTemplates = Get-CrmTemplates -ApiUrl $apiUrl -Credential $credentials
-
-    return $crmTemplates
+    try
+    { 
+        $templates = Get-CrmTemplates -ApiUrl $apiUrl -Credential $credentials
+    }
+    catch
+    {
+        if($_.Exception.Response.StatusCode -eq "NotFound")
+        {
+            Write-Host "Unable to find any application templates associated with tenant." -ForegroundColor Yellow
+        }
+        else
+        {
+            throw $_;
+        }
+    }
+    return $templates
 }
 
+
+<#
+	.SYNOPSIS
+        Retrieves a list of available Dynamics 365 application templates in the Office 365 tenant.
+	.DESCRIPTION
+        Retrieves a list of application templates supported for provisioning a Dynamics 365 Customer Engagement (online) instance.
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+		https://nullfactory.net
+	.PARAMETER apiUrl
+		The API service url for the tenant.
+    .PARAMETER credentials
+        The credentials used to access the API Service.
+    .PARAMETER instanceId
+    
+    .PARAMETER backupLabel
+        The name of the backup label
+	.EXAMPLE
+        $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+        $creds = New-Object System.Management.Automation.PSCredential ("admin@superinstance.crm6.dynamics.com", $securePassword)
+        Get-CrmInstanceBackupByLabel("https://admin.services.crm6.dynamics.com", $creds, "eaf67f76-3633-416c-9814-5639bf1494e7", "Release1Backup")
+        Retrieve backup name "Release1Backup" from tenant associated with user "admin@superinstance.crm6.dynamics.com" 
+#>
 function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceId, $backupLabel)
 {
     if(-Not $backupLabel)
@@ -74,13 +182,36 @@ function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceId, $backu
     }
 
     $backups = Get-CrmInstanceBackups -ApiUrl $apiUrl -Credential $credentials -InstanceId $instanceId
-    $backup = $backups | ? {$_.Label -eq $backupLabel } | Select-Object -First 1
+    $backup = $backups | Where-Object {$_.Label -eq $backupLabel } | Select-Object -First 1
+        
+    if(-Not $backup)
+    {
+        throw "Unable to find a backup with label $backupLabel";
+    }
 
     return $backup.Id
 }
 
-
-function  Get-CrmServiceVersionByName($apiUrl, $credentials, $serviceVersionName)
+<#
+	.SYNOPSIS
+        Retrieves the release for Dynamics 365 Customer Engagement (online) using the the service version name.
+	.DESCRIPTION
+        Retrieves the release for Dynamics 365 Customer Engagement (online) using the the service version name.
+	.NOTES
+		Author: Shane Carvalho
+		Version: generator-nullfactory-xrm@1.4.0
+	.LINK
+		https://nullfactory.net
+	.PARAMETER apiUrl
+		The API service url for the tenant.
+	.PARAMETER credentials
+		The credentials used to access the API Service.
+	.EXAMPLE
+        $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+        $creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
+        Get-CrmServiceVersionByName("https://admin.services.crm6.dynamics.com", $creds, "")
+#>
+function Get-CrmServiceVersionByName($apiUrl, $credentials, $serviceVersionName)
 {
     if(-Not $serviceVersionName)
     {
@@ -95,20 +226,14 @@ function  Get-CrmServiceVersionByName($apiUrl, $credentials, $serviceVersionName
         $serviceVersion = Get-CrmServiceVersions -ApiUrl $apiUrl -Credential $credentials | ? {$_.Name -eq $serviceVersionName } | Select-Object -First 1
     }
 
-    $serviceVersionId = $serviceVersion.Id;
+    $serviceVersionId = $serviceVersion.Id
+    $serviceVersionName = $serviceVersion.Name
 
-    Write-Verbose "ServiceVersionId: $serviceVersionId"
+    Write-Verbose "ServiceVersion Id: $serviceVersionId Name: $serviceVersionName"
 
     return $serviceVersionId;
 }
 
-function simpleFunction ($value)
-{
-    if(-Not $value)
-    {
-        Write-Host "yay!"
-    }
-}
 function Wait-CrmOperation (
 	[parameter(Mandatory=$true,ParameterSetName = "OperationId")]
 	[parameter(Mandatory=$true,ParameterSetName = "Operation")]
@@ -121,6 +246,9 @@ function Wait-CrmOperation (
 	[parameter(Mandatory=$true,ParameterSetName = "Operation")]
     $sourceOperation)
 {
+    Write-Host "Waiting for operation completion..."
+    $timeStamp = Get-Date -Format T
+    
     # ensure that the intial status is not a failure
     # if the initial status is a failure then GetOperation functionality would not work
     if($sourceOperation)
@@ -128,7 +256,7 @@ function Wait-CrmOperation (
         $statusString = $sourceOperation.Status
         $operationId = $sourceOperation.OperationId
 
-        Write-Verbose "Status $statusString"
+        Write-Host "[$timeStamp]: $statusString"
 
         if($statusString -eq "Succeeded")
         {
@@ -148,14 +276,11 @@ function Wait-CrmOperation (
         }
     }
 
-    # verify
     if($operationId -eq "00000000-0000-0000-0000-000000000000")
     {
-        Write-Verbose "Invalid operationId, exiting."
+        Write-Host "Invalid OperationId provided, exiting." -ForegroundColor Red
         exit 0
     }
-
-    Write-Host "Waiting for operation completion..."
 
     $timeout = new-timespan -Minutes 5
     $sw = [diagnostics.stopwatch]::StartNew()
@@ -163,7 +288,7 @@ function Wait-CrmOperation (
     {
         $opStatus = Get-CrmOperationStatus -apiUrl $apiUrl -Credential $credentials -Id $operationId
 
-        $timeStamp = (Get-Date).ToShortTimeString()
+        $timeStamp = Get-Date -Format T
         $statusString = $opStatus.Status;
 
         Write-Host "[$timeStamp]: $statusString"
@@ -171,14 +296,15 @@ function Wait-CrmOperation (
         # determinate statuses
         if($opStatus.Status -eq "Succeeded")
         {
-            $sourceOperation.Information | foreach { Write-Host $_.Subject - $_.Description }
+            $opStatus.Information | foreach { Write-Host $_.Subject - $_.Description }
             Write-Host "Operation completed successfully!" -ForegroundColor Green
             exit 0
         }
         elseif(@("FailedToCreate", "Failed", "Cancelling", "Cancelled", "Aborting", "Aborted", "Tombstone", "Deleting", "Deleted") -contains $statusString)
         {
-            $sourceOperation.Errors | foreach { Write-Host $_.Subject - $_.Description }
-            throw "Operation failed. $failReason";
+            $opStatus.Information | foreach { Write-Host $_.Subject - $_.Description }
+            $opStatus.Errors | foreach { Write-Host $_.Subject - $_.Description }
+            throw "Operation failed.";
         }
         # indeterminate statuses
         elseif(@("None", "NotStarted", "Ready", "Pending", "Running") -contains $statusString)
