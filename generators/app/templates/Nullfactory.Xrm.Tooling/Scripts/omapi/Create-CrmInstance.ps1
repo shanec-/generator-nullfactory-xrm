@@ -31,8 +31,8 @@
 	.PARAMETER templatesList
 		The templates to be used with this instance.
   .EXAMPLE
-    .\Create-CrmInstance.ps1 -apiUrl "https://admin.services.crm6.dynamics.com" -username "admin@superinstance.onmicrosoft.com" -password "P@ssw0rd!" -friendlyname "SuperInstance"
-    Provisions a new instance with friendly name "SuperInstance".
+    .\Create-CrmInstance.ps1 -apiUrl "https://admin.services.crm6.dynamics.com" -username "admin@superinstance.onmicrosoft.com" -password "P@ssw0rd!" -friendlyname "SuperInstance" -domain "superinstance" -initialUserEmail "admin@superinstance.onmicrosoft.com" -templatesList "D365_Sales"
+    Provisions a new instance with friendly name "SuperInstance" with the "Dynamics 365 Sales Application" pre-populated.
 #>
 [CmdletBinding(DefaultParameterSetName = "Internal")]
 param(

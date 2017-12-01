@@ -27,7 +27,7 @@
 	.PARAMETER targetUniqueName
 		The unique name for the target instance.
 	.PARAMETER backupId
-		The unique identigier for the backup.
+		The unique identifier for the backup.
 	.PARAMETER backupLabel
 		The label of the backup being restored.
 	.EXAMPLE

@@ -64,7 +64,7 @@ function Get-CrmInstanceByName($apiUrl, $credentials, $friendlyName, $uniqueName
 
     $instanceId = $instance.Id
     
-    Write-Verbose "Instance resolved $instanceId"
+    Write-Verbose "Resolved InstanceId:  $instanceId"
 
     return $instanceId;
 }
@@ -256,17 +256,19 @@ function Wait-CrmOperation (
         $statusString = $sourceOperation.Status
         $operationId = $sourceOperation.OperationId
 
+        Write-Host "OperationId: $operationId"
         Write-Host "[$timeStamp]: $statusString"
 
+        $sourceOperation.Information | ForEach-Object { Write-Host $_.Subject - $_.Description }
+        $sourceOperation.Errors | ForEach-Object { Write-Host $_.Subject - $_.Description }
+        
         if($statusString -eq "Succeeded")
         {
-            $sourceOperation.Information | foreach { Write-Host $_.Subject - $_.Description }
             Write-Host "Operation completed successfully!" -ForegroundColor Green
             exit 0
         }
         elseif(@("FailedToCreate", "Failed", "Cancelling", "Cancelled", "Aborting", "Aborted", "Tombstone", "Deleting", "Deleted") -contains $statusString)
         {
-            $sourceOperation.Errors | foreach { Write-Host $_.Subject - $_.Description }
             throw "Operation failed.";
         }
         # indeterminate statuses
@@ -275,14 +277,17 @@ function Wait-CrmOperation (
             Write-Verbose "Indeterminate status."
         }
     }
-
-    if($operationId -eq "00000000-0000-0000-0000-000000000000")
+    elseif($operationId -eq "00000000-0000-0000-0000-000000000000")
     {
         Write-Host "Invalid OperationId provided, exiting." -ForegroundColor Red
         exit 0
     }
+    else
+    {
+        Write-Host "OperationId: $operationId"
+    }
 
-    $timeout = new-timespan -Minutes 5
+    $timeout = New-TimeSpan -Minutes 5
     $sw = [diagnostics.stopwatch]::StartNew()
     while ($sw.elapsed -lt $timeout)
     {
@@ -293,17 +298,17 @@ function Wait-CrmOperation (
 
         Write-Host "[$timeStamp]: $statusString"
 
+        $opStatus.Information | ForEach-Object { Write-Host $_.Subject - $_.Description }
+        $opStatus.Errors | ForEach-Object { Write-Host $_.Subject - $_.Description }
+
         # determinate statuses
         if($opStatus.Status -eq "Succeeded")
         {
-            $opStatus.Information | foreach { Write-Host $_.Subject - $_.Description }
             Write-Host "Operation completed successfully!" -ForegroundColor Green
             exit 0
         }
         elseif(@("FailedToCreate", "Failed", "Cancelling", "Cancelled", "Aborting", "Aborted", "Tombstone", "Deleting", "Deleted") -contains $statusString)
         {
-            $opStatus.Information | foreach { Write-Host $_.Subject - $_.Description }
-            $opStatus.Errors | foreach { Write-Host $_.Subject - $_.Description }
             throw "Operation failed.";
         }
         # indeterminate statuses
