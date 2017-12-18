@@ -1,15 +1,15 @@
 <#
 	.SYNOPSIS
-        Initializes the Online Management API for Dynamics 365 for Customer Engagement.
-    .DESCRIPTION
-        Setup the pre-requisites for accessing the Online Management API and initialize PSCredentials object used by associated functions.
+		Initializes the Online Management API for Dynamics 365 for Customer Engagement.
+	.DESCRIPTION
+		Setup the pre-requisites for accessing the Online Management API and initialize PSCredentials object used by associated functions.
 	.NOTES
 		Author: Shane Carvalho
 		Version: generator-nullfactory-xrm@1.4.0
 	.LINK
-        https://nullfactory.net
-    .EXAMPLE
-        Init-OmapiModule("admin@superinstance.crm6.dynamics.com", "Pass@word1")
+		https://nullfactory.net
+	.EXAMPLE
+		Init-OmapiModule("admin@superinstance.crm6.dynamics.com", "Pass@word1")
 #>
 function Init-OmapiModule($username, $password)
 {
@@ -63,7 +63,7 @@ function Get-CrmInstanceByName($apiUrl, $credentials, $friendlyName, $uniqueName
     }
 
     $instanceId = $instance.Id
-    
+
     Write-Verbose "Instance resolved $instanceId"
 
     return $instanceId;
@@ -71,9 +71,9 @@ function Get-CrmInstanceByName($apiUrl, $credentials, $friendlyName, $uniqueName
 
 <#
 	.SYNOPSIS
-        Retrieves a list of available Dynamics 365 instances.
+		Retrieves a list of available Dynamics 365 instances.
 	.DESCRIPTION
-        Retrieves a list of available Dynamics 365 instances in the Office 365 tenant.
+		Retrieves a list of available Dynamics 365 instances in the Office 365 tenant.
 	.NOTES
 		Author: Shane Carvalho
 		Version: generator-nullfactory-xrm@1.4.0
@@ -112,9 +112,9 @@ function Get-AvailableCrmInstances($apiUrl, $credentials)
 
 <#
 	.SYNOPSIS
-        Retrieves a list of available Dynamics 365 application templates in the Office 365 tenant.
+		Retrieves a list of available Dynamics 365 application templates in the Office 365 tenant.
 	.DESCRIPTION
-        Retrieves a list of application templates supported for provisioning a Dynamics 365 Customer Engagement (online) instance.
+		Retrieves a list of application templates supported for provisioning a Dynamics 365 Customer Engagement (online) instance.
 	.NOTES
 		Author: Shane Carvalho
 		Version: generator-nullfactory-xrm@1.4.0
@@ -125,14 +125,14 @@ function Get-AvailableCrmInstances($apiUrl, $credentials)
 	.PARAMETER credentials
 		The credentials used to access the API Service.
 	.EXAMPLE
-        $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
-        $creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
-        Get-AvailableCrmTemplates("https://admin.services.crm6.dynamics.com", $creds)
+		$securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+		$creds = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
+		Get-AvailableCrmTemplates("https://admin.services.crm6.dynamics.com", $creds)
 #>
 function Get-AvailableCrmTemplates($apiUrl, $credentials)
 {
     try
-    { 
+    {
         $templates = Get-CrmTemplates -ApiUrl $apiUrl -Credential $credentials
     }
     catch
@@ -165,14 +165,14 @@ function Get-AvailableCrmTemplates($apiUrl, $credentials)
     .PARAMETER credentials
         The credentials used to access the API Service.
     .PARAMETER instanceId
-    
+
     .PARAMETER backupLabel
         The name of the backup label
 	.EXAMPLE
         $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
         $creds = New-Object System.Management.Automation.PSCredential ("admin@superinstance.crm6.dynamics.com", $securePassword)
         Get-CrmInstanceBackupByLabel("https://admin.services.crm6.dynamics.com", $creds, "eaf67f76-3633-416c-9814-5639bf1494e7", "Release1Backup")
-        Retrieve backup name "Release1Backup" from tenant associated with user "admin@superinstance.crm6.dynamics.com" 
+        Retrieve backup name "Release1Backup" from tenant associated with user "admin@superinstance.crm6.dynamics.com"
 #>
 function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceId, $backupLabel)
 {
@@ -183,7 +183,7 @@ function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceId, $backu
 
     $backups = Get-CrmInstanceBackups -ApiUrl $apiUrl -Credential $credentials -InstanceId $instanceId
     $backup = $backups | Where-Object {$_.Label -eq $backupLabel } | Select-Object -First 1
-        
+
     if(-Not $backup)
     {
         throw "Unable to find a backup with label $backupLabel";
@@ -248,7 +248,7 @@ function Wait-CrmOperation (
 {
     Write-Host "Waiting for operation completion..."
     $timeStamp = Get-Date -Format T
-    
+
     # ensure that the intial status is not a failure
     # if the initial status is a failure then GetOperation functionality would not work
     if($sourceOperation)
