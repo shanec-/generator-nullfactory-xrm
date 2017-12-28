@@ -53,6 +53,13 @@
     <None Include="Scripts\Pull-CrmSolution.ps1" />
     <None Include="Scripts\CrmSolution.Common.ps1" />
     <None Include="_Install\Install-Microsoft.Xrm.Data.PowerShell.ps1" />
+    <None Include="Scripts\omapi\Backup-CrmInstance.ps1" />
+    <None Include="Scripts\omapi\Create-CrmInstance.ps1" />
+    <None Include="Scripts\omapi\CrmInstance.Common.ps1" />
+    <None Include="Scripts\omapi\Delete-CrmInstance.ps1" />
+    <None Include="Scripts\omapi\Get-AvailableCrmInstances.ps1" />
+    <None Include="Scripts\omapi\Get-AvailableCrmTemplates.ps1" />
+    <None Include="Scripts\omapi\Restore-CrmInstance.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

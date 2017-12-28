@@ -11,7 +11,8 @@
   "files": [
     "generators/app",
     "generators/gitignore",
-	  "generators/solution"
+    "generators/solution",
+    "generators/cibuild"
   ],
   "main": "generators/index.js",
   "keywords": [
@@ -44,8 +45,7 @@
     "env": {
       "mocha": true
     },
-    "rules": {
-    }
+    "rules": {}
   },
   "repository": "shanec-/generator-nullfactory-xrm",
   "scripts": {

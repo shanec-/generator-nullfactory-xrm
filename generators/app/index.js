@@ -124,21 +124,40 @@ module.exports = yeoman.Base.extend({
 
   // tooling project
   _writeToolingProject: function () {
+
+    var staticFiles = [
+      '_RunFirst.ps1',
+      'Nullfactory.Xrm.Tooling/packages.config',
+      'Nullfactory.Xrm.Tooling/_Install/Install-Microsoft.Xrm.Data.PowerShell.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Backup-CrmInstance.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Create-CrmInstance.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/CrmInstance.Common.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Delete-CrmInstance.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Get-AvailableCrmInstances.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Get-AvailableCrmTemplates.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Restore-CrmInstance.ps1',
+    ];
+
+    // process static files that do no need parameters
+    for(var i =0; i < staticFiles.length; i++)
+    {
+      var element = staticFiles[i];
+      // this.log(element);
+      this.fs.copy(
+        this.templatePath(element),
+        this.destinationPath(element)
+      );
+    }
+    
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'),
       this.destinationPath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'), {
         crmSolutionName: this.props.crmSolutionName
       }
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/packages.config'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/packages.config')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/_Install/Install-Microsoft.Xrm.Data.PowerShell.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/_Install/Install-Microsoft.Xrm.Data.PowerShell.ps1')
     );
 
     this.fs.copyTpl(
@@ -150,21 +169,6 @@ module.exports = yeoman.Base.extend({
       }
     );
 
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1')
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1')
-    );
-
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'),
       this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'), {
@@ -172,11 +176,6 @@ module.exports = yeoman.Base.extend({
         crmSolutionName: this.props.crmSolutionName,
         crmServerUrl: this.props.crmServerUrl
       }
-    );
-
-    this.fs.copy(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.ps1')
     );
 
     this.fs.copyTpl(
@@ -265,13 +264,11 @@ module.exports = yeoman.Base.extend({
   end: function () {
     var postInstallSteps =
       chalk.green.bold('\nSuccessfully generated project structure for ' + this.props.crmSolutionName + '.') +
-      '\n\nFinalize the installation by: \n   1. Running the following command in the Visual Studio' + chalk.yellow(' "Package Manager Console"') + ' window.\n\t' +
-      chalk.yellow.bold('Update-Package -reinstall -project "Nullfactory.Xrm.Tooling"') +
-      '\n';
+      '\n\nFinalize the installation by: \n   1. Execute the ' + chalk.yellow(' "_RunFirst.ps1"') + ' powershell script located in the root folder.\n';
 
     postInstallSteps += '   2. Download and extracting the remote CRM solution by executing the ' +
-      chalk.yellow.bold('Pull-CrmSolution.Param.ps1') +
-      ' powershell script.';
+      chalk.yellow.bold('Pull-CrmSolution.Param.ps1') + ' powershell script' +
+      '\n      located in the Nullfactory.Xrm.Tooling\\Scripts folder.';
 
     if (this.props.isAddPluginProject || this.props.isAddWorkflowProject) {
       postInstallSteps += '\n   3. Add a strong name key file to the plugin and/or workflow projects.';
