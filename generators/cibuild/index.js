@@ -19,8 +19,8 @@ module.exports = yeoman.Base.extend({
     },
     {
       type: 'list',
-      name: 'project',
-      message: 'What type of project do you want to create today?',
+      name: 'buildServer',
+      message: 'What type of build server are you using?',
           choices: [
               "Visual Studio Team Services",
           ]
@@ -33,8 +33,13 @@ module.exports = yeoman.Base.extend({
   },
 
   writing: function () {
-
-    this._writeVsts();
+    switch(this.props.buildServer)
+    {
+      case("Visual Studio Team Services"):
+      {
+        this._writeVsts();
+      }
+    }    
   },
 
   // vs solution
@@ -53,7 +58,7 @@ module.exports = yeoman.Base.extend({
 
   end: function () {
     var postInstallSteps =
-      chalk.green.bold('\nSuccessfully generated CI build yml.');
+      chalk.green.bold('\nSuccessfully generated YAML CI build.');
 
     this.log(postInstallSteps);
   }
