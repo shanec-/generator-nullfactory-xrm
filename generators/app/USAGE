@@ -3,4 +3,5 @@ Description:
 
 Subgenerators:
 	yo nullfactory-xrm:gitignore
+	yo nullfactory-xrm:cibuild
 	yo nullfactory-xrm:solution [options]
