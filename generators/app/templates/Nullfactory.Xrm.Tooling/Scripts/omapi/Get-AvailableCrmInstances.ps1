@@ -5,7 +5,7 @@
         Retrieve a list of Dynamics 365 Customer Engagement instances in the Office 365 tenant.
     .NOTES
         Author: Shane Carvalho
-        Version: generator-nullfactory-xrm@1.4.0
+        Version: generator-nullfactory-xrm@1.6.0
     .LINK
         https://nullfactory.net
     .PARAMETER apiUrl

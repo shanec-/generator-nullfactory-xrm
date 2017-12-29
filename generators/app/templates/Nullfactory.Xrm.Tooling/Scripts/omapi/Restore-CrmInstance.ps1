@@ -5,7 +5,7 @@
 		Restore a backup from a source instance to a destination instance using one of the unique identifiers or friendly names.
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.4.0
+		Version: generator-nullfactory-xrm@1.6.0
 	.LINK
 		https://nullfactory.net
 	.PARAMETER apiUrl
