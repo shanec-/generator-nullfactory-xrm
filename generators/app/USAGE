@@ -1,6 +1,7 @@
 Description:
-	Creates a basic Dynamics CRM project structure
+	Creates a basic project structure that allows to manage Dynamics CRM / 365 solutions.
 
 Subgenerators:
-
-	yo nullfactory-xrm:gitignore [options]
+	yo nullfactory-xrm:gitignore
+	yo nullfactory-xrm:cibuild
+	yo nullfactory-xrm:solution [options]

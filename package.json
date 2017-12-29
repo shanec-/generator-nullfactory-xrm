@@ -1,6 +1,6 @@
 {
   "name": "generator-nullfactory-xrm",
-  "version": "1.4.1",
+  "version": "1.6.0",
   "description": "Dynamics CRM / 365 Project Structure Generator",
   "homepage": "http://www.nullfactory.net",
   "author": {
@@ -10,7 +10,9 @@
   },
   "files": [
     "generators/app",
-    "generators/gitignore"
+    "generators/gitignore",
+    "generators/solution",
+    "generators/cibuild"
   ],
   "main": "generators/index.js",
   "keywords": [
@@ -43,8 +45,7 @@
     "env": {
       "mocha": true
     },
-    "rules": {
-    }
+    "rules": {}
   },
   "repository": "shanec-/generator-nullfactory-xrm",
   "scripts": {

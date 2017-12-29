@@ -5,7 +5,7 @@
     Retrieves the username for the specified CRM solution which is stored in a user-environmental variable. If one does not exist, the script would prompt the user for a new username, which is then stored in a new environment variable.
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.4.0
+		Version: generator-nullfactory-xrm@1.6.0
 	.LINK
 		https://nullfactory.net
 	.PARAMETER solutionName

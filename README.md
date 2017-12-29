@@ -4,9 +4,9 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/4dmqta7pnueqxa11?svg=true)](https://ci.appveyor.com/project/shanec-/generator-nullfactory-xrm)
 [![npm version](https://badge.fury.io/js/generator-nullfactory-xrm.svg)](https://badge.fury.io/js/generator-nullfactory-xrm)
 
-A yeoman tempate for scaffolding [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx)-compatible Dynamics CRM/365 project structure.
+A yeoman generator for scaffolding [Solution Packager](https://msdn.microsoft.com/en-us/library/jj602987.aspx)-compatible Dynamics 365 project structures.
 
-The generated project structure is built around the Solution Packager provided in the official SDK and the [Microsoft.Xrm.Data.PowerShell](https://github.com/seanmcne/Microsoft.Xrm.Data.PowerShell) module. It facilitates the quick creation of team builds and release strategies with minimal effort and enables you to maintain a single source of truth for you CRM solutions.
+The project structure is built around the Solution Packager (provided as part of the official SDK) and the [Microsoft.Xrm.Data.PowerShell](https://github.com/seanmcne/Microsoft.Xrm.Data.PowerShell) module. It facilitates the quick creation of team builds and release strategies with minimal effort and enables you to maintain a single source of truth for your CRM solutions.
 
 ## Installation
 
@@ -37,10 +37,10 @@ Template questions and their purpose:
 
 ## Post Installation Setup
 
-Start off by updating the packages for the `Nullfactory.Xrm.Tooling` project. Open up the `Package Manager Console` in Visual Studio and execute the following command:
+Start off by running the `_RunFirst.ps1` powershell script located in the generated root folder. This script would restore and update the packages used by the `Nullfactory.Xrm.Tooling`
 
 ```
-Update-Package -reinstall -Project Nullfactory.Xrm.Tooling
+.\_RunFirst.ps1
 ```
 
 Next, if you opted to add either a plugin or workflow project, ensure that the assembly is signed with a new key.  
@@ -51,11 +51,19 @@ Optionally, install the [`Microsoft.Xrm.Data.PowerShell`](https://github.com/sea
 Install-Module -Name Microsoft.Xrm.Data.PowerShell -Scope CurrentUser -Force
 ```
 
-Even if you skip the above step, the sychrnoization PowerShell script would attempt to install it automatically. The PowerShell scripts require a minimum of PowerShell 5.0 and Microsoft.Xrm.Data.PowerShell 2.5.
+Even if you skip this step, the sychrnoization PowerShell script would attempt to install it automatically. The PowerShell scripts require a minimum of PowerShell 5.0 and Microsoft.Xrm.Data.PowerShell 2.5.
 
-## Syncing a Solution to the Project
+### Install Customised .gitignore
 
-Anytime the CRM solution needs to be synchronized back to the project, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Pull-CrmSolution.Param.ps1`.
+If the underlying repository is git, run the following command to install a customised version of the gitignore file. This file is structured to include the binaries within the `Nullfactory.Xrm.Tooling\bin\coretools` folder.  
+
+```
+yo nullfactory-xrm:gitignore
+```
+
+## Pull the CRM Solution into the Project Structure
+
+Anytime the CRM solution needs to be pulled down into the project structure, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Pull-CrmSolution.Param.ps1`.
 
 ### Resource Mapping
 
@@ -65,6 +73,16 @@ More information on the structure of the mapping file can be found [here](https:
 ## Building the CRM Solution
 
 The repackaging the extracted solution is integrated as a post-build step of the solution class library. Simply build it to output both a managed as well as unmanaged CRM solution package. 
+
+### Install a YAML based CI Build
+
+Use the following command and prompts in order to generate a tailored YAML CI build file.
+
+```
+yo nullfactory-xrm:cibuild
+```
+
+Currently supports only [Visual Studio Team Services](https://docs.microsoft.com/en-us/vsts/build-release/actions/build-yaml).
 
 ### Source Control, CI Builds and Release Management
 
@@ -81,5 +99,5 @@ More information on source control management, setting up continuous integration
 Please submit any feature requests or issues found to [https://github.com/shanec-/generator-nullfactory-xrm/issues](https://github.com/shanec-/generator-nullfactory-xrm/issues)
 
 ## License
-
-GPL-3.0 © [Shane Carvalho](http://www.nullfactory.net)
+Copyright © [Shane Carvalho](http://www.nullfactory.net). 
+Licensed under the GPL-3.0 License.

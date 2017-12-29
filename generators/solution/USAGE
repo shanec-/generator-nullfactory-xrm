@@ -1,0 +1,8 @@
+Description:
+	Creates the csproj file for Dynamics 365 solution
+
+Example:
+	yo nullfactory-xrm:solution
+
+	This will create:
+		csproj file customized for the solution. 

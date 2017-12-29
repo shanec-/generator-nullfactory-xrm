@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- generated using generator-nullfactory-xrm@1.4.0 -->
+<!-- generated using generator-nullfactory-xrm@1.6.0 -->
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -53,6 +53,13 @@
     <None Include="Scripts\Pull-CrmSolution.ps1" />
     <None Include="Scripts\CrmSolution.Common.ps1" />
     <None Include="_Install\Install-Microsoft.Xrm.Data.PowerShell.ps1" />
+    <None Include="Scripts\omapi\Backup-CrmInstance.ps1" />
+    <None Include="Scripts\omapi\Create-CrmInstance.ps1" />
+    <None Include="Scripts\omapi\CrmInstance.Common.ps1" />
+    <None Include="Scripts\omapi\Delete-CrmInstance.ps1" />
+    <None Include="Scripts\omapi\Get-AvailableCrmInstances.ps1" />
+    <None Include="Scripts\omapi\Get-AvailableCrmTemplates.ps1" />
+    <None Include="Scripts\omapi\Restore-CrmInstance.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
