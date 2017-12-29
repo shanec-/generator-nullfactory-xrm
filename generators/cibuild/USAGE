@@ -1,9 +1,9 @@
 Description:
-	Creates a YAML CI build file. Suppports the following formats:
-		Visual Studio Team Services
+	Creates a YAML based CI build file. Supports the following formats:
+		- Visual Studio Team Services
 
 Example:
 	yo nullfactory-xrm:cibuild
 
 	This will create:
-		A tailored .yml file.
+		A tailored *.yml build file.

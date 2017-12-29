@@ -74,6 +74,16 @@ More information on the structure of the mapping file can be found [here](https:
 
 The repackaging the extracted solution is integrated as a post-build step of the solution class library. Simply build it to output both a managed as well as unmanaged CRM solution package. 
 
+### Install a YAML based CI Build
+
+Use the following command and prompts in order to generate a tailored YAML CI build file.
+
+```
+yo nullfactory-xrm:cibuild
+```
+
+Currently supports only Visual Studio Team Services.
+
 ### Source Control, CI Builds and Release Management
 
 More information on source control management, setting up continuous integration builds and automated releases:
