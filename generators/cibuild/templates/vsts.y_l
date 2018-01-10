@@ -8,6 +8,7 @@ steps:
 - powershell: |
     Write-Host '##vso[task.setvariable variable=BuildConfiguration;]release'
     Write-Host '##vso[task.setvariable variable=BuildPlatform;]any cpu'
+    Write-Host '##vso[task.setvariable variable=Parameters.solution;]**/*.sln'
   displayName: Create variables
 
 - task: NuGetToolInstaller@0
@@ -15,8 +16,7 @@ steps:
 - task: NuGetCommand@2
   displayName: NuGet restore **\*.sln
   inputs:
-    # restoreSolution: "$(Parameters.solution)"
-    restoreSolution: "**/*.sln"
+    restoreSolution: "$(Parameters.solution)"
 
 - task: MSBuild@1
   displayName: Build solution **/*.sln
