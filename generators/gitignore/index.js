@@ -1,30 +1,30 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
 
-module.exports = yeoman.Base.extend({
-  prompting: function () {
+module.exports = class extends Generator{
+  prompting() {
     // Have Yeoman greet the user.
    this.log(yosay(
-      'Welcome to ' + chalk.red('nullfactory-xrm') + '\n The Dynamics CRM project structure generator!'
+      chalk.keyword('orange')('nullfactory-xrm') + '\n The' + chalk.green(' Dynamics 365') + ' Project Structure Generator!'
     ));
-  },
+  }
 
-  writing: function () {
+  writing() {
     this.fs.copy(
       this.templatePath('-gitignore'),
       this.destinationPath('.gitignore')
     );
-  },
+  }
 
-  install: function () {
+  install() {
     //this.installDependencies();
-  },
+  }
 
-  end: function () {
+  end() {
     var postInstallSteps = chalk.green.bold('\nSuccessfully generated .gitignore file.');
 
     this.log(postInstallSteps);
   }
-});
+};

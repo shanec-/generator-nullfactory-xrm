@@ -1,13 +1,13 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
 
-module.exports = yeoman.Base.extend({
-  prompting: function () {
+module.exports = class extends Generator{
+  prompting() {
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to ' + chalk.red('nullfactory-xrm') + '\n The Dynamics CRM/365 Project Structure Generator!'
+        chalk.keyword('orange')('nullfactory-xrm') + '\n The' + chalk.green(' Dynamics 365') + ' Project Structure Generator!'
     ));
 
     var prompts = [{
@@ -27,15 +27,15 @@ module.exports = yeoman.Base.extend({
       // To access props later use this.props.someAnswer;
       this.props = props;
     }.bind(this));
-  },
+  }
 
-  writing: function () {
+  writing() {
     // initialize the crm solution project
     this._writeCrmSolutionProject();
-  },
+  }
 
   // crm solution
-  _writeCrmSolutionProject: function () {
+  _writeCrmSolutionProject() {
     var generatedSolutionName = this.props.visualStudioSolutionProjectPrefix + '.' + this.props.crmSolutionName;
     this.fs.copyTpl(
       this.templatePath('Project.Solution/Project.Solution.csproj'),
@@ -45,13 +45,13 @@ module.exports = yeoman.Base.extend({
         visualStudioSolutionName: this.props.visualStudioSolutionName
       }
     );
-  },
+  }
 
-  install: function () {
+  install() {
     // this.installDependencies();
-  },
+  }
 
-  end: function () {
+  end() {
     var postInstallSteps =
       chalk.green.bold('\nSuccessfully generated project structure for ' + this.props.crmSolutionName + '.');
     postInstallSteps += '\n\nPlease submit any issues found to ' + chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues');
@@ -59,5 +59,5 @@ module.exports = yeoman.Base.extend({
 
     this.log(postInstallSteps);
   }
-});
+};
 ///

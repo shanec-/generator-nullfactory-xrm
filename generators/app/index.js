@@ -1,13 +1,13 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
 
-module.exports = yeoman.Base.extend({
-  prompting: function () {
+module.exports = class extends Generator {
+  prompting() {
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to ' + chalk.red('nullfactory-xrm') + '\n The Dynamics CRM/365 Project Structure Generator!'
+      chalk.keyword('orange')('nullfactory-xrm') + '\n The' + chalk.green(' Dynamics 365') + ' Project Structure Generator!'
     ));
 
     var prompts = [{
@@ -57,9 +57,9 @@ module.exports = yeoman.Base.extend({
       // To access props later use this.props.someAnswer;
       this.props = props;
     }.bind(this));
-  },
+  }
 
-  writing: function () {
+  writing() {
     // intialize the tooling project
     this._writeToolingProject();
 
@@ -83,10 +83,10 @@ module.exports = yeoman.Base.extend({
     if (this.props.isAddWorkflowProject) {
       this._writeWorkflowProject();
     }
-  },
+  }
 
   // vs solution
-  _writeVsSolutionProject: function () {
+  _writeVsSolutionProject() {
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Template.sln'),
       this.destinationPath(this.props.visualStudioSolutionName + '.sln'), {
@@ -107,10 +107,10 @@ module.exports = yeoman.Base.extend({
         crmServerUrl: this.props.crmServerUrl
       }
     );
-  },
+  }
 
   // crm solution
-  _writeCrmSolutionProject: function () {
+  _writeCrmSolutionProject() {
     var generatedSolutionName = this.props.visualStudioSolutionProjectPrefix + '.' + this.props.crmSolutionName;
     this.fs.copyTpl(
       this.templatePath('Project.Solution/Project.Solution.csproj'),
@@ -120,10 +120,10 @@ module.exports = yeoman.Base.extend({
         visualStudioSolutionName: this.props.visualStudioSolutionName
       }
     );
-  },
+  }
 
   // tooling project
-  _writeToolingProject: function () {
+  _writeToolingProject() {
 
     var staticFiles = [
       '_RunFirst.ps1',
@@ -152,7 +152,7 @@ module.exports = yeoman.Base.extend({
         this.destinationPath(element)
       );
     }
-    
+
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'),
       this.destinationPath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'), {
@@ -186,9 +186,9 @@ module.exports = yeoman.Base.extend({
         crmServerUrl: this.props.crmServerUrl
       }
     );
-  },
+  }
 
-  _writePluginProject: function () {
+  _writePluginProject() {
     var pluginProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Plugins';
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Plugins/Project.Xrm.Plugins.csproj'),
@@ -215,9 +215,9 @@ module.exports = yeoman.Base.extend({
       this.templatePath('Project.Xrm.Plugins/packages.config'),
       this.destinationPath(pluginProjectName + '/packages.config')
     );
-  },
+  }
 
-  _writeWorkflowProject: function () {
+  _writeWorkflowProject() {
     var workflowProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Workflows';
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Workflows/Project.Xrm.Workflows.csproj'),
@@ -244,9 +244,9 @@ module.exports = yeoman.Base.extend({
       this.templatePath('Project.Xrm.Workflows/packages.config'),
       this.destinationPath(workflowProjectName + '/packages.config')
     );
-  },
+  }
 
-  _writeResourcesProject: function () {
+  _writeResourcesProject() {
     var generatedProjectName = this.props.visualStudioSolutionProjectPrefix + '.' + this.props.crmSolutionName + '.WebResources';
     this.fs.copyTpl(
       this.templatePath('Project.Solution.WebResources/Project.Solution.WebResources.csproj'),
@@ -255,13 +255,13 @@ module.exports = yeoman.Base.extend({
         crmSolutionName: this.props.crmSolutionName
       }
     );
-  },
+  }
 
-  install: function () {
+  install () {
     // this.installDependencies();
-  },
+  }
 
-  end: function () {
+  end () {
     var postInstallSteps =
       chalk.green.bold('\nSuccessfully generated project structure for ' + this.props.crmSolutionName + '.') +
       '\n\nFinalize the installation by: \n   1. Execute the ' + chalk.yellow(' "_RunFirst.ps1"') + ' powershell script located in the root folder.\n';
@@ -279,5 +279,5 @@ module.exports = yeoman.Base.extend({
 
     this.log(postInstallSteps);
   }
-});
+};
 ///
