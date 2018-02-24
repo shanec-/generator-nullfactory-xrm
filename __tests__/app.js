@@ -1,24 +1,22 @@
 'use strict';
-var path = require('path');
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-test');
+const path = require('path');
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
 
-describe('generator-nullfactory-xrm:app', function () {
-  before(function () {
-    return helpers.run(path.join(__dirname, '../generators/app'))
-      .withPrompts({
-        visualStudioSolutionName: 'TestSolution',
-        visualStudioSolutionProjectPrefix: 'Test',
-        crmServerUrl: 'https://sndbx.crm6.dynamics.com',
-        crmSolutionName: 'FirstSolution',
-        isAddWebResourceProject: 'Yes',
-        isAddPluginProject: 'Yes',
-        isAddWorkflowProject: 'Yes'
-      })
-      .toPromise();
+describe('generator-nullfactory-xrm:app', () => {
+  beforeAll(() => {
+    return helpers.run(path.join(__dirname, '../generators/app')).withPrompts({
+      visualStudioSolutionName: 'TestSolution',
+      visualStudioSolutionProjectPrefix: 'Test',
+      crmServerUrl: 'https://sndbx.crm6.dynamics.com',
+      crmSolutionName: 'FirstSolution',
+      isAddWebResourceProject: 'Yes',
+      isAddPluginProject: 'Yes',
+      isAddWorkflowProject: 'Yes'
+    });
   });
 
-  it('creates files', function () {
+  it('creates files', () => {
     assert.file([
       'Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj',
       'Nullfactory.Xrm.Tooling/packages.config',
@@ -44,4 +42,3 @@ describe('generator-nullfactory-xrm:app', function () {
     ]);
   });
 });
-///

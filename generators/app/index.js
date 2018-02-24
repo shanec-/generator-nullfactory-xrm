@@ -6,90 +6,100 @@ const yosay = require('yosay');
 module.exports = class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
-    this.log(yosay(
-      chalk.keyword('orange')('nullfactory-xrm') + '\n The' + chalk.green(' Dynamics 365') + ' Project Structure Generator!'
-    ));
+    this.log(
+      yosay(
+        chalk.keyword('orange')('nullfactory-xrm') +
+          '\n The' +
+          chalk.green(' Dynamics 365') +
+          ' Project Structure Generator!'
+      )
+    );
 
-    var prompts = [{
-      type: 'input',
-      name: 'visualStudioSolutionName',
-      message: 'Visual Studio solution filename?',
-      default: 'Nullfactory'
-    },
-    {
-      type: 'input',
-      name: 'visualStudioSolutionProjectPrefix',
-      message: 'Visual Studio solution project filename prefix?',
-      default: 'Nullfactory'
-    },
-    {
-      type: 'input',
-      name: 'crmServerUrl',
-      message: 'Source CRM server url?',
-      default: 'https://sandbox.crm6.dynamics.com/'
-    },
-    {
-      type: 'input',
-      name: 'crmSolutionName',
-      message: 'Source CRM solution name?',
-      default: 'solution1'
-    },
-    {
-      type: 'confirm',
-      name: 'isAddWebResourceProject',
-      message: 'Add *.WebResource project?',
-      default: true
-    },
-    {
-      type: 'confirm',
-      name: 'isAddPluginProject',
-      message: 'Add *.Plugin project?',
-      default: true
-    },
-    {
-      type: 'confirm',
-      name: 'isAddWorkflowProject',
-      message: 'Add *.Workflow project?',
-      default: true
-    }];
+    var prompts = [
+      {
+        type: 'input',
+        name: 'visualStudioSolutionName',
+        message: 'Visual Studio solution filename?',
+        default: 'Nullfactory'
+      },
+      {
+        type: 'input',
+        name: 'visualStudioSolutionProjectPrefix',
+        message: 'Visual Studio solution project filename prefix?',
+        default: 'Nullfactory'
+      },
+      {
+        type: 'input',
+        name: 'crmServerUrl',
+        message: 'Source CRM server url?',
+        default: 'https://sandbox.crm6.dynamics.com/'
+      },
+      {
+        type: 'input',
+        name: 'crmSolutionName',
+        message: 'Source CRM solution name?',
+        default: 'solution1'
+      },
+      {
+        type: 'confirm',
+        name: 'isAddWebResourceProject',
+        message: 'Add *.WebResource project?',
+        default: true
+      },
+      {
+        type: 'confirm',
+        name: 'isAddPluginProject',
+        message: 'Add *.Plugin project?',
+        default: true
+      },
+      {
+        type: 'confirm',
+        name: 'isAddWorkflowProject',
+        message: 'Add *.Workflow project?',
+        default: true
+      }
+    ];
 
-    return this.prompt(prompts).then(function (props) {
-      // To access props later use this.props.someAnswer;
-      this.props = props;
-    }.bind(this));
+    return this.prompt(prompts).then(
+      function(props) {
+        // To access props later use this.props.someAnswer;
+        this.props = props;
+      }.bind(this)
+    );
   }
 
   writing() {
-    // intialize the tooling project
+    // Intialize the tooling project
     this._writeToolingProject();
 
-    // initialize the visual studio solution project
+    // Initialize the visual studio solution project
     this._writeVsSolutionProject();
 
-    // initialize the crm solution project
+    // Initialize the crm solution project
     this._writeCrmSolutionProject();
 
-    // add the web resource project
+    // Add the web resource project
     if (this.props.isAddWebResourceProject) {
       this._writeResourcesProject();
     }
 
-    // add the plugin project
+    // Add the plugin project
     if (this.props.isAddPluginProject) {
       this._writePluginProject();
     }
 
-    // add the workflow project
+    // Add the workflow project
     if (this.props.isAddWorkflowProject) {
       this._writeWorkflowProject();
     }
   }
 
-  // vs solution
+  // Vs solution
   _writeVsSolutionProject() {
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Template.sln'),
-      this.destinationPath(this.props.visualStudioSolutionName + '.sln'), {
+      this.destinationPath(this.props.visualStudioSolutionName + '.sln'),
+      {
         visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
         crmSolutionName: this.props.crmSolutionName,
         isAddPluginProject: this.props.isAddPluginProject,
@@ -98,23 +108,24 @@ module.exports = class extends Generator {
       }
     );
 
-    this.fs.copyTpl(
-      this.templatePath('README.md'),
-      this.destinationPath('README.md'), {
-        crmSolutionName: this.props.crmSolutionName,
-        visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
-        visualStudioSolutionName: this.props.visualStudioSolutionName,
-        crmServerUrl: this.props.crmServerUrl
-      }
-    );
+    this.fs.copyTpl(this.templatePath('README.md'), this.destinationPath('README.md'), {
+      crmSolutionName: this.props.crmSolutionName,
+      visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
+      visualStudioSolutionName: this.props.visualStudioSolutionName,
+      crmServerUrl: this.props.crmServerUrl
+    });
   }
 
-  // crm solution
+  // Crm solution
   _writeCrmSolutionProject() {
-    var generatedSolutionName = this.props.visualStudioSolutionProjectPrefix + '.' + this.props.crmSolutionName;
+    var generatedSolutionName =
+      this.props.visualStudioSolutionProjectPrefix + '.' + this.props.crmSolutionName;
     this.fs.copyTpl(
       this.templatePath('Project.Solution/Project.Solution.csproj'),
-      this.destinationPath(generatedSolutionName + '/' + generatedSolutionName + '.csproj'), {
+      this.destinationPath(
+        generatedSolutionName + '/' + generatedSolutionName + '.csproj'
+      ),
+      {
         crmSolutionName: this.props.crmSolutionName,
         visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
         visualStudioSolutionName: this.props.visualStudioSolutionName
@@ -122,9 +133,8 @@ module.exports = class extends Generator {
     );
   }
 
-  // tooling project
+  // Tooling project
   _writeToolingProject() {
-
     var staticFiles = [
       '_RunFirst.ps1',
       'Nullfactory.Xrm.Tooling/packages.config',
@@ -139,30 +149,30 @@ module.exports = class extends Generator {
       'Nullfactory.Xrm.Tooling/Scripts/omapi/Delete-CrmInstance.ps1',
       'Nullfactory.Xrm.Tooling/Scripts/omapi/Get-AvailableCrmInstances.ps1',
       'Nullfactory.Xrm.Tooling/Scripts/omapi/Get-AvailableCrmTemplates.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/omapi/Restore-CrmInstance.ps1',
+      'Nullfactory.Xrm.Tooling/Scripts/omapi/Restore-CrmInstance.ps1'
     ];
 
-    // process static files that do no need parameters
-    for(var i =0; i < staticFiles.length; i++)
-    {
+    // Process static files that do no need parameters
+    for (var i = 0; i < staticFiles.length; i++) {
       var element = staticFiles[i];
-      // this.log(element);
-      this.fs.copy(
-        this.templatePath(element),
-        this.destinationPath(element)
-      );
+      /// this.log(element);
+      this.fs.copy(this.templatePath(element), this.destinationPath(element));
     }
 
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'), {
+      this.destinationPath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'),
+      {
         crmSolutionName: this.props.crmSolutionName
       }
     );
 
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Mappings/solution-mapping.xml'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Mappings/' + this.props.crmSolutionName + '-mapping.xml'), {
+      this.destinationPath(
+        'Nullfactory.Xrm.Tooling/Mappings/' + this.props.crmSolutionName + '-mapping.xml'
+      ),
+      {
         visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
         isAddPluginProject: this.props.isAddPluginProject,
         isAddWorkflowProject: this.props.isAddWorkflowProject
@@ -171,7 +181,8 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'), {
+      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'),
+      {
         visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
         crmSolutionName: this.props.crmSolutionName,
         crmServerUrl: this.props.crmServerUrl
@@ -180,7 +191,10 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.Param.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.Param.ps1'), {
+      this.destinationPath(
+        'Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.Param.ps1'
+      ),
+      {
         visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
         crmSolutionName: this.props.crmSolutionName,
         crmServerUrl: this.props.crmServerUrl
@@ -192,21 +206,24 @@ module.exports = class extends Generator {
     var pluginProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Plugins';
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Plugins/Project.Xrm.Plugins.csproj'),
-      this.destinationPath(pluginProjectName + '/' + pluginProjectName + '.csproj'), {
+      this.destinationPath(pluginProjectName + '/' + pluginProjectName + '.csproj'),
+      {
         pluginProjectName: pluginProjectName
       }
     );
 
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Plugins/Properties/AssemblyInfo.cs'),
-      this.destinationPath(pluginProjectName + '/Properties/AssemblyInfo.cs'), {
+      this.destinationPath(pluginProjectName + '/Properties/AssemblyInfo.cs'),
+      {
         pluginProjectName: pluginProjectName
       }
     );
 
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Plugins/SimplePlugin.cs'),
-      this.destinationPath(pluginProjectName + '/SimplePlugin.cs'), {
+      this.destinationPath(pluginProjectName + '/SimplePlugin.cs'),
+      {
         pluginProjectName: pluginProjectName
       }
     );
@@ -218,24 +235,28 @@ module.exports = class extends Generator {
   }
 
   _writeWorkflowProject() {
-    var workflowProjectName = this.props.visualStudioSolutionProjectPrefix + '.Xrm.Workflows';
+    var workflowProjectName =
+      this.props.visualStudioSolutionProjectPrefix + '.Xrm.Workflows';
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Workflows/Project.Xrm.Workflows.csproj'),
-      this.destinationPath(workflowProjectName + '/' + workflowProjectName + '.csproj'), {
+      this.destinationPath(workflowProjectName + '/' + workflowProjectName + '.csproj'),
+      {
         workflowProjectName: workflowProjectName
       }
     );
 
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Workflows/Properties/AssemblyInfo.cs'),
-      this.destinationPath(workflowProjectName + '/Properties/AssemblyInfo.cs'), {
+      this.destinationPath(workflowProjectName + '/Properties/AssemblyInfo.cs'),
+      {
         workflowProjectName: workflowProjectName
       }
     );
 
     this.fs.copyTpl(
       this.templatePath('Project.Xrm.Workflows/SimpleWorkflowActivity.cs'),
-      this.destinationPath(workflowProjectName + '/SimpleWorkflowActivity.cs'), {
+      this.destinationPath(workflowProjectName + '/SimpleWorkflowActivity.cs'),
+      {
         workflowProjectName: workflowProjectName
       }
     );
@@ -247,37 +268,54 @@ module.exports = class extends Generator {
   }
 
   _writeResourcesProject() {
-    var generatedProjectName = this.props.visualStudioSolutionProjectPrefix + '.' + this.props.crmSolutionName + '.WebResources';
+    var generatedProjectName =
+      this.props.visualStudioSolutionProjectPrefix +
+      '.' +
+      this.props.crmSolutionName +
+      '.WebResources';
     this.fs.copyTpl(
-      this.templatePath('Project.Solution.WebResources/Project.Solution.WebResources.csproj'),
-      this.destinationPath(generatedProjectName + '/' + generatedProjectName + '.csproj'), {
+      this.templatePath(
+        'Project.Solution.WebResources/Project.Solution.WebResources.csproj'
+      ),
+      this.destinationPath(generatedProjectName + '/' + generatedProjectName + '.csproj'),
+      {
         visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
         crmSolutionName: this.props.crmSolutionName
       }
     );
   }
 
-  install () {
-    // this.installDependencies();
+  install() {
+    /// this.installDependencies();
   }
 
-  end () {
+  end() {
     var postInstallSteps =
-      chalk.green.bold('\nSuccessfully generated project structure for ' + this.props.crmSolutionName + '.') +
-      '\n\nFinalize the installation by: \n   1. Execute the ' + chalk.yellow(' "_RunFirst.ps1"') + ' powershell script located in the root folder.\n';
+      chalk.green.bold(
+        '\nSuccessfully generated project structure for ' +
+          this.props.crmSolutionName +
+          '.'
+      ) +
+      '\n\nFinalize the installation by: \n   1. Execute the ' +
+      chalk.yellow(' "_RunFirst.ps1"') +
+      ' powershell script located in the root folder.\n';
 
-    postInstallSteps += '   2. Download and extracting the remote CRM solution by executing the ' +
-      chalk.yellow.bold('Pull-CrmSolution.Param.ps1') + ' powershell script' +
+    postInstallSteps +=
+      '   2. Download and extracting the remote CRM solution by executing the ' +
+      chalk.yellow.bold('Pull-CrmSolution.Param.ps1') +
+      ' powershell script' +
       '\n      located in the Nullfactory.Xrm.Tooling\\Scripts folder.';
 
     if (this.props.isAddPluginProject || this.props.isAddWorkflowProject) {
-      postInstallSteps += '\n   3. Add a strong name key file to the plugin and/or workflow projects.';
+      postInstallSteps +=
+        '\n   3. Add a strong name key file to the plugin and/or workflow projects.';
     }
 
-    postInstallSteps += '\n\nPlease submit any issues found to ' + chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues');
+    postInstallSteps +=
+      '\n\nPlease submit any issues found to ' +
+      chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues');
     postInstallSteps += '\nGPL-3.0 © Shane Carvalho \n\n';
 
     this.log(postInstallSteps);
   }
 };
-///
