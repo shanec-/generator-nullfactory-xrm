@@ -15,7 +15,7 @@ module.exports = class extends Generator {
       )
     );
 
-    var prompts = [
+    const prompts = [
       {
         type: 'input',
         name: 'visualStudioSolutionName',
@@ -60,12 +60,10 @@ module.exports = class extends Generator {
       }
     ];
 
-    return this.prompt(prompts).then(
-      function(props) {
-        // To access props later use this.props.someAnswer;
-        this.props = props;
-      }.bind(this)
-    );
+    return this.prompt(prompts).then(props => {
+      // To access props later use this.props.someAnswer;
+      this.props = props;
+    });
   }
 
   writing() {

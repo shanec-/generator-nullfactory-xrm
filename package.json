@@ -71,7 +71,7 @@
     "prepublish": "nsp check",
     "pretest": "eslint .",
     "precommit": "lint-staged",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "license": "GPL-3.0"
 }
