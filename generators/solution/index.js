@@ -42,6 +42,9 @@ module.exports = class extends Generator {
   writing() {
     // Initialize the crm solution project
     this._writeCrmSolutionProject();
+
+    // Generate the mapping file
+    this._writeMappingFile();
   }
 
   // Crm solution
@@ -59,6 +62,16 @@ module.exports = class extends Generator {
         visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
         visualStudioSolutionName: this.props.visualStudioSolutionName
       }
+    );
+  }
+
+  // Solution mapping file
+  _writeMappingFile() {
+    this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Mappings/solution-mapping.xml'),
+      this.destinationPath(
+        'Nullfactory.Xrm.Tooling/Mappings/' + this.props.crmSolutionName + '-mapping.xml'
+      )
     );
   }
 
