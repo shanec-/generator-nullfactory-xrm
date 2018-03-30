@@ -2,6 +2,7 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
+const uuidv4 = require('uuid/v4');
 
 module.exports = class extends Generator {
   prompting() {
@@ -53,6 +54,7 @@ module.exports = class extends Generator {
         generatedSolutionName + '/' + generatedSolutionName + '.csproj'
       ),
       {
+        uniqueProjectId: uuidv4(),
         crmSolutionName: this.props.crmSolutionName,
         visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
         visualStudioSolutionName: this.props.visualStudioSolutionName

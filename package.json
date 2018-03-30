@@ -25,6 +25,7 @@
   "dependencies": {
     "chalk": "^2.3.1",
     "estraverse": "^4.2.0",
+    "uuid": "^3.2.1",
     "yeoman-generator": "^2.0.3",
     "yosay": "^2.0.1"
   },
