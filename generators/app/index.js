@@ -118,17 +118,20 @@ module.exports = class extends Generator {
   _writeCrmSolutionProject() {
     var generatedSolutionName =
       this.props.visualStudioSolutionProjectPrefix + '.' + this.props.crmSolutionName;
-    this.fs.copyTpl(
-      this.templatePath('Project.Solution/Project.Solution.csproj'),
-      this.destinationPath(
-        generatedSolutionName + '/' + generatedSolutionName + '.csproj'
-      ),
-      {
-        crmSolutionName: this.props.crmSolutionName,
-        visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
-        visualStudioSolutionName: this.props.visualStudioSolutionName
-      }
-    );
+    // This.fs.copyTpl(
+    //   this.templatePath('Project.Solution/Project.Solution.csproj'),
+    //   this.destinationPath(
+    //     generatedSolutionName + '/' + generatedSolutionName + '.csproj'
+    //   ),
+    //   {
+    //     crmSolutionName: this.props.crmSolutionName,
+    //     visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
+    //     visualStudioSolutionName: this.props.visualStudioSolutionName
+    //   }
+    // );
+    this.composeWith(require.resolve('../solution'), {
+      arguments: [generatedSolutionName]
+    });
   }
 
   // Tooling project

@@ -5,16 +5,28 @@ const yosay = require('yosay');
 const uuidv4 = require('uuid/v4');
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+
+    this.argument('test');
+    this.option('nosplash');
+
+    this.log(this.options.test);
+    this.log(this.options.nosplash);
+  }
+
   prompting() {
     // Have Yeoman greet the user.
-    this.log(
-      yosay(
-        chalk.keyword('orange')('nullfactory-xrm') +
-          '\n The' +
-          chalk.green(' Dynamics 365') +
-          ' Project Structure Generator!'
-      )
-    );
+    if (!this.options.nosplash) {
+      this.log(
+        yosay(
+          chalk.keyword('orange')('nullfactory-xrm') +
+            '\n The' +
+            chalk.green(' Dynamics 365') +
+            ' Project Structure Generator!'
+        )
+      );
+    }
 
     var prompts = [
       {
