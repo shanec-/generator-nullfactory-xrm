@@ -3,21 +3,31 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 const uuidv4 = require('uuid/v4');
+const prompt = require('./../app/prompt');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
 
-    this.argument('test');
+    this.argument('crmSolutionName');
+    this.argument('visualStudioSolutionProjectPrefix');
+    this.argument('visualStudioSolutionName');
     this.option('nosplash');
 
-    this.log(this.options.test);
+    this.log(this.options.crmSolutionName);
+    this.log(this.options.visualStudioSolutionProjectPrefix);
+    this.log(this.options.visualStudioSolutionName);
     this.log(this.options.nosplash);
+
+    this.crmSolutionName = this.options.crmSolutionName;
+    this.visualStudioSolutionProjectPrefix = this.options.crmSolutionName;
+    this.visualStudioSolutionName = this.options.crmSolutionName;
+    this.nosplash = this.options.nosplash;
   }
 
   prompting() {
     // Have Yeoman greet the user.
-    if (!this.options.nosplash) {
+    if (!this.nosplash) {
       this.log(
         yosay(
           chalk.keyword('orange')('nullfactory-xrm') +
@@ -29,24 +39,16 @@ module.exports = class extends Generator {
     }
 
     var prompts = [
-      {
-        type: 'input',
-        name: 'visualStudioSolutionProjectPrefix',
-        message: 'Visual Studio solution project filename prefix?',
-        default: 'Nullfactory'
-      },
-      {
-        type: 'input',
-        name: 'crmSolutionName',
-        message: 'Source CRM solution name?',
-        default: 'solution1'
-      }
+      prompt.visualStudioSolutionProjectPrefix(this),
+      prompt.crmSolutionName(this)
     ];
 
     return this.prompt(prompts).then(
       function(props) {
-        // To access props later use this.props.someAnswer;
-        this.props = props;
+        // To access props later use this.someAnswer;
+        // this = props;
+        this.visualStudioSolutionProjectPrefix = props.visualStudioSolutionProjectPrefix;
+        this.crmSolutionName = props.crmSolutionName;
       }.bind(this)
     );
   }
@@ -62,7 +64,7 @@ module.exports = class extends Generator {
   // Crm solution
   _writeCrmSolutionProject() {
     var generatedSolutionName =
-      this.props.visualStudioSolutionProjectPrefix + '.' + this.props.crmSolutionName;
+      this.visualStudioSolutionProjectPrefix + '.' + this.crmSolutionName;
     this.fs.copyTpl(
       this.templatePath('Project.Solution/Project.Solution.csproj'),
       this.destinationPath(
@@ -70,9 +72,9 @@ module.exports = class extends Generator {
       ),
       {
         uniqueProjectId: uuidv4(),
-        crmSolutionName: this.props.crmSolutionName,
-        visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
-        visualStudioSolutionName: this.props.visualStudioSolutionName
+        crmSolutionName: this.crmSolutionName,
+        visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
+        visualStudioSolutionName: this.visualStudioSolutionName
       }
     );
   }
@@ -82,7 +84,7 @@ module.exports = class extends Generator {
     this.fs.copy(
       this.templatePath('Nullfactory.Xrm.Tooling/Mappings/solution-mapping.xml'),
       this.destinationPath(
-        'Nullfactory.Xrm.Tooling/Mappings/' + this.props.crmSolutionName + '-mapping.xml'
+        'Nullfactory.Xrm.Tooling/Mappings/' + this.crmSolutionName + '-mapping.xml'
       )
     );
   }
@@ -93,7 +95,7 @@ module.exports = class extends Generator {
 
   end() {
     var postInstallSteps = chalk.green.bold(
-      '\nSuccessfully generated project structure for ' + this.props.crmSolutionName + '.'
+      '\nSuccessfully generated project structure for ' + this.crmSolutionName + '.'
     );
     postInstallSteps +=
       '\n\nPlease submit any issues found to ' +

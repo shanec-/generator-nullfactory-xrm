@@ -130,7 +130,13 @@ module.exports = class extends Generator {
     //   }
     // );
     this.composeWith(require.resolve('../solution'), {
-      arguments: [generatedSolutionName]
+      arguments: [
+        generatedSolutionName,
+        this.props.crmSolutionName,
+        this.props.visualStudioSolutionProjectPrefix,
+        this.props.visualStudioSolutionName,
+        'nosplash'
+      ]
     });
   }
 
