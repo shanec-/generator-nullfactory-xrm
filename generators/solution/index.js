@@ -13,15 +13,15 @@ module.exports = class extends Generator {
     this.argument('visualStudioSolutionName', { required: false });
     this.option('nosplash', { required: false, default: false });
 
-    this.log(this.options.crmSolutionName);
-    this.log(this.options.visualStudioSolutionProjectPrefix);
-    this.log(this.options.visualStudioSolutionName);
-    this.log(this.options.noSplash);
+    // This.log(this.options.crmSolutionName);
+    // this.log(this.options.visualStudioSolutionProjectPrefix);
+    // this.log(this.options.visualStudioSolutionName);
+    this.log(this.options.nosplash);
 
     this.crmSolutionName = this.options.crmSolutionName;
     this.visualStudioSolutionProjectPrefix = this.options.crmSolutionName;
     this.visualStudioSolutionName = this.options.crmSolutionName;
-    this.noSplash = this.options.noSplash;
+    this.noSplash = this.options.nosplash;
   }
 
   prompting() {
@@ -33,12 +33,10 @@ module.exports = class extends Generator {
       prompt.crmSolutionName(this)
     ];
 
-    return this.prompt(prompts).then(
-      function(props) {
-        this.visualStudioSolutionProjectPrefix = props.visualStudioSolutionProjectPrefix;
-        this.crmSolutionName = props.crmSolutionName;
-      }.bind(this)
-    );
+    return this.prompt(prompts).then(props => {
+      this.visualStudioSolutionProjectPrefix = props.visualStudioSolutionProjectPrefix;
+      this.crmSolutionName = props.crmSolutionName;
+    });
   }
 
   writing() {
