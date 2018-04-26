@@ -1,42 +1,32 @@
 'use strict';
 const Generator = require('yeoman-generator');
-const chalk = require('chalk');
-const yosay = require('yosay');
 const uuidv4 = require('uuid/v4');
 const prompt = require('./../app/prompt');
+const utility = require('./../app/utility');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
 
-    this.argument('crmSolutionName');
-    this.argument('visualStudioSolutionProjectPrefix');
-    this.argument('visualStudioSolutionName');
-    this.option('nosplash');
+    this.argument('crmSolutionName', { required: false });
+    this.argument('visualStudioSolutionProjectPrefix', { required: false });
+    this.argument('visualStudioSolutionName', { required: false });
+    this.option('nosplash', { required: false, default: false });
 
     this.log(this.options.crmSolutionName);
     this.log(this.options.visualStudioSolutionProjectPrefix);
     this.log(this.options.visualStudioSolutionName);
-    this.log(this.options.nosplash);
+    this.log(this.options.noSplash);
 
     this.crmSolutionName = this.options.crmSolutionName;
     this.visualStudioSolutionProjectPrefix = this.options.crmSolutionName;
     this.visualStudioSolutionName = this.options.crmSolutionName;
-    this.nosplash = this.options.nosplash;
+    this.noSplash = this.options.noSplash;
   }
 
   prompting() {
     // Have Yeoman greet the user.
-    if (!this.nosplash) {
-      this.log(
-        yosay(
-          chalk.keyword('orange')('nullfactory-xrm') +
-            '\n The' +
-            chalk.green(' Dynamics 365') +
-            ' Project Structure Generator!'
-        )
-      );
-    }
+    utility.showSplash(this);
 
     var prompts = [
       prompt.visualStudioSolutionProjectPrefix(this),
@@ -45,8 +35,6 @@ module.exports = class extends Generator {
 
     return this.prompt(prompts).then(
       function(props) {
-        // To access props later use this.someAnswer;
-        // this = props;
         this.visualStudioSolutionProjectPrefix = props.visualStudioSolutionProjectPrefix;
         this.crmSolutionName = props.crmSolutionName;
       }.bind(this)
@@ -94,14 +82,6 @@ module.exports = class extends Generator {
   }
 
   end() {
-    var postInstallSteps = chalk.green.bold(
-      '\nSuccessfully generated project structure for ' + this.crmSolutionName + '.'
-    );
-    postInstallSteps +=
-      '\n\nPlease submit any issues found to ' +
-      chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues');
-    postInstallSteps += '\nGPL-3.0 © Shane Carvalho \n\n';
-
-    this.log(postInstallSteps);
+    utility.showPostInstructionsSolution(this);
   }
 };

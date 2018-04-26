@@ -42,8 +42,8 @@ function crmSolutionName(obj) {
   return {
     type: `input`,
     name: `crmSolutionName`,
-    default: `https://sandbox.crm6.dynamics.com/`,
-    message: `Source CRM server url?`,
+    default: `solution1`,
+    message: `Source CRM solution name?`,
     when: () => {
       // If the parameter is passed in as an option then, skip.
       return obj.options.crmSolutionName === undefined;
