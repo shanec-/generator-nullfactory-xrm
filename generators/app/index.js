@@ -77,8 +77,8 @@ module.exports = class extends Generator {
 
   // Crm solution
   _writeCrmSolutionProject() {
-    var generatedSolutionName =
-      this.visualStudioSolutionProjectPrefix + '.' + this.crmSolutionName;
+    // Var generatedSolutionName =
+    //   this.visualStudioSolutionProjectPrefix + '.' + this.crmSolutionName;
     // This.fs.copyTpl(
     //   this.templatePath('Project.Solution/Project.Solution.csproj'),
     //   this.destinationPath(
@@ -90,9 +90,22 @@ module.exports = class extends Generator {
     //     visualStudioSolutionName: this.visualStudioSolutionName
     //   }
     // );
-    this.composeWith(require.resolve('../solution'), {
+
+    this.log('composeWith' + this.crmSolutionName);
+    this.log(this.visualStudioSolutionProjectPrefix);
+    this.log(this.visualStudioSolutionName);
+
+    // This.composeWith(require.resolve('../solution'), {
+    //   arguments: [
+    //     this.crmSolutionName,
+    //     this.visualStudioSolutionProjectPrefix,
+    //     this.visualStudioSolutionName,
+    //     'nosplash'
+    //   ]
+    // });
+
+    this.composeWith('nullfactory-xrm:solution', {
       arguments: [
-        generatedSolutionName,
         this.crmSolutionName,
         this.visualStudioSolutionProjectPrefix,
         this.visualStudioSolutionName,

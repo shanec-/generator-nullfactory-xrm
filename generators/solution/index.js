@@ -13,14 +13,14 @@ module.exports = class extends Generator {
     this.argument('visualStudioSolutionName', { required: false });
     this.option('nosplash', { required: false, default: false });
 
-    // This.log(this.options.crmSolutionName);
-    // this.log(this.options.visualStudioSolutionProjectPrefix);
-    // this.log(this.options.visualStudioSolutionName);
+    this.log(this.options.crmSolutionName);
+    this.log(this.options.visualStudioSolutionProjectPrefix);
+    this.log(this.options.visualStudioSolutionName);
     this.log(this.options.nosplash);
 
     this.crmSolutionName = this.options.crmSolutionName;
-    this.visualStudioSolutionProjectPrefix = this.options.crmSolutionName;
-    this.visualStudioSolutionName = this.options.crmSolutionName;
+    this.visualStudioSolutionProjectPrefix = this.options.visualStudioSolutionProjectPrefix;
+    this.visualStudioSolutionName = this.options.visualStudioSolutionName;
     this.noSplash = this.options.nosplash;
   }
 
@@ -51,6 +51,12 @@ module.exports = class extends Generator {
   _writeCrmSolutionProject() {
     var generatedSolutionName =
       this.visualStudioSolutionProjectPrefix + '.' + this.crmSolutionName;
+
+    this.log(this.crmSolutionName);
+    this.log(this.visualStudioSolutionProjectPrefix);
+    this.log(this.visualStudioSolutionName);
+    this.log(this.nosplash);
+
     this.fs.copyTpl(
       this.templatePath('Project.Solution/Project.Solution.csproj'),
       this.destinationPath(
