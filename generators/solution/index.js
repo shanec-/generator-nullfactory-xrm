@@ -10,22 +10,20 @@ module.exports = class extends Generator {
 
     this.argument('crmSolutionName', { required: false });
     this.argument('visualStudioSolutionProjectPrefix', { required: false });
-    this.argument('visualStudioSolutionName', { required: false });
     this.option('nosplash', { required: false, default: false });
 
-    this.log(this.options.crmSolutionName);
-    this.log(this.options.visualStudioSolutionProjectPrefix);
-    this.log(this.options.visualStudioSolutionName);
-    this.log(this.options.nosplash);
+    // This.log("Solution - Option: " + this.options.crmSolutionName);
+    // this.log("Solution - Option: " + this.options.visualStudioSolutionProjectPrefix);
+    // this.log("Solution - Option: " + this.options.nosplash);
 
     this.crmSolutionName = this.options.crmSolutionName;
     this.visualStudioSolutionProjectPrefix = this.options.visualStudioSolutionProjectPrefix;
-    this.visualStudioSolutionName = this.options.visualStudioSolutionName;
     this.noSplash = this.options.nosplash;
   }
 
   prompting() {
-    // Have Yeoman greet the user.
+    // This.log(this.options.nosplash);
+    // this.log(this.noSplash);
     utility.showSplash(this);
 
     var prompts = [
@@ -34,8 +32,14 @@ module.exports = class extends Generator {
     ];
 
     return this.prompt(prompts).then(props => {
-      this.visualStudioSolutionProjectPrefix = props.visualStudioSolutionProjectPrefix;
-      this.crmSolutionName = props.crmSolutionName;
+      this.visualStudioSolutionProjectPrefix = utility.resolveParam(
+        this.visualStudioSolutionProjectPrefix,
+        props.visualStudioSolutionProjectPrefix
+      );
+      this.crmSolutionName = utility.resolveParam(
+        this.crmSolutionName,
+        props.crmSolutionName
+      );
     });
   }
 
@@ -52,10 +56,9 @@ module.exports = class extends Generator {
     var generatedSolutionName =
       this.visualStudioSolutionProjectPrefix + '.' + this.crmSolutionName;
 
-    this.log(this.crmSolutionName);
-    this.log(this.visualStudioSolutionProjectPrefix);
-    this.log(this.visualStudioSolutionName);
-    this.log(this.nosplash);
+    // This.log(this.crmSolutionName);
+    // this.log(this.visualStudioSolutionProjectPrefix);
+    // this.log(this.noSplash);
 
     this.fs.copyTpl(
       this.templatePath('Project.Solution/Project.Solution.csproj'),
@@ -65,8 +68,7 @@ module.exports = class extends Generator {
       {
         uniqueProjectId: uuidv4(),
         crmSolutionName: this.crmSolutionName,
-        visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
-        visualStudioSolutionName: this.visualStudioSolutionName
+        visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix
       }
     );
   }

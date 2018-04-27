@@ -91,9 +91,8 @@ module.exports = class extends Generator {
     //   }
     // );
 
-    this.log('composeWith' + this.crmSolutionName);
-    this.log(this.visualStudioSolutionProjectPrefix);
-    this.log(this.visualStudioSolutionName);
+    this.log('composeWith Param' + this.crmSolutionName);
+    this.log('composeWith Param' + this.visualStudioSolutionProjectPrefix);
 
     // This.composeWith(require.resolve('../solution'), {
     //   arguments: [
@@ -105,12 +104,9 @@ module.exports = class extends Generator {
     // });
 
     this.composeWith('nullfactory-xrm:solution', {
-      arguments: [
-        this.crmSolutionName,
-        this.visualStudioSolutionProjectPrefix,
-        this.visualStudioSolutionName,
-        'nosplash'
-      ]
+      crmSolutionName: this.crmSolutionName,
+      visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
+      nosplash: true
     });
   }
 

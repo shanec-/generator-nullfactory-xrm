@@ -46,7 +46,6 @@ function showPostInstructions(obj) {
 }
 
 function showPostInstructionsSolution(obj) {
-  obj.log(obj.noSplash);
   if (!obj.noSplash) {
     var postInstallSteps = chalk.green.bold(
       '\nSuccessfully generated project structure for ' + obj.crmSolutionName + '.'
@@ -60,8 +59,17 @@ function showPostInstructionsSolution(obj) {
   }
 }
 
+function resolveParam(optionParam, userInput) {
+  if (optionParam === undefined) {
+    return userInput;
+  }
+
+  return optionParam;
+}
+
 module.exports = {
   showSplash: showSplash,
   showPostInstructions: showPostInstructions,
-  showPostInstructionsSolution: showPostInstructionsSolution
+  showPostInstructionsSolution: showPostInstructionsSolution,
+  resolveParam: resolveParam
 };
