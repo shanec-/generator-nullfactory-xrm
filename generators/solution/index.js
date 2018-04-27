@@ -12,18 +12,12 @@ module.exports = class extends Generator {
     this.argument('visualStudioSolutionProjectPrefix', { required: false });
     this.option('nosplash', { required: false, default: false });
 
-    // This.log("Solution - Option: " + this.options.crmSolutionName);
-    // this.log("Solution - Option: " + this.options.visualStudioSolutionProjectPrefix);
-    // this.log("Solution - Option: " + this.options.nosplash);
-
     this.crmSolutionName = this.options.crmSolutionName;
     this.visualStudioSolutionProjectPrefix = this.options.visualStudioSolutionProjectPrefix;
     this.noSplash = this.options.nosplash;
   }
 
   prompting() {
-    // This.log(this.options.nosplash);
-    // this.log(this.noSplash);
     utility.showSplash(this);
 
     var prompts = [
@@ -32,11 +26,12 @@ module.exports = class extends Generator {
     ];
 
     return this.prompt(prompts).then(props => {
-      this.visualStudioSolutionProjectPrefix = utility.resolveParam(
+      this.visualStudioSolutionProjectPrefix = utility.resolveParameter(
         this.visualStudioSolutionProjectPrefix,
         props.visualStudioSolutionProjectPrefix
       );
-      this.crmSolutionName = utility.resolveParam(
+
+      this.crmSolutionName = utility.resolveParameter(
         this.crmSolutionName,
         props.crmSolutionName
       );
@@ -55,10 +50,6 @@ module.exports = class extends Generator {
   _writeCrmSolutionProject() {
     var generatedSolutionName =
       this.visualStudioSolutionProjectPrefix + '.' + this.crmSolutionName;
-
-    // This.log(this.crmSolutionName);
-    // this.log(this.visualStudioSolutionProjectPrefix);
-    // this.log(this.noSplash);
 
     this.fs.copyTpl(
       this.templatePath('Project.Solution/Project.Solution.csproj'),
@@ -88,6 +79,6 @@ module.exports = class extends Generator {
   }
 
   end() {
-    utility.showPostInstructionsSolution(this);
+    utility.showInstructionsSolution(this);
   }
 };

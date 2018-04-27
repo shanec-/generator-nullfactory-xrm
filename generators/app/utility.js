@@ -17,7 +17,7 @@ function showSplash(obj) {
   }
 }
 
-function showPostInstructions(obj) {
+function showInstructionsFull(obj) {
   var postInstallSteps =
     chalk.green.bold(
       '\nSuccessfully generated project structure for ' + obj.crmSolutionName + '.'
@@ -37,39 +37,39 @@ function showPostInstructions(obj) {
       '\n   3. Add a strong name key file to the plugin and/or workflow projects.';
   }
 
-  postInstallSteps +=
-    '\n\nPlease submit any issues found to ' +
-    chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues');
-  postInstallSteps += '\nGPL-3.0 © Shane Carvalho \n\n';
-
   obj.log(postInstallSteps);
+  showCredits(obj);
 }
 
-function showPostInstructionsSolution(obj) {
+function showInstructionsSolution(obj) {
   if (!obj.noSplash) {
-    var postInstallSteps = chalk.green.bold(
-      '\nSuccessfully generated project structure for ' + obj.crmSolutionName + '.'
+    obj.log(
+      chalk.green.bold(
+        '\nSuccessfully generated project structure for ' + obj.crmSolutionName + '.'
+      )
     );
-    postInstallSteps +=
-      '\n\nPlease submit any issues found to ' +
-      chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues');
-    postInstallSteps += '\nGPL-3.0 © Shane Carvalho \n\n';
-
-    obj.log(postInstallSteps);
+    showCredits(obj);
   }
 }
 
-function resolveParam(optionParam, userInput) {
+function showCredits(obj) {
+  obj.log(
+    '\nPlease submit any issues found to ' +
+      chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues')
+  );
+  obj.log('GPL-3.0 © Shane Carvalho \n\n');
+}
+
+function resolveParameter(optionParam, userInput) {
   if (optionParam === undefined) {
     return userInput;
   }
-
   return optionParam;
 }
 
 module.exports = {
   showSplash: showSplash,
-  showPostInstructions: showPostInstructions,
-  showPostInstructionsSolution: showPostInstructionsSolution,
-  resolveParam: resolveParam
+  showInstructionsFull: showInstructionsFull,
+  showInstructionsSolution: showInstructionsSolution,
+  resolveParameter: resolveParameter
 };

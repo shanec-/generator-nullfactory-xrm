@@ -266,6 +266,6 @@ module.exports = class extends Generator {
   }
 
   end() {
-    utility.showPostInstructions(this);
+    utility.showInstructionsFull(this);
   }
 };
