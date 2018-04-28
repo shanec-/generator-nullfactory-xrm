@@ -90,6 +90,19 @@ function isAddWorkflowProject(obj) {
   };
 }
 
+function isToolingUpgrade(obj) {
+  return {
+    type: `confirm`,
+    name: `isToolingUpgrade`,
+    default: true,
+    message: `Upgrade the tooling project?`,
+    when: () => {
+      // If the parameter is passed in as an option then, skip.
+      return obj.options.isAddWorkflowProject === undefined;
+    }
+  };
+}
+
 // {
 //   type: 'input',
 //   name: 'visualStudioSolutionName',
@@ -140,5 +153,6 @@ module.exports = {
   crmSolutionName: crmSolutionName,
   isAddWebResourceProject: isAddWebResourceProject,
   isAddPluginProject: isAddPluginProject,
-  isAddWorkflowProject: isAddWorkflowProject
+  isAddWorkflowProject: isAddWorkflowProject,
+  isToolingUpgrade: isToolingUpgrade
 };

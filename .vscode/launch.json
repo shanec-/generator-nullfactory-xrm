@@ -8,11 +8,11 @@
       "type": "node",
       "request": "launch",
       "name": "Yeoman nullfactory-xrm",
-      "program":
-        "C:/Users/cheese/AppData/Roaming/npm/node_modules/yo/lib/cli.js",
+      "program": "${workspaceFolder}/node_modules/yo/lib/cli.js",
       "args": ["nullfactory-xrm"],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${env:gen-nfx-debug}"
     }
   ]
 }

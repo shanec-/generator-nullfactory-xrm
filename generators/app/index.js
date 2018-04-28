@@ -77,32 +77,6 @@ module.exports = class extends Generator {
 
   // Crm solution
   _writeCrmSolutionProject() {
-    // Var generatedSolutionName =
-    //   this.visualStudioSolutionProjectPrefix + '.' + this.crmSolutionName;
-    // This.fs.copyTpl(
-    //   this.templatePath('Project.Solution/Project.Solution.csproj'),
-    //   this.destinationPath(
-    //     generatedSolutionName + '/' + generatedSolutionName + '.csproj'
-    //   ),
-    //   {
-    //     crmSolutionName: this.crmSolutionName,
-    //     visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
-    //     visualStudioSolutionName: this.visualStudioSolutionName
-    //   }
-    // );
-
-    this.log('composeWith Param' + this.crmSolutionName);
-    this.log('composeWith Param' + this.visualStudioSolutionProjectPrefix);
-
-    // This.composeWith(require.resolve('../solution'), {
-    //   arguments: [
-    //     this.crmSolutionName,
-    //     this.visualStudioSolutionProjectPrefix,
-    //     this.visualStudioSolutionName,
-    //     'nosplash'
-    //   ]
-    // });
-
     this.composeWith('nullfactory-xrm:solution', {
       crmSolutionName: this.crmSolutionName,
       visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
@@ -112,70 +86,45 @@ module.exports = class extends Generator {
 
   // Tooling project
   _writeToolingProject() {
-    var staticFiles = [
-      '_RunFirst.ps1',
-      'Nullfactory.Xrm.Tooling/packages.config',
-      'Nullfactory.Xrm.Tooling/_Install/Install-Microsoft.Xrm.Data.PowerShell.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/ApplyVersionToArtifact.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/CrmSolution.Common.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/omapi/Backup-CrmInstance.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/omapi/Create-CrmInstance.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/omapi/CrmInstance.Common.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/omapi/Delete-CrmInstance.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/omapi/Get-AvailableCrmInstances.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/omapi/Get-AvailableCrmTemplates.ps1',
-      'Nullfactory.Xrm.Tooling/Scripts/omapi/Restore-CrmInstance.ps1'
-    ];
+    this.composeWith('nullfactory-xrm:tooling', {
+      crmSolutionName: this.crmSolutionName,
+      visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
+      crmServerUrl: this.crmServerUrl,
+      isAddPluginProject: this.isAddPluginProject,
+      isAddWorkflowProject: this.isAddWorkflowProject,
+      nosplash: true
+    });
+  }
 
-    // Process static files that do no need parameters
-    for (var i = 0; i < staticFiles.length; i++) {
-      var element = staticFiles[i];
-      /// this.log(element);
-      this.fs.copy(this.templatePath(element), this.destinationPath(element));
-    }
-
+  _writeWorkflowProject() {
+    var workflowProjectName = this.visualStudioSolutionProjectPrefix + '.Xrm.Workflows';
     this.fs.copyTpl(
-      this.templatePath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'),
+      this.templatePath('Project.Xrm.Workflows/Project.Xrm.Workflows.csproj'),
+      this.destinationPath(workflowProjectName + '/' + workflowProjectName + '.csproj'),
       {
-        crmSolutionName: this.crmSolutionName
+        workflowProjectName: workflowProjectName
       }
     );
 
     this.fs.copyTpl(
-      this.templatePath('Nullfactory.Xrm.Tooling/Mappings/solution-mapping.xml'),
-      this.destinationPath(
-        'Nullfactory.Xrm.Tooling/Mappings/' + this.crmSolutionName + '-mapping.xml'
-      ),
+      this.templatePath('Project.Xrm.Workflows/Properties/AssemblyInfo.cs'),
+      this.destinationPath(workflowProjectName + '/Properties/AssemblyInfo.cs'),
       {
-        visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
-        isAddPluginProject: this.isAddPluginProject,
-        isAddWorkflowProject: this.isAddWorkflowProject
+        workflowProjectName: workflowProjectName
       }
     );
 
     this.fs.copyTpl(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'),
-      this.destinationPath('Nullfactory.Xrm.Tooling/Scripts/Pull-CrmSolution.Param.ps1'),
+      this.templatePath('Project.Xrm.Workflows/SimpleWorkflowActivity.cs'),
+      this.destinationPath(workflowProjectName + '/SimpleWorkflowActivity.cs'),
       {
-        visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
-        crmSolutionName: this.crmSolutionName,
-        crmServerUrl: this.crmServerUrl
+        workflowProjectName: workflowProjectName
       }
     );
 
-    this.fs.copyTpl(
-      this.templatePath('Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.Param.ps1'),
-      this.destinationPath(
-        'Nullfactory.Xrm.Tooling/Scripts/Deploy-CrmSolution.Param.ps1'
-      ),
-      {
-        visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
-        crmSolutionName: this.crmSolutionName,
-        crmServerUrl: this.crmServerUrl
-      }
+    this.fs.copy(
+      this.templatePath('Project.Xrm.Workflows/packages.config'),
+      this.destinationPath(workflowProjectName + '/packages.config')
     );
   }
 
@@ -208,38 +157,6 @@ module.exports = class extends Generator {
     this.fs.copy(
       this.templatePath('Project.Xrm.Plugins/packages.config'),
       this.destinationPath(pluginProjectName + '/packages.config')
-    );
-  }
-
-  _writeWorkflowProject() {
-    var workflowProjectName = this.visualStudioSolutionProjectPrefix + '.Xrm.Workflows';
-    this.fs.copyTpl(
-      this.templatePath('Project.Xrm.Workflows/Project.Xrm.Workflows.csproj'),
-      this.destinationPath(workflowProjectName + '/' + workflowProjectName + '.csproj'),
-      {
-        workflowProjectName: workflowProjectName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('Project.Xrm.Workflows/Properties/AssemblyInfo.cs'),
-      this.destinationPath(workflowProjectName + '/Properties/AssemblyInfo.cs'),
-      {
-        workflowProjectName: workflowProjectName
-      }
-    );
-
-    this.fs.copyTpl(
-      this.templatePath('Project.Xrm.Workflows/SimpleWorkflowActivity.cs'),
-      this.destinationPath(workflowProjectName + '/SimpleWorkflowActivity.cs'),
-      {
-        workflowProjectName: workflowProjectName
-      }
-    );
-
-    this.fs.copy(
-      this.templatePath('Project.Xrm.Workflows/packages.config'),
-      this.destinationPath(workflowProjectName + '/packages.config')
     );
   }
 
