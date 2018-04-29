@@ -53,6 +53,18 @@ module.exports = class extends Generator {
     }
   }
 
+  // Tooling project
+  _writeToolingProject() {
+    this.composeWith('nullfactory-xrm:tooling', {
+      crmSolutionName: this.crmSolutionName,
+      visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
+      crmServerUrl: this.crmServerUrl,
+      isAddPluginProject: this.isAddPluginProject,
+      isAddWorkflowProject: this.isAddWorkflowProject,
+      nosplash: true
+    });
+  }
+
   // Vs solution
   _writeVsSolutionProject() {
     this.fs.copyTpl(
@@ -80,18 +92,6 @@ module.exports = class extends Generator {
     this.composeWith('nullfactory-xrm:solution', {
       crmSolutionName: this.crmSolutionName,
       visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
-      nosplash: true
-    });
-  }
-
-  // Tooling project
-  _writeToolingProject() {
-    this.composeWith('nullfactory-xrm:tooling', {
-      crmSolutionName: this.crmSolutionName,
-      visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
-      crmServerUrl: this.crmServerUrl,
-      isAddPluginProject: this.isAddPluginProject,
-      isAddWorkflowProject: this.isAddWorkflowProject,
       nosplash: true
     });
   }
