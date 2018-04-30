@@ -52,6 +52,11 @@ function showInstructionsSolution(obj) {
   }
 }
 
+function showInstructionsRepo(obj) {
+  obj.log(chalk.green.bold('\nSuccessfully generated .gitignore file.'));
+  showCredits(obj);
+}
+
 function showCredits(obj) {
   obj.log(
     '\nPlease submit any issues found to ' +
@@ -71,5 +76,6 @@ module.exports = {
   showSplash: showSplash,
   showInstructionsFull: showInstructionsFull,
   showInstructionsSolution: showInstructionsSolution,
-  resolveParameter: resolveParameter
+  resolveParameter: resolveParameter,
+  showInstructionsRepo: showInstructionsRepo
 };
