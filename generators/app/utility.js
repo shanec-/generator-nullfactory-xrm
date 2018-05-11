@@ -57,6 +57,11 @@ function showInstructionsRepo(obj) {
   showCredits(obj);
 }
 
+function showInstructionsCiBuild(obj) {
+  obj.log(chalk.green.bold('\nSuccessfully generated YAML CI build.'));
+  showCredits(obj);
+}
+
 function showCredits(obj) {
   obj.log(
     '\nPlease submit any issues found to ' +
@@ -77,5 +82,6 @@ module.exports = {
   showInstructionsFull: showInstructionsFull,
   showInstructionsSolution: showInstructionsSolution,
   resolveParameter: resolveParameter,
-  showInstructionsRepo: showInstructionsRepo
+  showInstructionsRepo: showInstructionsRepo,
+  showInstructionsCiBuild: showInstructionsCiBuild
 };

@@ -103,6 +103,20 @@ function isToolingUpgrade(obj) {
   };
 }
 
+function buildServer(obj) {
+  return {
+    type: `list`,
+    name: `buildServer`,
+    default: `Visual Studio Team Services`,
+    message: `What type of build server are you using?`,
+    choices: ['Visual Studio Team Services'],
+    when: () => {
+      // If the parameter is passed in as an option then, skip.
+      return obj.options.buildServer === undefined;
+    }
+  };
+}
+
 // {
 //   type: 'input',
 //   name: 'visualStudioSolutionName',
@@ -154,5 +168,6 @@ module.exports = {
   isAddWebResourceProject: isAddWebResourceProject,
   isAddPluginProject: isAddPluginProject,
   isAddWorkflowProject: isAddWorkflowProject,
-  isToolingUpgrade: isToolingUpgrade
+  isToolingUpgrade: isToolingUpgrade,
+  buildServer: buildServer
 };
