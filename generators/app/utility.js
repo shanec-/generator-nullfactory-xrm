@@ -52,6 +52,17 @@ function showInstructionsSolution(obj) {
   }
 }
 
+function showInstructionsTooling(obj) {
+  if (!obj.noSplash) {
+    if (obj.isToolingUpgrade) {
+      obj.log(chalk.green.bold('\nSuccessfully upgraded scripts.'));
+    } else {
+      obj.log(chalk.yellow.bold('\nUser cancelled. No files changed.'));
+    }
+    showCredits(obj);
+  }
+}
+
 function showInstructionsRepo(obj) {
   obj.log(chalk.green.bold('\nSuccessfully generated .gitignore file.'));
   showCredits(obj);
@@ -83,5 +94,6 @@ module.exports = {
   showInstructionsSolution: showInstructionsSolution,
   resolveParameter: resolveParameter,
   showInstructionsRepo: showInstructionsRepo,
-  showInstructionsCiBuild: showInstructionsCiBuild
+  showInstructionsCiBuild: showInstructionsCiBuild,
+  showInstructionsTooling: showInstructionsTooling
 };

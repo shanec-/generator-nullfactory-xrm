@@ -11,9 +11,7 @@ module.exports = class extends Generator {
     this.fs.copy(this.templatePath('-gitignore'), this.destinationPath('.gitignore'));
   }
 
-  install() {
-    /// this.installDependencies();
-  }
+  install() {}
 
   end() {
     utility.showInstructionsRepo(this);

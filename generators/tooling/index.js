@@ -13,6 +13,7 @@ module.exports = class extends Generator {
     this.argument('isAddPluginProject', { required: false });
     this.argument('isAddWorkflowProject', { required: false });
     this.option('nosplash', { required: false, default: false });
+    this.option('isIntegratedExecution', { required: false, default: false });
 
     this.crmSolutionName = this.options.crmSolutionName;
     this.visualStudioSolutionProjectPrefix = this.options.visualStudioSolutionProjectPrefix;
@@ -20,6 +21,7 @@ module.exports = class extends Generator {
     this.isAddPluginProject = this.options.isAddPluginProject;
     this.isAddWorkflowProject = this.options.isAddWorkflowProject;
     this.noSplash = this.options.nosplash;
+    this.isIntegratedExecution = this.options.isIntegratedExecution;
   }
 
   prompting() {
@@ -37,10 +39,16 @@ module.exports = class extends Generator {
 
   writing() {
     // Write the tooling project
-    this._writeToolingProject();
+    if (this.isIntegratedExecution) {
+      this._writeToolingStaticFiles();
+      this._writeToolingProject();
+    } else if (this.isToolingUpgrade) {
+      // Upgrade should only focus on the static files
+      this._writeToolingStaticFiles();
+    }
   }
 
-  _writeToolingProject() {
+  _writeToolingStaticFiles() {
     var staticFiles = [
       '_RunFirst.ps1',
       'Nullfactory.Xrm.Tooling/packages.config',
@@ -64,12 +72,9 @@ module.exports = class extends Generator {
       /// this.log(element);
       this.fs.copy(this.templatePath(element), this.destinationPath(element));
     }
+  }
 
-    // If this is a tooling upgrade only, there's nothing to do beyond this point
-    if (this.isToolingUpgrade) {
-      return;
-    }
-
+  _writeToolingProject() {
     this.fs.copyTpl(
       this.templatePath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'),
       this.destinationPath('Nullfactory.Xrm.Tooling/Nullfactory.Xrm.Tooling.csproj'),
@@ -113,11 +118,9 @@ module.exports = class extends Generator {
     );
   }
 
-  install() {
-    /// this.installDependencies();
-  }
+  install() {}
 
   end() {
-    utility.showInstructionsSolution(this);
+    utility.showInstructionsTooling(this);
   }
 };

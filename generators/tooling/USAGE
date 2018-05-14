@@ -1,0 +1,8 @@
+Description:
+	Create or upgrade the tooling scripts
+
+Example:
+	yo nullfactory-xrm:tooling
+
+	This will create:
+		create or update
