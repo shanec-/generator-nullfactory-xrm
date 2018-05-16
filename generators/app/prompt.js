@@ -95,7 +95,7 @@ function isToolingUpgrade(obj) {
     type: `confirm`,
     name: `isToolingUpgrade`,
     default: true,
-    message: `Proceed upgrading the tooling scripts?`,
+    message: `Proceed with upgrading the tooling scripts?`,
     when: () => {
       // If the parameter is passed in as an option then, skip.
       return obj.options.isAddWorkflowProject === undefined;
