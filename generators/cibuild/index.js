@@ -1,45 +1,40 @@
 'use strict';
 const Generator = require('yeoman-generator');
-const chalk = require('chalk');
-const yosay = require('yosay');
+const prompt = require('./../app/prompt');
+const utility = require('./../app/utility');
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+
+    this.argument('crmSolutionName', { required: false });
+    this.argument('visualStudioSolutionProjectPrefix', { required: false });
+    this.option('nosplash', { required: false, default: false });
+
+    this.buildServer = this.options.buildServer;
+    this.visualStudioSolutionProjectPrefix = this.options.visualStudioSolutionProjectPrefix;
+    this.noSplash = this.options.nosplash;
+  }
+
   prompting() {
     // Have Yeoman greet the user.
-    this.log(
-      yosay(
-        chalk.keyword('orange')('nullfactory-xrm') +
-          '\n The' +
-          chalk.green(' Dynamics 365') +
-          ' Project Structure Generator!'
-      )
-    );
+    utility.showSplash(this);
 
-    var prompts = [
-      {
-        type: 'input',
-        name: 'visualStudioSolutionProjectPrefix',
-        message: 'Visual Studio solution project filename prefix?',
-        default: 'Nullfactory'
-      },
-      {
-        type: 'list',
-        name: 'buildServer',
-        message: 'What type of build server are you using?',
-        choices: ['Visual Studio Team Services']
-      }
-    ];
+    return this.prompt([
+      prompt.visualStudioSolutionProjectPrefix(this),
+      prompt.buildServer(this)
+    ]).then(props => {
+      this.visualStudioSolutionProjectPrefix = utility.resolveParameter(
+        this.visualStudioSolutionProjectPrefix,
+        props.visualStudioSolutionProjectPrefix
+      );
 
-    return this.prompt(prompts).then(
-      function(props) {
-        // To access props later use this.props.someAnswer;
-        this.props = props;
-      }.bind(this)
-    );
+      this.buildServer = utility.resolveParameter(this.buildServer, props.buildServer);
+    });
   }
 
   writing() {
-    switch (this.props.buildServer) {
+    switch (this.buildServer) {
       case 'Visual Studio Team Services':
       default: {
         this._writeVsts();
@@ -50,7 +45,7 @@ module.exports = class extends Generator {
   // Vs solution
   _writeVsts() {
     this.fs.copyTpl(this.templatePath('vsts.y_l'), this.destinationPath('.vsts-ci.yml'), {
-      visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix
+      visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix
     });
   }
 
@@ -59,8 +54,6 @@ module.exports = class extends Generator {
   }
 
   end() {
-    var postInstallSteps = chalk.green.bold('\nSuccessfully generated YAML CI build.');
-
-    this.log(postInstallSteps);
+    utility.showInstructionsCiBuild(this);
   }
 };
