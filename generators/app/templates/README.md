@@ -5,12 +5,13 @@ CRM Server Url: [<%= crmServerUrl %>](<%= crmServerUrl %>)
 
 ## Getting Started
 
-Ensure that the NuGet packages in the `Nullfactory.Xrm.Tooling` project are refreshed by running the following command:
+Execute the `_RunFirst.ps1` powershell script located in the generated root folder. This script would restore and update the packages used by the `Nullfactory.Xrm.Tooling`
+
 ```
-Update-Package -reinstall -Project Nullfactory.Xrm.Tooling
+.\_RunFirst.ps1
 ```
 
-### Pull the CRM Solution into the Project Structure
+### Pull the CRM Solution into the project structure
 
 When the CRM solution needs to be pulled down into the project structure, execute the script located at `Nullfactory.Xrm.Tooling\Scripts\Pull-CrmSolution.Param.ps1`.
 
@@ -34,3 +35,12 @@ More information on setting up continuous integration builds and automated relea
 - [Release Strategy for Dynamics CRM - Part 3 - Setting Up the Release](http://www.nullfactory.net/2016/11/release-strategy-for-dynamics-crm-setting-up-the-release-part-3/)
 - [Release Strategy for Dynamics CRM - Part 4 - Versioning](http://www.nullfactory.net/2017/02/release-strategy-for-dynamics-crm-versioning-part-4/)
 - [Release Strategy for Dynamics CRM - Part 5 - Deploy Third-Party Solutions](http://www.nullfactory.net/2017/04/release-strategy-for-dynamics-crm-deploying-third-party-solutions-part-5/)
+
+### Upgrading the PowerShell scripts
+
+In order to upgrade the PowerShell scripts, execute the `tooling` sub-generator and follow the prompts:
+
+```
+yo nullfactory-xrm:tooling
+```
+
