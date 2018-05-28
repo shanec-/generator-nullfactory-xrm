@@ -55,7 +55,7 @@ module.exports = class extends Generator {
 
   // Tooling project
   _writeToolingProject() {
-    this.composeWith('nullfactory-xrm:tooling', {
+    this.composeWith(require.resolve('../tooling'), {
       crmSolutionName: this.crmSolutionName,
       visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
       crmServerUrl: this.crmServerUrl,
@@ -90,7 +90,7 @@ module.exports = class extends Generator {
 
   // Crm solution
   _writeCrmSolutionProject() {
-    this.composeWith('nullfactory-xrm:solution', {
+    this.composeWith(require.resolve('../solution'), {
       crmSolutionName: this.crmSolutionName,
       visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix,
       nosplash: true
