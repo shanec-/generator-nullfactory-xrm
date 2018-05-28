@@ -117,49 +117,6 @@ function buildServer(obj) {
   };
 }
 
-// {
-//   type: 'input',
-//   name: 'visualStudioSolutionName',
-//   message: 'Visual Studio solution filename?',
-//   default: 'Nullfactory'
-// },
-// {
-//   type: 'input',
-//   name: 'visualStudioSolutionProjectPrefix',
-//   message: 'Visual Studio solution project filename prefix?',
-//   default: 'Nullfactory'
-// },
-// {
-//   type: 'input',
-//   name: 'crmServerUrl',
-//   message: 'Source CRM server url?',
-//   default: 'https://sandbox.crm6.dynamics.com/'
-// },
-// {
-//   type: 'input',
-//   name: 'crmSolutionName',
-//   message: 'Source CRM solution name?',
-//   default: 'solution1'
-// },
-// {
-//   type: 'confirm',
-//   name: 'isAddWebResourceProject',
-//   message: 'Add *.WebResource project?',
-//   default: true
-// },
-// {
-//   type: 'confirm',
-//   name: 'isAddPluginProject',
-//   message: 'Add *.Plugin project?',
-//   default: true
-// },
-// {
-//   type: 'confirm',
-//   name: 'isAddWorkflowProject',
-//   message: 'Add *.Workflow project?',
-//   default: true
-// }
-
 module.exports = {
   visualStudioSolutionName: visualStudioSolutionName,
   visualStudioSolutionProjectPrefix: visualStudioSolutionProjectPrefix,

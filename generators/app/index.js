@@ -61,7 +61,8 @@ module.exports = class extends Generator {
       crmServerUrl: this.crmServerUrl,
       isAddPluginProject: this.isAddPluginProject,
       isAddWorkflowProject: this.isAddWorkflowProject,
-      nosplash: true
+      nosplash: true,
+      isIntegratedExecution: true
     });
   }
 

@@ -23,7 +23,7 @@ function showInstructionsFull(obj) {
       '\nSuccessfully generated project structure for ' + obj.crmSolutionName + '.'
     ) +
     '\n\nFinalize the installation by: \n   1. Execute the ' +
-    chalk.yellow(' "_RunFirst.ps1"') +
+    chalk.yellow('"_RunFirst.ps1"') +
     ' powershell script located in the root folder.\n';
 
   postInstallSteps +=
