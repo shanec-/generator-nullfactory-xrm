@@ -22,7 +22,7 @@ function showInstructionsFull(obj) {
     chalk.green.bold(
       '\nSuccessfully generated project structure for ' + obj.crmSolutionName + '.'
     ) +
-    '\n\nFinalize the installation by: \n   1. Execute the ' +
+    '\n\nFinalize the installation by: \n   1. Executing the ' +
     chalk.yellow('"_RunFirst.ps1"') +
     ' powershell script located in the root folder.\n';
 
