@@ -281,7 +281,7 @@ __pycache__/
 # !tools/packages.config
 
 # generator-nullfactory-xrm
-Nullfactory.Xrm.Tooling/scripts/**/*.zip
+**/Nullfactory.Xrm.Tooling/scripts/**/*.zip
 [Bb]in/*
 !Nullfactory.Xrm.Tooling/[Bb]in/coretools/
-*WebResources/bin
+**/*WebResources/[Bb]in/*

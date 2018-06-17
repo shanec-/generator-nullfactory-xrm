@@ -5,7 +5,7 @@
 		Setup the pre-requisites for accessing the Online Management API and initialize PSCredentials object used by associated functions.
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.6.0
+		Version: generator-nullfactory-xrm@1.7.0
 	.LINK
 		https://nullfactory.net
 	.EXAMPLE
@@ -29,7 +29,7 @@ function Init-OmapiModule($username, $password)
         Retrieves the unique identifier of a Dynamics 365 Customer Engagement instance using its friendly or unique name. If one does not exist, an error is thrown.
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.6.0
+		Version: generator-nullfactory-xrm@1.7.0
 	.LINK
 		https://nullfactory.net
 	.PARAMETER apiUrl
@@ -76,7 +76,7 @@ function Get-CrmInstanceByName($apiUrl, $credentials, $friendlyName, $uniqueName
 		Retrieves a list of available Dynamics 365 instances in the Office 365 tenant.
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.6.0
+		Version: generator-nullfactory-xrm@1.7.0
 	.LINK
 		https://nullfactory.net
 	.PARAMETER apiUrl
@@ -117,7 +117,7 @@ function Get-AvailableCrmInstances($apiUrl, $credentials)
 		Retrieves a list of application templates supported for provisioning a Dynamics 365 Customer Engagement (online) instance.
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.6.0
+		Version: generator-nullfactory-xrm@1.7.0
 	.LINK
 		https://nullfactory.net
 	.PARAMETER apiUrl
@@ -157,7 +157,7 @@ function Get-AvailableCrmTemplates($apiUrl, $credentials)
         Retrieves a list of application templates supported for provisioning a Dynamics 365 Customer Engagement (online) instance.
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.6.0
+		Version: generator-nullfactory-xrm@1.7.0
 	.LINK
 		https://nullfactory.net
 	.PARAMETER apiUrl
@@ -199,7 +199,7 @@ function Get-CrmInstanceBackupByLabel($apiUrl, $credentials, $instanceId, $backu
         Retrieves the release for Dynamics 365 Customer Engagement (online) using the the service version name.
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.6.0
+		Version: generator-nullfactory-xrm@1.7.0
 	.LINK
 		https://nullfactory.net
 	.PARAMETER apiUrl

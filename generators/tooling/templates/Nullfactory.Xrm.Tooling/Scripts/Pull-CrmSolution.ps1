@@ -12,7 +12,7 @@
 
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.6.0
+		Version: generator-nullfactory-xrm@1.7.0
 	.LINK
 		https://nullfactory.net
 	.PARAMETER serverUrl
@@ -83,6 +83,11 @@ if($connectionState.IsReady -eq $false)
 	throw $connectionState.LastCrmError
 }
 
+# create a temp location to hold the downloaded files
+$tempPath =  [System.IO.Path]::GetTempPath() + "nfac_" + [System.Guid]::NewGuid()
+New-Item -ItemType Directory -Path $tempPath | Out-Null
+Write-Host "Using temporary path $tempPath"
+
 $exportZipFileName = $solutionName + "_export.zip"
 $exportZipFileNameManaged = $solutionName + "_export_Managed.zip"
 
@@ -91,10 +96,10 @@ if (Test-Path $exportZipFileName) { Remove-Item $exportZipFileName }
 if (Test-Path $exportZipFileNameManaged) { Remove-Item $exportZipFileNameManaged }
 
 Write-Verbose "Exporting the un-managed version of the solution..."
-Export-CrmSolution -SolutionName $solutionName -SolutionZipFileName $exportZipFileName
+Export-CrmSolution -SolutionName $solutionName -SolutionZipFileName $exportZipFileName -SolutionFilePath $tempPath
 
 Write-Verbose "Exporting the managed version of the solution..."
-Export-CrmSolution -SolutionName $solutionName -Managed -SolutionZipFileName $exportZipFileNameManaged
+Export-CrmSolution -SolutionName $solutionName -Managed -SolutionZipFileName $exportZipFileNameManaged -SolutionFilePath $tempPath
 
 Write-Verbose "Delete the source controlled artifacts while keeping the project file intact..."
 Remove-Item -Recurse $solutionRootFolder  -Force -exclude *.csproj
@@ -106,7 +111,7 @@ if($solutionMapFile -eq "")
 	/a:extract `
 	/packagetype:both `
 	/f:"$solutionRootFolder" `
-	/z:"$exportZipFileName" `
+	/z:"$tempPath\$exportZipFileName" `
 	/ad:no
 }
 else
@@ -116,7 +121,7 @@ else
 	/a:extract `
 	/packagetype:both `
 	/f:"$solutionRootFolder" `
-	/z:"$exportZipFileName" `
+	/z:"$tempPath\$exportZipFileName" `
 	/ad:no `
 	/map:"$solutionMapFile"
 }

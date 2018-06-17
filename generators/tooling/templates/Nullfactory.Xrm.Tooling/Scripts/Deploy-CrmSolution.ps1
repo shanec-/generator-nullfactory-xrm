@@ -12,7 +12,7 @@
 
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.6.0
+		Version: generator-nullfactory-xrm@1.7.0
 	.LINK
 		https://nullfactory.net
 	.PARAMETER serverUrl

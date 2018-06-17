@@ -1,62 +1,76 @@
 'use strict';
 const Generator = require('yeoman-generator');
-const chalk = require('chalk');
-const yosay = require('yosay');
+const uuidv4 = require('uuid/v4');
+const prompt = require('./../app/prompt');
+const utility = require('./../app/utility');
 
 module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+
+    this.argument('crmSolutionName', { required: false });
+    this.argument('visualStudioSolutionProjectPrefix', { required: false });
+    this.option('nosplash', { required: false, default: false });
+
+    this.crmSolutionName = this.options.crmSolutionName;
+    this.visualStudioSolutionProjectPrefix = this.options.visualStudioSolutionProjectPrefix;
+    this.noSplash = this.options.nosplash;
+  }
+
   prompting() {
-    // Have Yeoman greet the user.
-    this.log(
-      yosay(
-        chalk.keyword('orange')('nullfactory-xrm') +
-          '\n The' +
-          chalk.green(' Dynamics 365') +
-          ' Project Structure Generator!'
-      )
-    );
+    utility.showSplash(this);
 
     var prompts = [
-      {
-        type: 'input',
-        name: 'visualStudioSolutionProjectPrefix',
-        message: 'Visual Studio solution project filename prefix?',
-        default: 'Nullfactory'
-      },
-      {
-        type: 'input',
-        name: 'crmSolutionName',
-        message: 'Source CRM solution name?',
-        default: 'solution1'
-      }
+      prompt.visualStudioSolutionProjectPrefix(this),
+      prompt.crmSolutionName(this)
     ];
 
-    return this.prompt(prompts).then(
-      function(props) {
-        // To access props later use this.props.someAnswer;
-        this.props = props;
-      }.bind(this)
-    );
+    return this.prompt(prompts).then(props => {
+      this.visualStudioSolutionProjectPrefix = utility.resolveParameter(
+        this.visualStudioSolutionProjectPrefix,
+        props.visualStudioSolutionProjectPrefix
+      );
+
+      this.crmSolutionName = utility.resolveParameter(
+        this.crmSolutionName,
+        props.crmSolutionName
+      );
+    });
   }
 
   writing() {
     // Initialize the crm solution project
     this._writeCrmSolutionProject();
+
+    // Generate the mapping file
+    this._writeMappingFile();
   }
 
   // Crm solution
   _writeCrmSolutionProject() {
     var generatedSolutionName =
-      this.props.visualStudioSolutionProjectPrefix + '.' + this.props.crmSolutionName;
+      this.visualStudioSolutionProjectPrefix + '.' + this.crmSolutionName;
+
     this.fs.copyTpl(
       this.templatePath('Project.Solution/Project.Solution.csproj'),
       this.destinationPath(
         generatedSolutionName + '/' + generatedSolutionName + '.csproj'
       ),
       {
-        crmSolutionName: this.props.crmSolutionName,
-        visualStudioSolutionProjectPrefix: this.props.visualStudioSolutionProjectPrefix,
-        visualStudioSolutionName: this.props.visualStudioSolutionName
+        uniqueProjectId: uuidv4(),
+        crmSolutionName: this.crmSolutionName,
+        visualStudioSolutionProjectPrefix: this.visualStudioSolutionProjectPrefix
       }
+    );
+  }
+
+  // Solution mapping file
+  _writeMappingFile() {
+    this.fs.copy(
+      this.templatePath('Nullfactory.Xrm.Tooling/Mappings/solution-mapping.xml'),
+      this.destinationPath(
+        'Nullfactory.Xrm.Tooling/Mappings/' + this.crmSolutionName + '-mapping.xml'
+      )
     );
   }
 
@@ -65,14 +79,6 @@ module.exports = class extends Generator {
   }
 
   end() {
-    var postInstallSteps = chalk.green.bold(
-      '\nSuccessfully generated project structure for ' + this.props.crmSolutionName + '.'
-    );
-    postInstallSteps +=
-      '\n\nPlease submit any issues found to ' +
-      chalk.yellow.bold('https://github.com/shanec-/generator-nullfactory-xrm/issues');
-    postInstallSteps += '\nGPL-3.0 © Shane Carvalho \n\n';
-
-    this.log(postInstallSteps);
+    utility.showInstructionsSolution(this);
   }
 };

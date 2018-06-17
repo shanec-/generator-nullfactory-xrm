@@ -1,6 +1,6 @@
 {
   "name": "generator-nullfactory-xrm",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Dynamics CRM / 365 Project Structure Generator",
   "homepage": "http://www.nullfactory.net",
   "author": {
@@ -12,7 +12,8 @@
     "generators/app",
     "generators/gitignore",
     "generators/solution",
-    "generators/cibuild"
+    "generators/cibuild",
+    "generators/tooling"
   ],
   "main": "generators/index.js",
   "keywords": [
@@ -23,34 +24,46 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "chalk": "^2.3.1",
+    "chalk": "^2.4.1",
     "estraverse": "^4.2.0",
-    "yeoman-generator": "^2.0.3",
-    "yosay": "^2.0.1"
+    "lodash": "^4.17.10",
+    "uuid": "^3.2.1",
+    "yeoman-generator": "^2.0.5",
+    "yosay": "^2.0.2"
   },
   "devDependencies": {
-    "coveralls": "^3.0.0",
-    "eslint": "^4.18.1",
+    "coveralls": "^3.0.1",
+    "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-xo": "^0.20.1",
     "eslint-plugin-prettier": "^2.6.0",
     "husky": "^0.14.3",
-    "jest": "^22.4.2",
-    "lint-staged": "^7.0.0",
+    "jest": "^22.4.4",
+    "lint-staged": "^7.1.2",
     "nsp": "^3.2.1",
-    "prettier": "^1.10.2",
-    "yeoman-assert": "^3.1.0",
-    "yeoman-test": "^1.7.0"
+    "prettier": "^1.13.2",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-test": "^1.7.2",
+    "yo": "^2.0.2"
   },
   "jest": {
     "testEnvironment": "node"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.json": ["prettier --write", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "eslintConfig": {
-    "extends": ["xo", "prettier"],
+    "extends": [
+      "xo",
+      "prettier"
+    ],
     "env": {
       "jest": true,
       "node": true
@@ -64,7 +77,9 @@
         }
       ]
     },
-    "plugins": ["prettier"]
+    "plugins": [
+      "prettier"
+    ]
   },
   "repository": "shanec-/generator-nullfactory-xrm",
   "scripts": {
