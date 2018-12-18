@@ -83,7 +83,7 @@
   },
   "repository": "shanec-/generator-nullfactory-xrm",
   "scripts": {
-    "prepublish": "nsp check",
+    "prepublish": "nsp audit --audit-level high",
     "pretest": "eslint .",
     "precommit": "lint-staged",
     "test": "jest --coverage"
