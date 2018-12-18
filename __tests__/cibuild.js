@@ -7,7 +7,7 @@ describe('generator-nullfactory-xrm:cibuild', () => {
   beforeAll(() => {
     return helpers.run(path.join(__dirname, '../generators/cibuild')).withPrompts({
       visualStudioSolutionProjectPrefix: 'Test',
-      buildServer: 'Visual Studio Team Services'
+      buildServer: 'Azure DevOps - Pipelines'
     });
   });
 

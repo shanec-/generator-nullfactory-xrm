@@ -82,7 +82,7 @@ Use the following command and prompts in order to generate a tailored YAML CI bu
 yo nullfactory-xrm:cibuild
 ```
 
-Currently supports only [Visual Studio Team Services](https://docs.microsoft.com/en-us/vsts/build-release/actions/build-yaml).
+Currently supports only [Azure DevOps](https://docs.microsoft.com/en-us/vsts/build-release/actions/build-yaml).
 
 ### Source Control, CI Builds and Release Management
 

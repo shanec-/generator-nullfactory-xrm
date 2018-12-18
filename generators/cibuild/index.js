@@ -35,7 +35,7 @@ module.exports = class extends Generator {
 
   writing() {
     switch (this.buildServer) {
-      case 'Visual Studio Team Services':
+      case 'Azure DevOps - Pipelines':
       default: {
         this._writeVsts();
       }

@@ -1,6 +1,6 @@
 Description:
 	Creates a YAML based CI build file. Supports the following formats:
-		- Visual Studio Team Services
+		- Azure DevOps - Pipelines
 
 Example:
 	yo nullfactory-xrm:cibuild

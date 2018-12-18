@@ -107,9 +107,9 @@ function buildServer(obj) {
   return {
     type: `list`,
     name: `buildServer`,
-    default: `Visual Studio Team Services`,
+    default: `Azure DevOps - Pipelines`,
     message: `What type of build server are you using?`,
-    choices: ['Visual Studio Team Services'],
+    choices: ['Azure DevOps - Pipelines'],
     when: () => {
       // If the parameter is passed in as an option then, skip.
       return obj.options.buildServer === undefined;
