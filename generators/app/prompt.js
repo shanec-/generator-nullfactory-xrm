@@ -3,7 +3,7 @@ function visualStudioSolutionName(obj) {
     type: `input`,
     name: `visualStudioSolutionName`,
     default: `Nullfactory`,
-    message: `Visual Studio solution filename?`,
+    message: `Visual Studio solution (*.sln) filename?`,
     when: () => {
       // If the parameter is passed in as an option then, skip.
       return obj.options.visualStudioSolutionName === undefined;

@@ -27,7 +27,7 @@ yo nullfactory-xrm
 
 Template questions and their purpose:
 
-1. Visual Studio solution file name?  `The visual studio solution filename.`
+1. Visual Studio solution (*.sln) filename?  `The visual studio solution filename.`
 2. Visual Studio project prefix?  `The prefix for the projects generated. This can be an organization name or preferred convention.`
 3. Source CRM server url? `This is the source CRM server url. Example:[https://sndbx.crm6.dynamics.com](https://sndbx.crm6.dynamics.com)`
 4. Source CRM solution name? `The name of the CRM solution to be extracted.`
