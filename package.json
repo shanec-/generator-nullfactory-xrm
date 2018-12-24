@@ -26,25 +26,25 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "estraverse": "^4.2.0",
-    "lodash": "^4.17.10",
-    "uuid": "^3.2.1",
+    "lodash": "^4.17.11",
+    "uuid": "^3.3.2",
     "yeoman-generator": "^2.0.5",
     "yosay": "^2.0.2"
   },
   "devDependencies": {
-    "coveralls": "^3.0.1",
+    "coveralls": "^3.0.2",
     "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-prettier": "^2.10.0",
     "eslint-config-xo": "^0.20.1",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^2.7.0",
     "husky": "^0.14.3",
     "jest": "^22.4.4",
-    "lint-staged": "^7.1.2",
+    "lint-staged": "^7.3.0",
     "nsp": "^3.2.1",
-    "prettier": "^1.13.2",
+    "prettier": "^1.15.3",
     "yeoman-assert": "^3.1.1",
-    "yeoman-test": "^1.7.2",
-    "yo": "^2.0.2"
+    "yeoman-test": "^1.9.1",
+    "yo": "^2.0.5"
   },
   "jest": {
     "testEnvironment": "node"
