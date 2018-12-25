@@ -2,7 +2,7 @@
 const chalk = require('chalk');
 const yosay = require('yosay');
 
-const VERSION = '1.7.0';
+const VERSION = '1.7.1';
 
 function showSplash(obj) {
   if (!obj.noSplash) {

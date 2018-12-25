@@ -5,7 +5,7 @@
     Provision a new Dynamics 365 Customer Engagement instance in the Office 365 tenant.
   .NOTES
     Author: Shane Carvalho
-    Version: generator-nullfactory-xrm@1.7.0
+    Version: generator-nullfactory-xrm@1.7.1
   .LINK
     https://nullfactory.net
   .PARAMETER apiUrl

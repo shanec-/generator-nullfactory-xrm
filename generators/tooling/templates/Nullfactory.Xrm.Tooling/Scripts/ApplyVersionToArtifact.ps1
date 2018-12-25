@@ -5,7 +5,7 @@
     Recursively finds a list of files within a folder and uses a regular expression pattern to match and replace it with a specified version number.
 	.NOTES
 		Author: Shane Carvalho
-		Version: generator-nullfactory-xrm@1.7.0
+		Version: generator-nullfactory-xrm@1.7.1
 	.LINK
 		https://nullfactory.net
 	.PARAMETER BuildSourcePath
