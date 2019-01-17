@@ -1,0 +1,9 @@
+{
+  // See extensions.json documentation here: https://go.microsoft.com/fwlink/?LinkId=827846
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "ajhyndman.jslint",
+    "ms-vscode.powershell"
+  ]
+}
